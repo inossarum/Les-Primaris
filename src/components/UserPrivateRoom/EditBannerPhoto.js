@@ -35,6 +35,7 @@ const EditBannerPhoto = () => {
                 bannerRef: `${imageRef}`,
                 uploadedBannersList: [...userUploadedBannersList, url],
               })
+            )
           );
         });
       } catch (err) {
