@@ -18,30 +18,18 @@ const OwnedShipsListAndCrews = () => {
   const dispatch = useDispatch();
   const shipSearchKeyWord = useRef("");
 
-  const shipDisplayer = async (e) => {
+  const shipDisplayer = (e) => {
     e.preventDefault();
-    let searchResultArray = [];
-
-    if (shipSearchKeyWord.current.value.toLowerCase() === "") {
+    const query = shipSearchKeyWord.current.value.trim().toLowerCase();
+    if (!query) {
       dispatch(setPrivateRoomShipsListSearchResult(""));
-    } else {
-      RSIShips &&
-        [...RSIShips].find((ship) => {
-          if (
-            ship.name
-              .toLowerCase()
-              .includes(shipSearchKeyWord.current.value.toLowerCase()) ===
-              true ||
-            ship.name.includes(shipSearchKeyWord.current.value) === true ||
-            ship.manufacturer.name
-              .toLowerCase()
-              .includes(shipSearchKeyWord.current.value) === true
-          ) {
-            searchResultArray = [...searchResultArray, ship];
-            dispatch(setPrivateRoomShipsListSearchResult(searchResultArray));
-          }
-        });
+      return;
     }
+    const results = (RSIShips || []).filter((ship) =>
+      String(ship.name || "").toLowerCase().includes(query) ||
+      String(ship.manufacturer?.name || "").toLowerCase().includes(query)
+    );
+    dispatch(setPrivateRoomShipsListSearchResult(results));
   };
 
   return (
