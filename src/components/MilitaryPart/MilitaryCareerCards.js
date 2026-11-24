@@ -66,7 +66,7 @@ const MilitaryCareerCards = ({career, department, opened}) => {
           }
           src={"./assets/img/departments/jobs/" + imgName + ".webp"}
           alt=""
-          onClick={() => (setJob(career), setActive(true))}
+          onClick={() => { setJob(career); setActive(true); }}
         />
       </div>
       <div
@@ -79,7 +79,7 @@ const MilitaryCareerCards = ({career, department, opened}) => {
       >
         <span
           className="come-back-btn-container"
-          onClick={() => (setJob(""), setActive(false))}
+          onClick={() => { setJob(""); setActive(false); }}
         >
           <i className="fa-sharp fa-solid fa-chevron-left"></i>
           <h4 className="come-back">retour arrière</h4>
