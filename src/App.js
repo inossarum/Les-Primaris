@@ -69,7 +69,7 @@ import EX1RcFleetPanel from "./components/MilitaryPart/MilitaryCrews/MilitaryFle
 const App = () => {
     const dispatch = useDispatch();
 
-    useE    useEffect(() => {
+    useEffect(() => {
         let unsubscribeProfile = null;
 
         const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
@@ -164,7 +164,9 @@ const App = () => {
             unsubscribeMilitaryRanks();
             unsubscribeShipsAndCrews();
         };
-    }, [dispatch]);turn (
+    }, [dispatch]);
+
+    return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
