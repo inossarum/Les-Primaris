@@ -123,7 +123,7 @@ const MilitaryEventJobSelectionPanel = ({vehicle}) => {
               className="primaris-ingame-shop-new-product-form-button-green"
               type="submit"
               onClick={(e) =>
-                (handleAddCrewMemberPostulant(e), dispatch(setEventJobSelectionActive(false)))
+                { handleAddCrewMemberPostulant(e); dispatch(setEventJobSelectionActive(false)); }
               }
             >
               Valider le choix
