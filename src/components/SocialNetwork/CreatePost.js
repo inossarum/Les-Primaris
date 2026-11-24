@@ -59,7 +59,7 @@ const CreatePost = () => {
       imageRef: imageDataRef,
       likers: [],
       createdAt: Date.now(),
-      notificationId: Math.random(Date.now()),
+      notificationId: Date.now() + Math.random(),
     };
 
     if (data.message !== "" || data.image !== "") {
