@@ -29,7 +29,7 @@ const EditProfilPhoto = () => {
         uploadBytes(imageRef, e.target.files[0]).then((snapshot) => {
           getDownloadURL(snapshot.ref).then(
             (url) =>
-              dispatch(getUserPhoto(url)) &
+              (dispatch(getUserPhoto(url)),
               updateDoc(doc(db, "users", `${auth.currentUser.uid}`), {
                 photo: `${url}`,
                 photoRef: `${imageRef}`,
