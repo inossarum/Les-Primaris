@@ -16,29 +16,42 @@ const SocialNetwork = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auth !== null)
-      onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-        dispatch(getUser(currentUser ? currentUser.displayName : null));
-      });
+    const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      dispatch(getUser(currentUser?.displayName ?? null));
+    });
 
-    // Real time updating posts and dispatch with Redux
-    onSnapshot(collection(db, "posts"), (snapshot) => {
-      let postsData = [];
-      snapshot.docs.forEach((doc) => {
-        postsData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getPosts(postsData));
-    });
-    onSnapshot(collection(db, "comments"), (snapshot) => {
-      let commentsData = [];
-      snapshot.docs.forEach((doc) => {
-        commentsData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getComments(commentsData));
-    });
+    const unsubscribePosts = onSnapshot(
+      collection(db, "posts"),
+      (snapshot) => {
+        const postsData = snapshot.docs.map((postDoc) => ({
+          ...postDoc.data(),
+          id: postDoc.id,
+        }));
+        dispatch(getPosts(postsData));
+      },
+      (error) => console.error("Unable to load posts:", error)
+    );
+
+    const unsubscribeComments = onSnapshot(
+      collection(db, "comments"),
+      (snapshot) => {
+        const commentsData = snapshot.docs.map((commentDoc) => ({
+          ...commentDoc.data(),
+          id: commentDoc.id,
+        }));
+        dispatch(getComments(commentsData));
+      },
+      (error) => console.error("Unable to load comments:", error)
+    );
 
     window.scrollTo(0, 0);
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribePosts();
+      unsubscribeComments();
+    };
   }, [dispatch]);
 
   return (
