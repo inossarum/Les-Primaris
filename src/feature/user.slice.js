@@ -51,7 +51,7 @@ export const userSlice = createSlice({
             user.factionPart === "civil" ||
             user.factionPart === "civil-militaire"
         )
-        .sort((a, b) => a.pseudo.localeCompare(b.pseudo));
+        .sort((a, b) => String(a.pseudo || "").localeCompare(String(b.pseudo || "")));
       state.militaryUsers = state.users
         .filter(
           (user) =>
