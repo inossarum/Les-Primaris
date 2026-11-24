@@ -46,7 +46,7 @@ const AccountBtn = ({factionPart}) => {
   return (
     <div
       className={btnClasseName}
-      onClick={() => (setActive(!active), windowSetActiveState())}
+      onClick={() => { setActive(!active); windowSetActiveState(); }}
     >
       <div className="notification-counter">
         {notifications === undefined || notifications?.length === 0 ? (
