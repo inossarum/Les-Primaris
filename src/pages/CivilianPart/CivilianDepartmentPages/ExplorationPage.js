@@ -17,16 +17,18 @@ const ExplorationPage = () => {
   );
 
   useEffect(() => {
-    onSnapshot(collection(db, "explorationLocations"), (snapshot) => {
-      let ExplorationDepartmentLocationsData = [];
-      snapshot.docs.forEach((doc) => {
-        ExplorationDepartmentLocationsData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(
-        getExplorationDepartmentLocations(ExplorationDepartmentLocationsData)
-      );
-    });
-  }, []);
+    const unsubscribe = onSnapshot(
+      collection(db, "explorationLocations"),
+      (snapshot) => {
+        const locations = snapshot.docs.map((locationDoc) => ({
+          ...locationDoc.data(),
+          id: locationDoc.id,
+        }));
+        dispatch(getExplorationDepartmentLocations(locations));
+      }
+    );
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <div className="exploration-page-body ">
