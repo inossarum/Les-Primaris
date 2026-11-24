@@ -135,8 +135,7 @@ const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
             <button
                 className="owned-ship-card-hangar-back-button"
                 onClick={() =>
-                    dispatch(setShipSelectionActive(false)) &
-                    setIsDeployed(false)
+                    (dispatch(setShipSelectionActive(false)), setIsDeployed(false))
                 }
             >
                 Retour
