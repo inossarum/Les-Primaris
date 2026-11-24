@@ -36,7 +36,7 @@ const JobSelectionPanel = ({ownedShipDatas}) => {
       factionRank: user.factionRank,
       job: job.current.value,
       shipDesired: actualShipSelected.id,
-      notificationId: Math.random(Date.now()),
+      notificationId: Date.now() + Math.random(),
     };
 
     await updateDoc(doc(db, "shipsAndCrews", actualShipSelected?.id), {
