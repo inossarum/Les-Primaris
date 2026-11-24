@@ -115,8 +115,7 @@ const CivilianEventBoard = () => {
             <div
               className="civilian-bulletin-board-add-event-container"
               onClick={() =>
-                setIsViewingArchives(false) &
-                dispatch(setEventDetailsWindowActive(""))
+                (setIsViewingArchives(false), dispatch(setEventDetailsWindowActive("")))
               }
             >
               <span>Evenements en cours</span>
@@ -125,8 +124,7 @@ const CivilianEventBoard = () => {
             <div
               className="civilian-bulletin-board-add-event-container"
               onClick={() =>
-                setIsViewingArchives(true) &
-                dispatch(setEventDetailsWindowActive(""))
+                (setIsViewingArchives(true), dispatch(setEventDetailsWindowActive("")))
               }
             >
               <span>Archives</span>
