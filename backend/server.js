@@ -32,6 +32,18 @@ app.use(express.urlencoded({extended: false}));
 app.use("/post", require("./routes/post.routes"));
 app.use("/user", require("./routes/user.routes"));
 
+app.use((req, res) => {
+  res.status(404).json({message: "Route introuvable"});
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  const status = err.name === "ValidationError" || err.name === "CastError"
+    ? 400
+    : 500;
+  return res.status(status).json({message: "Une erreur serveur est survenue"});
+});
+
 connectDB()
   .then(() => {
     app.listen(port, () => console.log("listening on port " + port));
