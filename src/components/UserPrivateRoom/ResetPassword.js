@@ -9,20 +9,23 @@ const ResetPassword = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const resetPassword = () => {
-    sendPasswordResetEmail(auth, userEmail)
-      .then(
-        (res) =>
-          console.log(res) &
-          setSuccessMessage(`mail envoyé à l'adresse ${userEmail}`) &
-          setTimeout(() => setSuccessMessage(""), 3000)
-      )
-      .catch(
-        (err) =>
-          console.log(err) &
-          setErrorMessage("Une erreur s'est produite") &
-          setTimeout(() => setErrorMessage(""), 3000)
-      );
+  const resetPassword = async () => {
+    if (!userEmail) {
+      setErrorMessage("Aucune adresse e-mail n’est associée à ce compte.");
+      return;
+    }
+
+    setSuccessMessage("");
+    setErrorMessage("");
+    try {
+      await sendPasswordResetEmail(auth, userEmail);
+      setSuccessMessage(`Mail envoyé à l'adresse ${userEmail}`);
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (error) {
+      console.error("Échec de l’envoi du lien de réinitialisation :", error);
+      setErrorMessage("Une erreur s'est produite. Vérifiez l'adresse e-mail.");
+      setTimeout(() => setErrorMessage(""), 3000);
+    }
   };
 
   return (
