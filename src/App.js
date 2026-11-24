@@ -13,6 +13,7 @@ import MilitaryOutfits from "./pages/MilitaryOutfits";
 import MilitaryFleets from "./pages/MilitaryFleets";
 import {useDispatch} from "react-redux";
 import {
+    clearCurrentUser,
     getUser,
     getUserAssignment,
     getUserAssignmentUnit,
@@ -77,8 +78,8 @@ const App = () => {
                 unsubscribeProfile = null;
             }
 
+            dispatch(clearCurrentUser());
             if (!user) {
-                dispatch(getUser(null));
                 return;
             }
 
