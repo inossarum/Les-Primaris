@@ -241,7 +241,7 @@ const Thread = ({thread}) => {
                 <button
                   className="open-btn"
                   onClick={(e) =>
-                    setIsOpened(true) & handleRemoveAssociatedNotification(e)
+                    (setIsOpened(true), handleRemoveAssociatedNotification(e))
                   }
                 >
                   Ouvrir
@@ -329,7 +329,7 @@ const Thread = ({thread}) => {
               ) : (
                 <button
                   className="close-btn"
-                  onClick={() => setIsOpened(false) & setIsResponding(false)}
+                  onClick={() => (setIsOpened(false), setIsResponding(false))}
                 >
                   Fermer
                 </button>
