@@ -87,7 +87,7 @@ const PrimarisIngameShopNewProductForm = () => {
 
       dispatch(setIsAddingANewProduct(false));
       if (notificationResults.some((result) => result.status === "rejected")) {
-        setFormError("Annonce enregistrée, mais certaines notifications n’ont pas pu être envoyées.");
+        console.error("Annonce enregistrée, mais certaines notifications n’ont pas été envoyées.");
       }
       [
         newProductCategory,
