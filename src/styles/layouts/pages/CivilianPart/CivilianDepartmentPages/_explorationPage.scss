@@ -1,0 +1,33 @@
+.exploration-page-body {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  background: url(../../../../../../public/assets/img/departments/exploration-department-background.webp)
+    fixed center/cover;
+  @include flex(row, "", center, center);
+
+  .exploration-page-main-container {
+    padding-top: 140px;
+    margin-top: 140px;
+    width: 400vw;
+    height: 100%;
+    @include flex(row, "", center, center);
+  }
+
+  .extra-left {
+    transition: 0.2s;
+    transform: translateX(150vw);
+  }
+  .left {
+    transition: 0.2s;
+    transform: translateX(50vw);
+  }
+  .central {
+    transition: 0.2s;
+    transform: translateX(-50vw);
+  }
+  .right {
+    transition: 0.2s;
+    transform: translateX(-150vw);
+  }
+}

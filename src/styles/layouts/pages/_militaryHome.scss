@@ -1,0 +1,386 @@
+.military-home {
+  // position: relative;
+  background: $black1;
+
+  #toTop {
+    position: fixed;
+    bottom: 5vh;
+    right: 3.9vw;
+    z-index: 1;
+    font-size: 1.5rem;
+    background: -webkit-linear-gradient(95deg, $grey3, $white1, $grey3);
+    background-clip: text;
+    filter: drop-shadow(0 0 5px $shadow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-filter: drop-shadow(0 0 5px $shadow);
+    backdrop-filter: blur(2px);
+    border-radius: 50%;
+    animation: opacity 2s forwards;
+
+    a {
+      @include flex("", "", center, center);
+      width: 50px;
+      height: 50px;
+      padding: 10px;
+      border: 2px solid $grey2;
+      border-radius: 50%;
+    }
+  }
+
+  .ember-effect {
+    top: 0;
+    height: 100vh;
+
+    .title-container {
+      @include flex(column, wrap, center, center);
+      position: absolute;
+      width: 50%;
+      height: 70vh;
+      top: 60vh;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .logo-container {
+        width: 100%;
+        @include flex(flex, "", center, center);
+        animation: opacity 1.5s forwards;
+
+        img {
+          height: auto;
+          min-width: 200px;
+          width: 15vw;
+          max-width: 400px;
+          border-radius: 50%;
+          backdrop-filter: blur(2px);
+        }
+      }
+
+      h1 {
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        font-family: $agFBB;
+        text-align: center;
+        background: -webkit-linear-gradient(95deg, $grey3, $white1, $grey3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-filter: drop-shadow(0 0 5px $shadow);
+        animation: titleWaveBlue 4s infinite, opacity 1.5s forwards;
+      }
+
+      .btn-container {
+        position: relative;
+        z-index: 0;
+        margin-top: 10vh;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        background: -webkit-linear-gradient(95deg, $grey3, $white1, $grey3);
+        background-clip: text;
+        filter: drop-shadow(0 0 5px $shadow);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-filter: drop-shadow(0 0 5px $shadow);
+        backdrop-filter: blur(2px);
+        animation: opacity 1.5s forwards;
+
+        a {
+          @include flex("", "", center, center);
+          width: 50px;
+          height: 50px;
+          padding: 10px;
+          border: 2px solid $grey2;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .content-background-container {
+    padding: 3px 0;
+    background: -webkit-linear-gradient(135deg, $grey3, $white1, $grey3);
+
+    .content-container {
+      padding: 5vh 10vw;
+      background: $black1;
+
+      .main-background-description-container {
+        margin: 0 auto;
+        max-width: 1920px;
+        position: relative;
+        margin-top: 5vh;
+        padding: 1px;
+        border-radius: 5px;
+        background: linear-gradient(135deg, $grey3, $white1, $grey3);
+        z-index: 1;
+
+        .deco-left {
+          position: absolute;
+          background: $black3;
+          top: -15px;
+          left: -15px;
+          height: 30px;
+          width: 30px;
+          border: 1px solid $grey1;
+          border-radius: 5px;
+          z-index: 1;
+          animation: decoWaveBW 5s infinite;
+
+          .inside-deco {
+            position: absolute;
+            background: $black1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            height: 20px;
+            width: 20px;
+            border: 1px solid $grey1;
+            border-radius: 2px;
+            z-index: 1;
+            animation: decoInsideWaveBW 5s infinite;
+          }
+        }
+
+        .deco-right {
+          position: absolute;
+          background: $black1;
+          top: -15px;
+          right: -15px;
+          height: 30px;
+          width: 30px;
+          border: 1px solid $grey1;
+          border-radius: 5px;
+          z-index: 1;
+          box-shadow: 0 0 5px $shadow;
+          animation: decoWaveBW 5s infinite;
+
+          .inside-deco {
+            position: absolute;
+            background: $black1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            height: 20px;
+            width: 20px;
+            border: 1px solid $grey1;
+            border-radius: 2px;
+            z-index: 1;
+            animation: decoInsideWaveBW 5s infinite;
+          }
+        }
+
+        .main-description-container {
+          // max-width: 1920px;
+          border-radius: 5px;
+          @include flex("", "", space-around, top);
+          background: linear-gradient(
+            135deg,
+            $black1 0%,
+            $black2 5%,
+            $black3 50%,
+            $black2 95%,
+            $black1 100%
+          );
+          height: 25vh;
+          font-family: $agFB;
+          letter-spacing: 3px;
+
+          .text-container-right {
+            @include flex(column, "", space-around, flex-end);
+            width: 100%;
+            padding: 2vh 1vw 2vh 1vw;
+            text-align: right;
+          }
+          .text-container-left {
+            @include flex(column, "", space-around, flex-start);
+            width: 100%;
+            padding: 2vh 1vw 2vh 1vw;
+            text-align: left;
+          }
+
+          &:hover {
+            .img-container-left,
+            .img-container-right {
+              .top {
+                height: 10%;
+                width: 40%;
+                border-top: 1px solid $white1;
+                border-left: 1px solid $white1;
+              }
+
+              .right {
+                height: 20%;
+                width: 20%;
+                border-top: 1px solid $white1;
+                border-right: 1px solid $white1;
+              }
+
+              .bottom {
+                height: 10%;
+                width: 40%;
+                border-bottom: 1px solid $white1;
+                border-right: 1px solid $white1;
+              }
+
+              .left {
+                height: 20%;
+                width: 20%;
+                border-bottom: 1px solid $white1;
+                border-left: 1px solid $white1;
+              }
+            }
+          }
+
+          h2 {
+            text-transform: uppercase;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, $grey3, $white1, $grey3);
+            background-clip: text;
+            filter: drop-shadow(0 0 5px $shadow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-filter: drop-shadow(0 0 5px $shadow);
+          }
+
+          p {
+            font-size: 1.3rem;
+          }
+
+          h3 {
+            position: relative;
+            width: fit-content;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            padding: 5px 0;
+            background: linear-gradient(95deg, $grey3, $white1, $grey3);
+            background-clip: text;
+            filter: drop-shadow(0 0 5px $shadow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-filter: drop-shadow(0 0 5px $shadow);
+
+            &:after {
+              position: absolute;
+              content: "";
+              height: 1px;
+              width: 100%;
+              bottom: 0;
+              left: 0;
+              background: linear-gradient(135deg, $white1, $grey3);
+            }
+          }
+
+          .img-container-left {
+            position: relative;
+            @include flex("", "", left, center);
+            height: 100%;
+
+            span {
+              position: absolute;
+              transition: 0.3s;
+              border-radius: 1px;
+            }
+
+            .top {
+              top: 9px;
+              left: 9px;
+              height: 20%;
+              width: 20%;
+              border-top: 1px solid $grey3;
+              border-left: 1px solid $grey3;
+            }
+
+            .right {
+              top: 9px;
+              right: 9px;
+              height: 10%;
+              width: 40%;
+              border-top: 1px solid $grey3;
+              border-right: 1px solid $grey3;
+            }
+
+            .bottom {
+              bottom: 9px;
+              right: 9px;
+              height: 20%;
+              width: 20%;
+              border-bottom: 1px solid $grey3;
+              border-right: 1px solid $grey3;
+            }
+
+            .left {
+              bottom: 9px;
+              left: 9px;
+              height: 10%;
+              width: 40%;
+              border-bottom: 1px solid $grey3;
+              border-left: 1px solid $grey3;
+            }
+
+            img {
+              width: auto;
+              height: 100%;
+            }
+          }
+          .img-container-right {
+            position: relative;
+            @include flex("", "", right, center);
+
+            span {
+              position: absolute;
+              transition: 0.3s;
+              border-radius: 1px;
+            }
+
+            .top {
+              top: 9px;
+              left: 9px;
+              height: 20%;
+              width: 20%;
+              border-top: 1px solid $grey3;
+              border-left: 1px solid $grey3;
+            }
+
+            .right {
+              top: 9px;
+              right: 9px;
+              height: 10%;
+              width: 40%;
+              border-top: 1px solid $grey3;
+              border-right: 1px solid $grey3;
+            }
+
+            .bottom {
+              bottom: 9px;
+              right: 9px;
+              height: 20%;
+              width: 20%;
+              border-bottom: 1px solid $grey3;
+              border-right: 1px solid $grey3;
+            }
+
+            .left {
+              bottom: 9px;
+              left: 9px;
+              height: 10%;
+              width: 40%;
+              border-bottom: 1px solid $grey3;
+              border-left: 1px solid $grey3;
+            }
+
+            img {
+              width: auto;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .separator {
+    height: 10vh;
+    width: 100%;
+    background: $black1;
+  }
+}

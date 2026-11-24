@@ -1,0 +1,50 @@
+.primaris-ingame-shop-search-bar-body {
+  position: relative;
+  width: 89.7%;
+  margin: 0 auto;
+  height: 108px;
+  @include flex(column, "", center, center);
+  padding: 20px 50px;
+  @include borders($black2, $grey7, $black5);
+  border-radius: 10px;
+  background: $black3;
+  letter-spacing: 2px;
+
+  input {
+    font-size: 1.2rem;
+    outline: none;
+    @include borders($black2, $grey7, $black5);
+    border-radius: 5px;
+    background: $black2;
+    padding: 5px 10px;
+
+    &::placeholder {
+      color: $green5;
+    }
+  }
+
+  .primaris-ingame-shop-new-product-form-button-blue {
+    @include primaris-button(
+      1px,
+      $black2,
+      $grey7,
+      $black5,
+      $darkShadow,
+      $black3,
+      $white1,
+      $blue2,
+      $blue5,
+      $blue2,
+      $black1,
+      $blue2,
+      $blue5,
+      $blue2,
+      $black1
+    );
+  }
+
+  span {
+    height: 20px;
+    margin: 10px 0 0 0;
+  }
+}

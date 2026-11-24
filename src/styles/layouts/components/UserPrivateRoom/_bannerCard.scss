@@ -1,0 +1,39 @@
+.card-general-container {
+  position: relative;
+  margin: 5px 0;
+  width: 100%;
+  height: 400px;
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+
+    &:hover {
+      .delete-icon {
+        opacity: 1;
+      }
+    }
+
+    .banner {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+    }
+
+    .delete-icon {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      opacity: 0;
+      transition: 0.1s;
+
+      &:hover {
+        cursor: pointer;
+        color: $yellow1;
+        transform: scale(1.2);
+      }
+    }
+  }
+}

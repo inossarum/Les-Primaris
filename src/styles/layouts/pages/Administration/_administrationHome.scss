@@ -1,0 +1,135 @@
+.administration-home-body {
+  padding: 140px 0 0 0;
+  height: 100vh;
+
+  .administration-home-title-container {
+    @include flex(column, "", center, center);
+    top: 70px;
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    background: radial-gradient(circle, $violet2 3%, #000000 100%);
+    box-shadow: 0 0 10px $black1;
+    border-bottom: 1px solid $violet1;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $violet3, $white1, $violet3);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $yellow1);
+      letter-spacing: 10px;
+      animation: titleWaveViolet 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+
+  .administration-home-main-container {
+    margin: 0 auto;
+    @include flex(column, "", center, center);
+    padding: 5vh 0;
+    max-width: 1300px;
+
+    .administration-home-logo-wrapper {
+      @include flex(row, "", center, center);
+      margin: 0 10vw 3vh;
+
+      .administration-home-department-logo {
+        height: 20vh;
+        box-sizing: border-box;
+        filter: drop-shadow(0 2px 5px $darkShadow);
+      }
+    }
+
+    .administration-home-buttons-container {
+      @include flex(row, "", space-between, center);
+      width: 100%;
+
+      .administration-home-button {
+        @include borders($grey5, $grey7, $black4);
+        @include flex(column, "", center, center);
+        border-radius: 10px;
+
+        width: 325px;
+        height: 50vh;
+        box-shadow: 0 2px 5px 1px $darkShadow;
+        transition: 0.2s;
+        margin: 20px;
+        color: $white1;
+
+        &:visited {
+          color: $white1;
+        }
+
+        div {
+          @include flex(column, "", center, center);
+
+          svg {
+            font-size: 10rem;
+            margin: 20px;
+            transition: 0.2s;
+          }
+
+          span {
+            display: block;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.2s;
+          }
+        }
+
+        &:hover {
+          border-bottom: 1px solid $violet4;
+
+          svg {
+            color: $violet5;
+            filter: drop-shadow(0 0 3px $violet3);
+          }
+
+          span {
+            color: $violet5;
+            filter: drop-shadow(0 0 3px $violet3);
+          }
+        }
+      }
+
+      .left {
+        background: linear-gradient(
+          89deg,
+          $black1 0%,
+          $black3 50%,
+          $black1 100%
+        );
+        &:hover {
+          transform: translateX(-20px);
+        }
+      }
+
+      .middle {
+        background: linear-gradient(
+          90deg,
+          $black1 0%,
+          $black3 50%,
+          $black1 100%
+        );
+        &:hover {
+          transform: translateY(20px);
+        }
+      }
+      .right {
+        background: linear-gradient(
+          91deg,
+          $black1 0%,
+          $black3 50%,
+          $black1 100%
+        );
+        &:hover {
+          transform: translateX(20px);
+        }
+      }
+    }
+  }
+}

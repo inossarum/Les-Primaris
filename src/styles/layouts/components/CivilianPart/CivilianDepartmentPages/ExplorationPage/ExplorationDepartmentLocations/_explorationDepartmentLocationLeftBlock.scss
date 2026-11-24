@@ -1,0 +1,11 @@
+.exploration-department-locations-left-block-body {
+  @include flex(row, "", center, center);
+  width: 200vw;
+  height: 95.4vh;
+
+  .exploration-department-locations-left-block-main-container {
+    @include flex(column, "", "", center);
+    width: 100vw;
+    height: 100%;
+  }
+}

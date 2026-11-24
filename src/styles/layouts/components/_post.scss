@@ -1,0 +1,236 @@
+.posts-container {
+  max-width: 1300px;
+  margin: 0 auto;
+
+  .post-card-container {
+    position: relative;
+    margin: 5vh 0 2vh 0;
+    background: linear-gradient(
+      135deg,
+      $black1 0%,
+      $black3 25%,
+      $black5 50%,
+      $black3 75%,
+      $black1 100%
+    );
+    padding: 0.5vh 10px;
+    border-radius: 10px;
+    box-shadow: 0 3px 5px 2px $shadow;
+    border-top: 1px solid $grey6;
+    border-left: 1px solid $black3;
+    border-right: 1px solid $black3;
+    border-bottom: 1px solid $black2;
+    transition: 0.2s;
+
+    &:hover {
+      border-bottom: 1px solid $yellow1;
+    }
+
+    .editing-post-mention-displayer {
+      background: $black4;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border-top: 1px solid $grey5;
+      border-right: 1px solid $grey6;
+      border-left: 1px solid $grey6;
+      border-bottom: 1px solid $black4;
+      position: absolute;
+      top: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.3rem;
+      color: $blue3;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px $blue4;
+    }
+
+    .card-header {
+      @include flex(row, "", space-between, center);
+
+      .post-actions-container {
+        @media screen and (max-width: 750px) {
+          width: 25%;
+        }
+
+        width: 5%;
+        @include grid(50% 50%, "", center, center);
+
+        span {
+          &:hover {
+            cursor: pointer;
+            color: $yellow1;
+          }
+        }
+      }
+    }
+
+    .publication-time-container {
+      @include flex(row, "", space-between, center);
+      position: relative;
+      padding: 0 0 5px 0;
+
+      .posted-time {
+        margin: 5px 0 5px;
+        letter-spacing: 1px;
+        font-size: 1rem;
+      }
+
+      .new-post {
+        border: none;
+        font-size: 1.3rem;
+        animation: titleWaveRed 2s infinite;
+        color: $red5;
+        letter-spacing: 1px;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        height: 1px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(
+          135deg,
+          $yellow1 0%,
+          $yellow2 5%,
+          $yellow3 50%,
+          $yellow2 95%,
+          $yellow1 100%
+        );
+      }
+    }
+
+    .post-content {
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      @include flex(column, "", center, center);
+
+      .post-image-container {
+        margin: 10px 0 0 0;
+        width: 100%;
+        box-sizing: border-box;
+
+        img {
+          width: 100%;
+          border-radius: 5px;
+          border-top: 1px solid $grey7;
+          border-left: 1px solid $grey5;
+          border-right: 1px solid $grey5;
+          border-bottom: 1px solid $grey4;
+        }
+      }
+
+      .message {
+        box-sizing: border-box;
+        position: relative;
+        margin: 10px 0;
+        padding: 10px 10px;
+        width: 100%;
+        border-top: 1px solid $white2;
+        border-left: 1px solid $grey4;
+        border-right: 1px solid $grey4;
+        border-bottom: 1px solid $grey7;
+        box-shadow: 0 1px 2px 0px $shadow;
+        border-radius: 5px;
+        background: $grey5;
+      }
+
+      .icons-part {
+        @include flex(row, "", flex-start, center);
+        position: relative;
+        width: 100%;
+        padding: 0 0 10px;
+      }
+
+      .edit-post-content-textarea {
+        box-shadow: inset 0 0 5px 2px $shadow;
+        height: 150px;
+        resize: vertical;
+        border: none;
+        border-radius: 5px 5px 0 5px;
+        padding: 1%;
+        margin: 10px 0;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.3rem;
+        background: $black5;
+        border-top: 1px solid $grey7;
+        border-left: 1px solid $grey5;
+        border-right: 1px solid $grey5;
+        border-bottom: 1px solid $grey4;
+        letter-spacing: 1px;
+        color: $white2;
+
+        &::-webkit-scrollbar {
+          background: $black4;
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: $yellow1;
+          border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-button {
+          display: none;
+        }
+
+        &::selection {
+          background: $yellow1;
+          color: $black1;
+        }
+
+        &:focus {
+          border: none;
+          outline: none;
+          box-shadow: inset 0 0 5px 2px $shadow;
+          border-top: 1px solid $grey7;
+          border-left: 1px solid $grey5;
+          border-right: 1px solid $grey5;
+          border-bottom: 1px solid $yellow1;
+          background: $black3;
+          color: $white2;
+          letter-spacing: 1px;
+        }
+
+        &::placeholder {
+          color: $white2;
+        }
+      }
+
+      .validate-edit-btn {
+        font-size: 1.1rem;
+        font-weight: $agFBB;
+        padding: 5px 10px 3px;
+        margin: 0 0 10px 0;
+        border-radius: 5px 0px 5px 0px;
+        border-top: 1px solid $grey6;
+        border-left: 1px solid $black3;
+        border-right: 1px solid $black3;
+        border-bottom: 1px solid $black2;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-align: center;
+        transition: 0.2s;
+        background: $black4;
+        color: $yellow1;
+
+        &:hover {
+          border: 1px solid $yellow1;
+          background: linear-gradient(
+            135deg,
+            $black1 0%,
+            $black2 5%,
+            $black3 50%,
+            $black2 95%,
+            $black1 100%
+          );
+          color: $white1;
+          box-shadow: 0 0 5px 2px $yellow1;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

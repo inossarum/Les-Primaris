@@ -1,0 +1,40 @@
+.military-promotion-card-body {
+  @include flex(column, "", center, flex-start);
+  @include borders($grey5, $grey5, $grey5);
+  height: fit-content;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  background: $black3;
+
+  .military-promotion-card-header {
+    @include flex(row, "", space-between, flex-start);
+    position: relative;
+    padding: 0 0 5px 0;
+    margin: 0 0 10px 0;
+    width: 100%;
+    letter-spacing: 2px;
+
+    &:after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      width: 100%;
+      background: $grey5;
+      bottom: 0;
+      left: 0;
+    }
+
+    svg {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .military-promotion-card-container {
+    letter-spacing: 1px;
+  }
+}

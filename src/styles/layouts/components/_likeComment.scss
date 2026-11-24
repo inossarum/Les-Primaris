@@ -1,0 +1,35 @@
+.like-icon {
+  @include flex(row, "", center, center);
+
+  p {
+    margin: 0;
+  }
+
+  #liked-btn {
+    padding-left: 5px;
+    background: none;
+    border: none;
+    color: $white1;
+    font-size: 1.5rem;
+
+    &:hover {
+      box-shadow: none;
+      color: $green2;
+      cursor: pointer;
+    }
+  }
+
+  #disliked-btn {
+    padding-left: 5px;
+    background: none;
+    border: none;
+    color: $yellow1;
+    font-size: 1.5rem;
+
+    &:hover {
+      box-shadow: none;
+      color: $red3;
+      cursor: pointer;
+    }
+  }
+}

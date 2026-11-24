@@ -1,0 +1,121 @@
+.banner-and-profil-photo-container {
+  margin-top: 70px;
+  max-width: 100%;
+
+  .banner-wrapper {
+    position: relative;
+    max-width: 100%;
+    height: 400px;
+    margin: 0 auto;
+
+    &:hover {
+      .banner-edition-container {
+        opacity: 1;
+      }
+    }
+
+    .banner-edition-container {
+      opacity: 0;
+      position: absolute;
+      bottom: 25px;
+      right: 5px;
+      transition: 0.1s;
+
+      &:hover {
+        color: $yellow1;
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+    }
+
+    .line2 {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 1px;
+      width: 515px;
+      background: $yellow1;
+    }
+
+    .bloc1 {
+      position: absolute;
+      left: 525px;
+      bottom: 0;
+      height: 20px;
+      width: 10px;
+      border: 1px solid $yellow1;
+      background: $yellow3;
+      box-shadow: 0 0 5px 0px $yellow1;
+      transform: skew(-45deg, 0deg);
+      z-index: 2;
+    }
+
+    .line3 {
+      position: absolute;
+      left: 544px;
+      bottom: 19px;
+      height: 1px;
+      width: 1054px;
+      background: $yellow1;
+      z-index: 2;
+    }
+
+    .banner-picture {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+    }
+
+    .profil-photo-wrapper {
+      @include flex("", "", center, center);
+      position: absolute;
+      bottom: -180px;
+      left: 150px;
+      transform: translate(-50%, -50%);
+      width: 250px;
+      height: 250px;
+      box-sizing: border-box;
+      border-top: 1px solid $grey6;
+      border-left: 1px solid $black4;
+      border-right: 1px solid $black4;
+      border-bottom: 1px solid $black2;
+      box-shadow: 0 1px 2px 0px $shadow;
+      border-radius: 10px;
+      padding: 2px;
+      background: linear-gradient(
+        135deg,
+        $black1 0%,
+        $black2 25%,
+        $black3 50%,
+        $black2 75%,
+        $black1 100%
+      );
+      z-index: 15;
+
+      &:hover {
+        .profil-photo-edition-container {
+          opacity: 1;
+        }
+      }
+
+      .profil-photo-edition-container {
+        @include flex(column, "", "", center);
+        opacity: 0;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        transition: 0.1s;
+
+        &:hover {
+          color: $yellow1;
+          transform: scale(1.2);
+          cursor: pointer;
+        }
+      }
+
+      .profil-photo {
+        width: 100%;
+      }
+    }
+  }
+}

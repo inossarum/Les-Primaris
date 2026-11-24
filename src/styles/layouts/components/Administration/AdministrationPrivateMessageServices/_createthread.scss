@@ -1,0 +1,146 @@
+.create-thread-body {
+  @include borders($black1, $black4, $violet4);
+  background: radial-gradient($black1 10%, $violet1 100%) fixed;
+  background-position: 50% -350px;
+  background-size: 150%;
+  box-shadow: inset 0 0 5px 1px $darkShadow;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 7px;
+  width: 100%;
+
+  .create-thread-main-container {
+    box-sizing: border-box;
+    width: 100%;
+
+    .create-thread-main-buttons-container {
+      @include flex(row, wrap, flex-start, center);
+      width: fit-content;
+
+      button {
+        @include flex(row, wrap, center, center);
+        @include borders($grey7, $black4, $black1);
+        background: $black2;
+        color: $white1;
+        border-radius: 3px;
+        height: 30px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0 15px 0px 0;
+        box-shadow: 0 0 5px 1px $darkShadow;
+        padding: 2px 6px 1px;
+        transition: 0.1s;
+
+        svg {
+          margin: 0 0 0 10px;
+        }
+
+        &:hover {
+          cursor: pointer;
+          border: 1px solid $yellow1;
+          box-shadow: 0 0 5px 1px $yellow1;
+          background: $yellow3;
+          color: $black1;
+        }
+      }
+      .submit {
+        &:focus {
+          cursor: pointer;
+          border: 1px solid $green2;
+          box-shadow: 0 0 5px 1px $green2;
+          background: $green5;
+        }
+      }
+      .cancel {
+        &:focus {
+          cursor: pointer;
+          border: 1px solid $red2;
+          box-shadow: 0 0 5px 1px $red2;
+          background: $red5;
+          color: $black1;
+        }
+      }
+    }
+
+    form {
+      margin: 10px 0 0 0;
+      width: 100%;
+
+      .new-thread-main-container {
+        @include flex(column, wrap, "", flex-start);
+
+        .new-thread-input-container {
+          @include flex(column, wrap, "", flex-start);
+          width: 100%;
+
+          div {
+            @include flex(column, wrap, flex-start, flex-start);
+            margin: 10px 0;
+
+            label {
+              text-transform: uppercase;
+              margin: 0 0 2px;
+              letter-spacing: 1px;
+              font-size: 1.2rem;
+            }
+
+            input {
+              width: 300px;
+              font-size: 1.2rem;
+              outline: none;
+            }
+          }
+
+          textarea {
+            width: 100%;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            outline: none;
+          }
+        }
+      }
+
+      button {
+        @include flex(row, wrap, center, center);
+        @include borders($grey7, $black4, $black1);
+        background: $black2;
+        color: $white1;
+        border-radius: 3px;
+        height: 30px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0 15px 0px 0;
+        box-shadow: 0 0 5px 1px $darkShadow;
+        padding: 2px 6px 1px;
+        transition: 0.1s;
+
+        svg {
+          margin: 0 0 0 10px;
+        }
+
+        &:hover {
+          cursor: pointer;
+          border: 1px solid $green2;
+          box-shadow: 0 0 5px 1px $green2;
+          background: $green5;
+          color: $black1;
+        }
+
+        &:focus {
+          cursor: pointer;
+          border: 1px solid $violet3;
+          box-shadow: 0 0 5px 1px $violet3;
+          background: $violet5;
+        }
+      }
+    }
+  }
+
+  .create-thread-error-message {
+    display: block;
+    margin-top: 10px;
+    letter-spacing: 2px;
+  }
+}

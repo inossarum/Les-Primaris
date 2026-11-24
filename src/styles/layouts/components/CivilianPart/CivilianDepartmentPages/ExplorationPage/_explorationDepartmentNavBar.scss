@@ -1,0 +1,52 @@
+.exploration-department-navbar-body {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  width: 100vw;
+  height: 70px;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 25;
+
+  @include flex(row, "", center, center);
+  background: linear-gradient(
+    90deg,
+    $translucent 0%,
+    $shadow 10%,
+    $black1 25%,
+
+    $black1 75%,
+    $shadow 90%,
+    $translucent 100%
+  );
+
+  .exploration-department-navbar-main-container {
+    @include grid(33.33% 33.34% 33.33%, "", center, center);
+    width: 50%;
+
+    .primaris-ingame-shop-new-product-form-button-exploration {
+      height: 100%;
+      transition: 0.2s ease;
+      @include flex(row, "", center, center);
+      @include primaris-button(
+        1px,
+        $black2,
+        $grey7,
+        $black5,
+        $darkShadow,
+        $black3,
+        $white1,
+        $blueExplo,
+        $blue4,
+        $blueExplo,
+        $black1,
+        $blueExplo,
+        $blue4,
+        $blueExplo,
+        $black1
+      );
+      letter-spacing: 2px;
+      margin: 0;
+    }
+  }
+}

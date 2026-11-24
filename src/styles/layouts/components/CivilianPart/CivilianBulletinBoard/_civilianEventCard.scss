@@ -1,0 +1,498 @@
+.civilian-event-card-body {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid $grey3;
+  border-right: 1px solid $grey5;
+  border-left: 1px solid $grey5;
+  border-bottom: 1px solid $grey7;
+  box-shadow: 0 0 5px 1px $darkShadow;
+  border-radius: 5px;
+  margin: 5px auto;
+  transition: 0.1s;
+
+  .archived-event {
+    z-index: 20;
+    position: absolute;
+    font-size: 10rem;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: $red5;
+    text-shadow: 0 0 5px $red2;
+    background: linear-gradient(
+      90deg,
+      $translucent 0%,
+      $darkShadow 50%,
+      $translucent 100%
+    );
+    width: 100%;
+    text-align: center;
+  }
+
+  &:hover {
+    border-bottom: 1px solid $red3;
+  }
+
+  span {
+    text-align: right;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+
+  h3 {
+    width: fit-content;
+    padding: 12px 10px 10px;
+    border-radius: 4px;
+    background: $black2;
+    box-shadow: 2px 2px 5px 1px $darkShadow;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    // border-top: 1px solid $grey5;
+    // border-left: 1px solid $grey5;
+    border-right: 1px solid $red3;
+    border-bottom: 1px solid $red3;
+  }
+
+  .civilian-event-card-creator-id {
+    @include flex(row, "", space-between, center);
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px 0;
+    padding: 0 10px;
+    width: 100%;
+
+    .civilian-event-card-creator-id-sub-container {
+      width: 50%;
+    }
+
+    .left {
+      text-align: left;
+    }
+    .right {
+      text-align: right;
+    }
+  }
+
+  .civilian-event-card-main-container-event-button {
+    margin: 10px 0;
+    z-index: 2;
+    @include flex(column, "", center, center);
+    height: fit-content;
+    padding: 5px 10px;
+    width: fit-content;
+    border-top: 1px solid $grey3;
+    border-right: 1px solid $grey5;
+    border-left: 1px solid $grey5;
+    border-bottom: 1px solid $grey7;
+    box-shadow: 0 0 5px 1px $darkShadow;
+    border-radius: 5px;
+    background: $black2;
+    transition: 0.1s all;
+
+    &:hover {
+      background: $red5;
+      color: $black1;
+      border: 1px solid $red2;
+      box-shadow: 0 0 5px 1px $red2;
+      cursor: pointer;
+    }
+
+    svg {
+      margin: 0 0 5px 0;
+    }
+
+    span {
+      text-transform: uppercase;
+    }
+  }
+
+  .add {
+    &:hover {
+      background: $green5;
+      color: $black1;
+      border: 1px solid $green2;
+      box-shadow: 0 0 5px 1px $green2;
+      cursor: pointer;
+    }
+  }
+
+  .remove {
+    &:hover {
+      background: $red5;
+      color: $black1;
+      border: 1px solid $red2;
+      box-shadow: 0 0 5px 1px $red2;
+      cursor: pointer;
+    }
+  }
+
+  .civilian-event-card-header {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    @include flex(column, "", space-between, center);
+    background: linear-gradient(
+      90deg,
+      $translucent 0%,
+      $black1 50%,
+      $translucent 100%
+    );
+
+    .civilian-event-card-header-title-container {
+      width: 100%;
+      @include flex(column, "", center, center);
+
+      h2 {
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 10px 10px;
+        margin: 0;
+        width: 100%;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 3px;
+        color: $yellow3;
+        text-shadow: 0 0 5px $yellow1;
+        font-size: 1.7rem;
+
+        &:after {
+          position: absolute;
+          content: "";
+          width: 100%;
+          height: 1px;
+          bottom: 0;
+          left: 0;
+          background: $red3;
+        }
+      }
+
+      span {
+        box-sizing: border-box;
+        margin: 10px 0;
+        padding: 0 10px 10px;
+        width: 100%;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 3px;
+        color: $red5;
+        font-size: 1.3rem;
+      }
+      .corporation {
+        animation: titleWaveRed 2s infinite;
+        color: $red5;
+      }
+      .mission-departementale {
+        animation: titleWaveBlue 2s infinite;
+        color: $blue5;
+      }
+      .sortie-detente {
+        animation: titleWaveGreen 2s infinite;
+        color: $green5;
+      }
+    }
+  }
+
+  .civilian-event-card-main-container {
+    @include flex(column, "", center, flex-start);
+    width: 100%;
+    padding: 10px;
+
+    .civilian-event-card-main-container-description-main-container {
+      @include flex(row, "", space-around, center);
+      width: 100%;
+
+      .civilian-event-card-main-container-description-sub-container {
+        @include flex(column, "", flex-start, flex-start);
+        width: 100%;
+
+        .corporation {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $red5;
+          text-shadow: 0 0 5px $red2;
+          width: fit-content;
+        }
+        .mission-departementale {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $blue5;
+          text-shadow: 0 0 5px $blue2;
+          width: fit-content;
+        }
+        .sortie-detente {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $green5;
+          text-shadow: 0 0 5px $green2;
+          width: fit-content;
+        }
+
+        .minage {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $orange4;
+          text-shadow: 0 0 5px $orange1;
+          width: fit-content;
+        }
+        .transport {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $blue5;
+          text-shadow: 0 0 5px $blue2;
+          width: fit-content;
+        }
+        .commerce {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $green5;
+          text-shadow: 0 0 5px $green2;
+          width: fit-content;
+        }
+        .recyclage {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $yellow3;
+          text-shadow: 0 0 5px $yellow1;
+          width: fit-content;
+        }
+        .course {
+          text-align: justify;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $pink5;
+          text-shadow: 0 0 5px $pink2;
+          width: fit-content;
+        }
+
+        .event-location {
+          text-transform: capitalize;
+          letter-spacing: 3px;
+          text-align: justify;
+          font-size: 1.4rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+          color: $blue5;
+          text-shadow: 0 0 5px $blue2;
+        }
+      }
+    }
+
+    .civilian-event-card-main-container-description-sub-container {
+      width: 100%;
+
+      .civilian-event-card-main-container-description-sub-container-title {
+        @include flex(row, "", flex-start, center);
+      }
+
+      h3 {
+        width: fit-content;
+        margin-right: 10px;
+      }
+
+      .civilian-event-card-main-container-description-sub-container-content {
+        @include flex(row, "", space-around, center);
+        width: 100%;
+
+        .civilian-event-card-main-container-description-edit-container-content {
+          @include flex(row, "", space-around, center);
+          width: 100%;
+
+          textarea {
+            margin: 0;
+            text-align: left;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            width: 100%;
+            padding: 10px;
+            height: fit-content;
+            resize: vertical;
+            background: $black2;
+            border-radius: 4px;
+            border-top: 1px solid $black1;
+            border-left: 1px solid $grey6;
+            border-right: 1px solid $grey6;
+            border-bottom: 1px solid $grey4;
+            color: $white1;
+          }
+
+          .primaris-ingame-shop-new-product-form-button-green {
+            height: 100%;
+            @include flex(row, "", center, center);
+            @include primaris-button(
+              1px,
+              $black2,
+              $grey7,
+              $black5,
+              $darkShadow,
+              $black3,
+              $white1,
+              $green2,
+              $green5,
+              $green2,
+              $black1,
+              $green2,
+              $green5,
+              $green2,
+              $black1
+            );
+            margin: 0 0 0 20px;
+          }
+        }
+
+        p {
+          margin: 0;
+          text-align: left;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          padding: 10px;
+          width: 100%;
+          background: $black2;
+          border-radius: 4px;
+          border-top: 1px solid $black1;
+          border-left: 1px solid $grey6;
+          border-right: 1px solid $grey6;
+          border-bottom: 1px solid $grey4;
+        }
+
+        .primaris-ingame-shop-new-product-form-button-red {
+          height: 100%;
+          @include flex(row, "", center, center);
+          @include primaris-button(
+            1px,
+            $black2,
+            $grey7,
+            $black5,
+            $darkShadow,
+            $black3,
+            $white1,
+            $red2,
+            $red5,
+            $red2,
+            $black1,
+            $red2,
+            $red5,
+            $red2,
+            $black1
+          );
+          margin: 0 10px 0 20px;
+        }
+      }
+    }
+
+    .civilian-event-card-main-container-players-sub-container {
+      width: fit-content;
+      max-width: 100%;
+      @include flex(column, "", flex-start, flex-start);
+
+      .civilian-event-card-main-container-players-list {
+        width: 100%;
+        @include flex(row, wrap, flex-start, flex-start);
+        text-align: justify;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        background: $black2;
+        border-radius: 5px;
+        border-top: 1px solid $black1;
+        border-left: 1px solid $grey6;
+        border-right: 1px solid $grey6;
+        border-bottom: 1px solid $grey4;
+        max-height: 100px;
+        overflow-y: auto;
+      }
+    }
+
+    .civilian-event-card-main-container-vehicles-sub-container {
+      width: fit-content;
+      max-width: 100%;
+      @include flex(column, "", flex-start, flex-start);
+
+      .civilian-event-card-main-container-vehicles-list {
+        width: 100%;
+        @include flex(row, wrap, flex-start, flex-start);
+        text-align: justify;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        background: $black2;
+        border-radius: 5px;
+        border-top: 1px solid $black1;
+        border-left: 1px solid $grey6;
+        border-right: 1px solid $grey6;
+        border-bottom: 1px solid $grey4;
+        height: fit-content;
+        overflow-y: auto;
+      }
+    }
+  }
+}

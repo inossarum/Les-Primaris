@@ -1,0 +1,162 @@
+.encyclopedia-home-page-body {
+  @include flex(row, "", space-between, flex-start);
+  background: url(../../../../../public/assets/img/departments/invictus-fleet.webp)
+    center/cover fixed;
+  height: fit-content;
+  overflow-anchor: none;
+
+  .encyclopedia-search-container {
+    height: 300px;
+    width: 100%;
+
+    .search-form-container {
+      @include flex("", "", center, center);
+      width: 100%;
+      height: 100%;
+
+      .home-form-container {
+        @include flex("", "", center, center);
+        min-width: 40%;
+
+        .input-wrapper {
+          @include flex("", "", center, center);
+          height: 50px;
+          width: 100%;
+
+          input {
+            position: relative;
+            border-radius: 7px;
+            height: 100%;
+            width: 100%;
+            padding: 0 0 0 10px;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            color: $white1;
+            background: $black2;
+            border-top: 1px solid $grey7;
+            border-left: 1px solid $grey5;
+            border-right: 1px solid $grey5;
+            border-bottom: 1px solid $grey3;
+            outline: none;
+
+            &::placeholder {
+              color: $white1;
+            }
+
+            &::selection {
+              background: $yellow1;
+              color: $black1;
+            }
+
+            &:focus {
+              color: $yellow1;
+              background: $black4;
+            }
+          }
+
+          .search-button {
+            position: relative;
+            margin: 0 0 0 10px;
+            border-radius: 7px;
+            padding: 0;
+            height: 100%;
+            width: 70px;
+            border-top: 2px solid $grey3;
+            border-left: 2px solid $grey5;
+            border-right: 2px solid $grey5;
+            border-bottom: 2px solid $grey7;
+            color: $white1;
+            background: $black2;
+            transition: 0.1s;
+            box-shadow: 0 0 5px 3px $darkShadow;
+
+            .search-logo {
+              transition: 0.05s;
+            }
+
+            &:hover {
+              background: $grey5;
+              color: $blue4;
+              border-top: 2px solid $grey2;
+              border-left: 2px solid $grey4;
+              border-right: 2px solid $grey4;
+              border-bottom: 2px solid $grey6;
+              cursor: pointer;
+
+              &:before {
+                background: $blue4;
+                box-shadow: 0 0 5px 2px $blueExplo;
+              }
+
+              &:after {
+                background: $blue4;
+                box-shadow: 0 0 5px 2px $blueExplo;
+              }
+            }
+
+            &:before {
+              position: absolute;
+              content: "";
+              top: -2px;
+              left: 50%;
+              width: 50%;
+              transform: translateX(-50%);
+              height: 2px;
+              background: $yellow3;
+              box-shadow: 0 0 5px 1px $yellow1;
+              transition: 0.1s;
+            }
+
+            &:after {
+              position: absolute;
+              content: "";
+              bottom: -2px;
+              left: 50%;
+              width: 50%;
+              transform: translateX(-50%);
+              height: 2px;
+              background: $yellow3;
+              box-shadow: 0 0 5px 1px $yellow1;
+              transition: 0.1s;
+            }
+          }
+        }
+      }
+    }
+
+    .search-result-container {
+      background: url(../../../../../public/assets/img/departments/invictus-fleet.webp)
+        center/cover fixed;
+
+      .sub-container {
+        @include flex(column, wrap, space-around, center);
+
+        .sub-container-title {
+          padding: 10px 0;
+          width: 75%;
+          text-align: center;
+          font-size: 1.4rem;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          background: linear-gradient(
+            90deg,
+            $translucent 0%,
+            $shadow 40%,
+            $black2 50%,
+            $shadow 60%,
+            $translucent 100%
+          );
+        }
+
+        .stations-sub-container {
+          width: 100%;
+          @include flex(row, wrap, space-around, flex-start);
+        }
+        .ships-sub-container {
+          width: 100%;
+          @include flex(row, wrap, space-around, flex-start);
+        }
+      }
+    }
+  }
+}

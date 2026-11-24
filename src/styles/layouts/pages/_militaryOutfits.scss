@@ -1,0 +1,351 @@
+.military-outfits-body {
+  margin: 5vh 0 0 0;
+  overflow-y: hidden;
+  position: relative;
+  background: url(../../../../public/assets/img/departments/ensemble.webp)
+    center/cover fixed;
+
+  .outfits-main-container {
+    @include grid("", 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr, center, center);
+
+    .department-outfits-container {
+      margin: 2vh auto;
+      width: 1105px;
+      padding: 10px 0 10px 0;
+      border-radius: 10px;
+      border-top: 1px solid $grey4;
+      border-left: 1px solid $grey7;
+      border-right: 1px solid $grey7;
+      border-bottom: 1px solid $black2;
+      box-shadow: 0 3px 10px 2px $darkShadow;
+      text-align: center;
+      background: linear-gradient(
+        135deg,
+        $black2 0%,
+        $black3 25%,
+        $black4 50%,
+        $black3 75%,
+        $black2 100%
+      );
+      transition: 0.2s;
+
+      .department-title {
+        width: 45%;
+        border-top: 1px solid $black2;
+        border-left: 1px solid $grey7;
+        border-right: 1px solid $grey7;
+        border-bottom: 1px solid $grey5;
+        border-radius: 7px;
+        background: $black2;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        padding: 10px 0;
+        margin: 0 10px;
+        box-shadow: inset 0 0 10px $shadow;
+        transition: 0.2s;
+      }
+
+      &:hover {
+        border-bottom: 1px solid $blue2;
+
+        .department-title {
+          color: $blue5;
+          text-shadow: 0 0 10px $blue2;
+        }
+      }
+
+      .aerospatial {
+        @include grid(100%, "", left, center);
+      }
+
+      .logistics {
+        @include grid(100%, "", left, center);
+      }
+
+      .infantry {
+        @include grid(50% 50%, "", left, center);
+
+        .department-title {
+          width: 90%;
+          border-top: 1px solid $black2;
+          border-left: 1px solid $grey7;
+          border-right: 1px solid $grey7;
+          border-bottom: 1px solid $grey5;
+          border-radius: 7px;
+          background: $black2;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          padding: 10px 0;
+          margin: 0 10px;
+          box-shadow: inset 0 0 10px $shadow;
+          transition: 0.2s linear;
+        }
+
+        .camo-btn-container {
+          @include flex(row, "", flex-end, center);
+          width: 100%;
+          height: 100%;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          margin: 0 0 0 0;
+          padding: 0 10px 0 0;
+          transition: 0.2s linear;
+
+          .camo-btn-container-wrapper {
+            width: 75%;
+            @include grid(25% 25% 25% 25%, "", end, center);
+
+            .btn-container {
+              @include flex(row, "", center, center);
+              height: 100%;
+
+              .light {
+                width: 7px;
+                height: 100%;
+                background: linear-gradient(
+                  0deg,
+                  $black1 0%,
+                  $black1 25%,
+                  $black2 50%,
+                  $black3 75%,
+                  $black4 100%
+                );
+                border-top: 1px solid $grey3;
+                border-radius: 5px 0 0 5px;
+                box-shadow: 0 2px 5px 1px $darkShadow;
+                padding: 5px 0;
+              }
+
+              .urban-active {
+                width: 7px;
+                height: 100%;
+                animation: urbanSizzle 1s forwards;
+                padding: 5px 0;
+                border-radius: 5px 0 0 5px;
+              }
+              .arctic-active {
+                width: 7px;
+                height: 100%;
+                animation: arcticSizzle 1s forwards;
+                padding: 5px 0;
+                border-radius: 5px 0 0 5px;
+              }
+              .woodland-active {
+                width: 7px;
+                height: 100%;
+                animation: woodlandSizzle 1s forwards;
+                padding: 5px 0;
+                border-radius: 5px 0 0 5px;
+              }
+              .desert-active {
+                width: 7px;
+                height: 100%;
+                animation: desertSizzle 1s forwards;
+                padding: 5px 0;
+                border-radius: 5px 0 0 5px;
+              }
+
+              .btn {
+                height: 100%;
+                background: linear-gradient(
+                  0deg,
+                  $black1 0%,
+                  $black1 25%,
+                  $black2 50%,
+                  $black3 75%,
+                  $black4 100%
+                );
+                border-top: 1px solid $grey3;
+                border-radius: 0 5px 5px 0;
+                cursor: pointer;
+                width: fit-content;
+                padding: 5px;
+                margin-left: 2px;
+                box-shadow: 0 2px 5px 1px $darkShadow;
+              }
+            }
+          }
+        }
+      }
+
+      .outfits-cards-container {
+        @include flex(row, "", flex-start, flex-start);
+        overflow-x: auto;
+        margin: 10px 10px 0 10px;
+        background: $black2;
+        border-top: 1px solid $black2;
+        border-left: 1px solid $grey7;
+        border-right: 1px solid $grey7;
+        border-bottom: 1px solid $grey5;
+        border-radius: 7px;
+
+        &::-webkit-scrollbar {
+          background: none;
+          height: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background: $grey2;
+        }
+
+        .military-outfit-card {
+          position: relative;
+          width: auto;
+          margin: 10px;
+
+          h4 {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+          }
+
+          .outfit-img-container {
+            position: relative;
+            width: 250px;
+            height: 500px;
+            overflow: hidden;
+            border-top: 1px solid $black4;
+            border-left: 1px solid $grey6;
+            border-right: 1px solid $grey6;
+            border-bottom: 1px solid $grey4;
+            border-radius: 5px;
+
+            img {
+              border: 1px solid $black3;
+              border-radius: 5px;
+              width: 100%;
+              cursor: pointer;
+            }
+
+            .infantry {
+              @include grid(100% 100% 100% 100%, "", center, center);
+              width: 250px;
+            }
+
+            .outfit-img-slider {
+              position: absolute;
+              transition: 0.5s;
+
+              img {
+                border: 1px solid $black3;
+                border-radius: 5px;
+                width: 100%;
+              }
+            }
+
+            .urban {
+              left: 0;
+            }
+            .arctic {
+              left: -250px;
+            }
+            .woodland {
+              left: -500px;
+            }
+            .desert {
+              left: -750px;
+            }
+          }
+
+          .outfit-card-description-closer-container {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            height: 25px;
+            width: 25px;
+            z-index: 10;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+            span {
+              content: "";
+              position: absolute;
+              height: 10px;
+              width: 20px;
+              background: $yellow1;
+              border: 1px solid $translucent;
+            }
+          }
+        }
+      }
+    }
+
+    .staff {
+      margin: 2vh auto;
+      padding: 10px 0 10px 0;
+      border-radius: 10px;
+      text-align: center;
+      background: linear-gradient(
+        135deg,
+        $black2 0%,
+        $black3 25%,
+        $black4 50%,
+        $black3 75%,
+        $black2 100%
+      );
+
+      .outfits-cards-container {
+        @include grid(33.33% 33.33% 33.33%, "", center, center);
+        overflow-x: auto;
+        margin: 10px 10px 0 10px;
+        background: $black2;
+        border-top: 1px solid $black2;
+        border-left: 1px solid $grey7;
+        border-right: 1px solid $grey7;
+        border-bottom: 1px solid $grey5;
+        border-radius: 7px;
+
+        .military-outfit-card {
+          position: relative;
+          width: auto;
+          margin: 10px;
+
+          h4 {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+          }
+
+          .outfit-img-container {
+            position: relative;
+            width: 250px;
+            height: 500px;
+            overflow: hidden;
+            border: 1px solid $black4;
+            border-radius: 5px;
+
+            img {
+              border: 1px solid $black3;
+              border-radius: 5px;
+              width: 100%;
+              cursor: pointer;
+            }
+          }
+
+          .outfit-card-description-closer-container {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            height: 25px;
+            width: 25px;
+            z-index: 10;
+
+            &:hover {
+              cursor: pointer;
+            }
+
+            span {
+              content: "";
+              position: absolute;
+              height: 10px;
+              width: 20px;
+              background: $yellow1;
+              border: 1px solid $translucent;
+            }
+          }
+        }
+      }
+    }
+  }
+}

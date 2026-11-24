@@ -1,0 +1,55 @@
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+
+import NavBar from "../components/Navbar/NavBar";
+import {collection, onSnapshot} from "firebase/firestore";
+import {db} from "../utils/firebase.config";
+import {getMilitaryRanks} from "../feature/militaryRanks.slice";
+import MilitaryInfosCard from "../components/MilitaryPart/MilitaryTrainingsAndMissionsFollower/MilitaryInfosCard";
+import {getMilitaryEventsArchivesList} from "../feature/events.slice";
+
+const MilitaryTrainingsAndMissionsFollower = () => {
+  const dispatch = useDispatch();
+  const militaryUsers = useSelector((state) => state.user.militaryUsers);
+
+  useEffect(() => {
+    onSnapshot(collection(db, "militaryEventsArchives"), (snapshot) => {
+      let militaryEventsArchivesData = [];
+      snapshot.docs.forEach((doc) => {
+        militaryEventsArchivesData.push({...doc.data(), id: doc.id});
+      });
+      dispatch(getMilitaryEventsArchivesList(militaryEventsArchivesData));
+    });
+    onSnapshot(collection(db, "militaryRanks"), (snapshot) => {
+      let militaryRanks = [];
+      snapshot.docs.forEach((doc) => {
+        militaryRanks.push({...doc.data(), id: doc.id});
+      });
+      dispatch(getMilitaryRanks(militaryRanks));
+    });
+  }, []);
+
+  return (
+    <div className="military-trainings-and-missions-follower-body">
+      <NavBar
+        factionPart={"military"}
+        pageActive={"military-trainings-and-missions-follower"}
+      />
+      <div className="military-crew-title-container">
+        <h2>Entrainements & Missions</h2>
+      </div>
+      <div className="military-trainings-and-missions-follower-cards-container-wrapper">
+        <div className="military-trainings-and-missions-follower-cards-container">
+          {militaryUsers &&
+            [...militaryUsers]
+              ?.sort((a, b) => b.rankOrder - a.rankOrder)
+              .map((military) => (
+                <MilitaryInfosCard military={military} key={military.id} />
+              ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MilitaryTrainingsAndMissionsFollower;

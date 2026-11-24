@@ -1,0 +1,191 @@
+// GENERALS =>
+@import "./settings";
+
+// COMPONENTS =>
+
+// General
+@import "./layouts/components/navBar";
+@import "./layouts/components/homeBtn";
+@import "./layouts/components/copyrights";
+
+// Decorations
+@import "./layouts/components/Decorations/decorationBar1";
+@import "./layouts/components/Decorations/decorationBar2";
+@import "./layouts/components/Decorations/decorationBorderThin";
+@import "./layouts/components/Decorations/decorationBorderThick";
+@import "./layouts/components/Decorations/decorationBorderThickBlue";
+@import "./layouts/components/Decorations/decorationBorderThickYellow";
+@import "./layouts/components/Decorations/decorationCircles1";
+
+// User Private Room;
+@import "./layouts/components/UserPrivateRoom/banner";
+@import "./layouts/components/UserPrivateRoom/bannerCard";
+@import "./layouts/components/UserPrivateRoom/profileCard";
+@import "./layouts/components/UserPrivateRoom/userInformations";
+@import "./layouts/components/UserPrivateRoom/imgLibrary";
+
+// User Hangar
+@import "./layouts/components/UserHangar/ownedShipsListAndCrews";
+@import "./layouts/components/UserHangar/shipsListCard";
+@import "./layouts/components/UserHangar/ownedShipCard";
+@import "./layouts/components/UserHangar/ownedShipCardInformationsData";
+@import "./layouts/components/UserHangar/crewMemberCard";
+@import "./layouts/components/UserHangar/crewMemberPostulantCard";
+@import "./layouts/components/UserHangar/crewMemberSearchResultCard";
+@import "./layouts/components/UserHangar/userSearchPanel";
+@import "./layouts/components/UserHangar/militaryShipInformationsForm";
+
+// Civilian Part
+@import "./layouts/components/particles";
+
+// Civilian Departments Pages Components
+
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/explorationDepartmentNavBar";
+
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/ExplorationDepartmentLocations/explorationDepartmentLocationLeftBlock";
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/ExplorationDepartmentLocations/explorationDepartmentAddNewLocation";
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/ExplorationDepartmentLocations/explorationDepartmentLocationDisplayer";
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/ExplorationDepartmentLocations/explorationDepartmentAddNewLocationForm";
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/ExplorationDepartmentLocations/explorationDepartmentLocationCard";
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/ExplorationDepartmentLocations/explorationDepartmentLocationSearchBar";
+
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/explorationDepartmentNewsCenterBlock";
+
+@import "./layouts/components/CivilianPart/CivilianDepartmentPages/ExplorationPage/explorationDepartmentMembersRightBlock";
+
+// Civilian Bulletin Board
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianBulletinBoardNavBar";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianPromotionsBoard";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventBoard";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEvent";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventCard";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventShipSelector";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventShipSearchResultCard";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventEnlistedShipCardPostulant";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventEnlistedShipCardEmployee";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventEnlistedShipCard";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventJobSelectionPanel";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventUserSearchPanel";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventCrewMemberSearchResultCard";
+@import "./layouts/components/CivilianPart/CivilianBulletinBoard/civilianEventPlayerCard";
+
+// Social network
+@import "./layouts/components/createPost";
+@import "./layouts/components/post";
+@import "./layouts/components/postHeader";
+@import "./layouts/components/avatar";
+@import "./layouts/components/likePost";
+@import "./layouts/components/commentPost";
+@import "./layouts/components/commentCard";
+@import "./layouts/components/likeComment";
+
+// AdministrationHome
+
+// Administration Users
+@import "./layouts/components/Administration/AdministrationUsers/administrationParticles";
+@import "./layouts/components/Administration/AdministrationUsers/userCard";
+
+//Administration Private Message Services
+@import "./layouts/components/Administration/AdministrationPrivateMessageServices/createthread";
+@import "./layouts/components/Administration/AdministrationPrivateMessageServices/thread";
+@import "./layouts/components/Administration/AdministrationPrivateMessageServices/threadResponse";
+
+// Account statment
+@import "./layouts/components/AccountStatment/connectModal";
+@import "./layouts/components/AccountStatment/login";
+@import "./layouts/components/AccountStatment/signUp";
+@import "./layouts/components/AccountStatment/accountStatment";
+@import "./layouts/components/AccountStatment/caption";
+@import "./layouts/components/AccountStatment/notificationsDisplayer";
+@import "./layouts/components/AccountStatment/notification";
+
+// Contact
+@import "./layouts/components/Contact/contactForm";
+@import "./layouts/components/Contact/particlesContact";
+
+// Military Part
+@import "./layouts/components/MilitaryPart/militaryParticles";
+@import "./layouts/components/MilitaryPart/militaryOutfitsCardsDescription";
+@import "./layouts/components/MilitaryPart/MilitaryCrews/fleetCard";
+@import "./layouts/components/MilitaryPart/MilitaryCrews/admiralCard";
+@import "./layouts/components/MilitaryPart/MilitaryCrews/subordonateCard";
+
+// Military Trainings And Missions Follower
+@import "./layouts/components/MilitaryPart/MilitaryTrainingsAndMissionsFollower/militaryInfosCard";
+
+// Military Bulletin Board
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryBulletinBoardNavBar";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventBoard";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEvent";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventCard";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventShipSelector";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventShipSearchResultCard";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventEnlistedShipCardPostulant";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventEnlistedShipCardEmployee";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventEnlistedShipCard";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventJobSelectionPanel";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventUserSearchPanel";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventCrewMemberSearchResultCard";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/militaryEventPlayerCard";
+
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/MilitaryPromotionBoard/militaryPromotionsBoard";
+@import "./layouts/components/MilitaryPart/MilitaryBulletinBoard/MilitaryPromotionBoard/militaryPromotionCard";
+
+// Star Citizen Encyclopedia
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaNavBar";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShips";
+
+@import "./layouts/components/StarCitizenEncyclopedia/EncyclopediaPrimarisLorePage/encyclopediaPrimarisLorePage";
+@import "./layouts/components/StarCitizenEncyclopedia/EncyclopediaPrimarisLorePage/encyclopediaHistoryFactContainer";
+
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaHomePage";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShipPage";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShipPageDetailsCompartment";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShipCard";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaStationPage";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShopPage";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShopItemPageCard";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaShopsItemsFilter";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaCelestialObjectsPage";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaObjectPageCard";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaCelestialObjectsMiniCard";
+@import "./layouts/components/StarCitizenEncyclopedia/encyclopediaStarSystemPage";
+
+// Primaris Ingame Shop
+
+@import "./layouts/components/PrimarisIngameShop/primarisIngameShopNewProductBtn";
+@import "./layouts/components/PrimarisIngameShop/primarisIngameShopSearchBar";
+@import "./layouts/components/PrimarisIngameShop/primarisIngameShopNewProductForm";
+@import "./layouts/components/PrimarisIngameShop/primarisIngameShopProductsListContainer";
+@import "./layouts/components/PrimarisIngameShop/primarisIngameShopProductCard";
+@import "./layouts/components/PrimarisIngameShop/primarisIngameShopProductCardMessage";
+
+// PAGES =>
+@import "./layouts/pages/home";
+@import "./layouts/pages/militaryHome";
+@import "./layouts/pages/civilianCareers";
+@import "./layouts/pages/civilianCrew";
+@import "./layouts/pages/civilianBulletinBoard";
+@import "./layouts/pages/PrimarisIngameShop/primarisIngameShop";
+@import "./layouts/pages/militaryCareers";
+@import "./layouts/pages/militaryCrew";
+@import "./layouts/pages/militaryFleet";
+@import "./layouts/pages/militaryMenu";
+@import "./layouts/pages/militaryRanks";
+@import "./layouts/pages/militaryPatents";
+@import "./layouts/pages/militaryOutfits";
+@import "./layouts/pages/militaryTrainingsAndMissionsFollower";
+@import "./layouts/pages/militaryBulletinBoard";
+@import "./layouts/pages/socialNetwork";
+@import "./layouts/pages/battlefield";
+@import "./layouts/pages/Administration/administrationHome";
+@import "./layouts/pages/Administration/administrationUsers";
+@import "./layouts/pages/Administration/administrationPrivateMessagingServices";
+@import "./layouts/pages/contact";
+@import "./layouts/pages/starCitizenEncyclopedia";
+@import "./layouts/pages/userPrivateRoom";
+@import "./layouts/pages/userHangar";
+
+// Civilian Departments Pages
+
+@import "./layouts/pages/CivilianPart/CivilianDepartmentPages/explorationPage";

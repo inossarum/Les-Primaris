@@ -1,0 +1,39 @@
+.primaris-ingame-shop-product-card-message-body {
+  width: 100%;
+  @include borders($grey6, $grey6, $grey6);
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0;
+  height: fit-content;
+
+  .primaris-ingame-shop-product-card-message-header {
+    margin: 0 0 5px 0;
+    @include flex(row, "", space-between, center);
+
+    .primaris-ingame-shop-product-card-message-author {
+      position: relative;
+      font-size: 1.2rem;
+      margin: 0 35px 0 0;
+    }
+
+    .primaris-ingame-shop-product-card-message-date {
+      position: relative;
+      font-size: 1rem;
+
+      &:before {
+        width: 20px;
+        height: 1px;
+        position: absolute;
+        content: "";
+        background: $green5;
+        top: 50%;
+        left: 0;
+        transform: translateX(-30px);
+      }
+    }
+
+    div {
+      width: fit-content;
+    }
+  }
+}

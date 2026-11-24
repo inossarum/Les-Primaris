@@ -1,0 +1,245 @@
+.civilian-event-ship-search-result-card-body {
+  @include flex(row, wrap, center, center);
+  height: fit-content;
+  min-height: 400px;
+  width: 880px;
+  border: 1px solid $black3;
+  border-radius: 5px;
+  margin: 10px 10px;
+  box-shadow: 0 2px 5px 1px $darkShadow;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .civilian-event-ship-search-result-card-image {
+    display: block;
+    min-height: 400px;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+
+    .civilian-event-ship-search-result-card-name {
+      width: 100%;
+      padding: 10px 0 8px;
+      margin: 0 auto;
+      border: none;
+      border-bottom: 1px solid $grey7;
+      border-radius: 5px 5px 0 0;
+      color: $yellow3;
+      text-shadow: 0 0 5px $yellow1;
+      box-shadow: none;
+      background: $darkShadow;
+      backdrop-filter: blur(2px);
+
+      span {
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+        position: relative;
+        width: fit-content;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        letter-spacing: 5px;
+        padding: 0 10px 0 15px;
+
+        &:before {
+          position: absolute;
+          content: "";
+          left: 0;
+          top: 50%;
+          transform: translateX(-100%);
+          width: 50%;
+          height: 1px;
+          background: $yellow3;
+          box-shadow: 0 0 5px $yellow1;
+        }
+        &:after {
+          position: absolute;
+          content: "";
+          right: 0;
+          top: 50%;
+          transform: translateX(100%);
+          width: 50%;
+          height: 1px;
+          background: $yellow3;
+          box-shadow: 0 0 5px $yellow1;
+        }
+      }
+    }
+
+    .selector {
+      margin-top: 80px;
+      height: 40px;
+      padding: 10px 0 10px;
+      text-align: center;
+      background: linear-gradient(
+        90deg,
+        $translucent 0%,
+        $darkShadow 50%,
+        $translucent 100%
+      );
+      color: $red5;
+      text-shadow: 0 0 10px $red3;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 1.2rem;
+      backdrop-filter: blur(3px);
+    }
+
+    .civilian-event-ship-search-result-card-role-container {
+      @include flex(column, "", "", center);
+      width: 70%;
+      z-index: 10;
+      margin: 20px auto;
+      background: $darkShadow;
+      border-radius: 5px;
+
+      span {
+        display: block;
+        margin: 10px 0;
+      }
+
+      .civilian-event-ship-search-result-card-role-button-container {
+        @include flex(row, "", space-around, center);
+        width: 90%;
+        margin: 10px 0;
+        background: $black2;
+        border-radius: 7px;
+        box-shadow: 0 0 5px 1px $darkShadow;
+
+        .civilian-event-ship-search-result-card-role-button {
+          text-align: center;
+          width: fit-content;
+          background: $black2;
+          @include borders($grey5, $black5, $black2);
+          box-shadow: 0 0 5px 1px $darkShadow;
+          padding: 5px 10px 4px;
+          margin: 10px 0;
+          border-radius: 5px;
+          color: $white1;
+          font-size: 1.1rem;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+
+          &:hover {
+            cursor: pointer;
+            border: 1px solid $yellow1;
+            background: $yellow3;
+            color: $black1;
+            box-shadow: 0 0 5px 1px $yellow1;
+          }
+        }
+      }
+
+      .civilian-event-ship-search-result-card-sub-container {
+        @include flex(row, "", space-around, center);
+        width: 90%;
+        margin: 10px 0;
+        background: $black2;
+        border-radius: 7px;
+        box-shadow: 0 0 5px 1px $darkShadow;
+
+        .civilian-event-ship-search-result-card-block {
+          @include flex(column, "", top, flex-start);
+          height: 90px;
+
+          span {
+            &:first-child {
+              margin: 10px 0;
+            }
+            &:last-child {
+              margin: 5px 0;
+            }
+          }
+
+          input {
+            width: 100%;
+            font-size: 1.2rem;
+            background: $grey7;
+            outline: none;
+            @include borders($black1, $black5, $grey6);
+            border-radius: 5px;
+            padding: 5px;
+            color: $white1;
+
+            &:focus {
+              border-bottom: 1px solid $yellow1;
+            }
+          }
+        }
+
+        .civilian-event-ship-search-result-card-role-button {
+          text-align: center;
+          width: fit-content;
+          background: $black2;
+          @include borders($grey5, $black5, $black2);
+          box-shadow: 0 0 5px 1px $darkShadow;
+          padding: 5px 10px 4px;
+          margin: 10px 0;
+          border-radius: 5px;
+          color: $white1;
+          font-size: 1.1rem;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+
+          &:hover {
+            cursor: pointer;
+            border: 1px solid $green2;
+            background: $green5;
+            color: $black1;
+            box-shadow: 0 0 5px 1px $green2;
+          }
+        }
+      }
+
+      .civilian-event-ship-search-result-card-description-container {
+        @include flex(row, "", space-around, center);
+        width: 90%;
+        margin: 10px 0;
+        padding: 0 0 10px 0;
+        background: $black2;
+        border-radius: 7px;
+        box-shadow: 0 0 5px 1px $darkShadow;
+
+        .civilian-event-ship-search-result-card-block {
+          @include flex(column, "", top, center);
+          height: fit-content;
+          width: 100%;
+          padding: 0 10px;
+
+          span {
+            &:first-child {
+              margin: 10px 0;
+            }
+            &:last-child {
+              margin: 5px 0;
+            }
+          }
+
+          textarea {
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 50px;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            background: $grey7;
+            resize: vertical;
+            color: $white1;
+            outline: none;
+            border-radius: 0 0 5px 5px;
+            margin: 0 0 10px;
+
+            &::placeholder {
+              color: $yellow3;
+            }
+
+            &:focus {
+              border-bottom: 1px solid $yellow1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,186 @@
+.encyclopedia-nav-bar-body {
+  position: relative;
+  height: 100vh;
+  width: 70px;
+  z-index: 25;
+
+  .nav-bar-main-container {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    height: 100%;
+    padding: 70px 0;
+    z-index: 25;
+    border-right: 1px solid $grey6;
+    background: linear-gradient(
+      180deg,
+      $black1 40%,
+      $darkShadow 50%,
+      $darkShadow 100%
+    );
+
+    .nav-bar-inner-container {
+      @include flex(column, "", space-between, center);
+      min-height: 100%;
+      z-index: 25;
+
+      .encyclopedia-nav-bar-top-container {
+        @include flex(row, wrap, center, center);
+        width: 100%;
+        height: fit-content;
+        color: $grey1;
+
+        .encyclopedia-nav-bar-button {
+          @include flex(row, wrap, center, center);
+          box-sizing: border-box;
+          width: 100%;
+          height: 70px;
+          padding: 10px;
+
+          .encyclopedia-nav-bar-icon {
+            height: 100%;
+            width: auto;
+            transition: 0.1s;
+          }
+
+          #search-icon {
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/searchNavBarLogo.png)
+              center/cover;
+
+            &:hover {
+              cursor: pointer;
+              filter: drop-shadow(0 0 3px $yellow1);
+              background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/searchNavBarLogoActive.png)
+                center/cover;
+            }
+          }
+          #star-systems-icon {
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/starSystemsNavBarLogo.png)
+              center/cover;
+
+            &:hover {
+              cursor: pointer;
+              filter: drop-shadow(0 0 3px $yellow1);
+              background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/starSystemsNavBarLogoActive.png)
+                center/cover;
+            }
+          }
+          #celestial-objects-icon {
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/celestialObjectsNavBarLogo.png)
+              center/cover;
+
+            &:hover {
+              cursor: pointer;
+              filter: drop-shadow(0 0 3px $yellow1);
+              background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/celestialObjectsNavBarLogoActive.png)
+                center/cover;
+            }
+          }
+          #stations-icon {
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/stationsNavBarLogo.png)
+              center/cover;
+
+            &:hover {
+              cursor: pointer;
+              filter: drop-shadow(0 0 3px $yellow1);
+              background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/stationsNavBarLogoActive.png)
+                center/cover;
+            }
+          }
+          #ships-icon {
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/shipsNavBarLogo.png)
+              center/cover;
+
+            &:hover {
+              cursor: pointer;
+              filter: drop-shadow(0 0 3px $yellow1);
+              background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/shipsNavBarLogoActive.png)
+                center/cover;
+            }
+          }
+          #lore-icon {
+            box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/loreNavBarLogo.png)
+              center/cover;
+
+            &:hover {
+              cursor: pointer;
+              filter: drop-shadow(0 0 3px $yellow1);
+              background: url(../../../../../public/assets/img/StarCitizenEncyclopedia/encyclopediaNavBarLogos/loreNavBarLogoActive.png)
+                center/cover;
+            }
+          }
+
+          i {
+            width: auto;
+            font-size: 1.6rem;
+          }
+
+          .encyclopedia-nav-bar-button-title {
+            padding: 2px 0 0 0;
+            text-transform: uppercase;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+          }
+        }
+      }
+
+      .encyclopedia-nav-bar-bottom-container {
+        @include flex(row, wrap, flex-start, center);
+        width: 100%;
+        height: fit-content;
+        color: $grey1;
+
+        .encyclopedia-nav-bar-button {
+          @include flex(row, wrap, flex-start, center);
+          box-sizing: border-box;
+          color: $grey1;
+          width: auto;
+          height: 70px;
+          padding: 10px;
+
+          .encyclopedia-nav-bar-icon {
+            height: 100%;
+            width: auto;
+            z-index: 26;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .encyclopedia-nav-bar-button-title {
+            padding: 2px 0 0 0;
+            text-transform: uppercase;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+  }
+}

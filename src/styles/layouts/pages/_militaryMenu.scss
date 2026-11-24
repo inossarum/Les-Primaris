@@ -1,0 +1,50 @@
+.military-menu-body {
+  margin: 70px 0 0 0;
+  padding: 70px 0 0 0;
+  overflow-y: hidden;
+  height: 92.5vh;
+  background: url(../../../../public/assets/img/departments/invictus-fleet.webp)
+    center/cover;
+
+  .military-menu-container {
+    @include flex(row, "", space-around, center);
+    width: 95%;
+    margin: 0 auto;
+
+    .container {
+      margin: 10px;
+      // width: 500px;
+      @include flex(column, "", center, center);
+
+      .container-title {
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        padding: 10px;
+        background: linear-gradient(
+          90deg,
+          $translucent 0%,
+          $darkShadow 50%,
+          $translucent 100%
+        );
+        text-align: center;
+      }
+
+      img {
+        border-radius: 10px;
+        width: 100%;
+        max-height: 858px;
+        border-top: 1px solid $grey5;
+        border-right: 1px solid $grey7;
+        border-left: 1px solid $grey7;
+        border-bottom: 1px solid $black3;
+        box-shadow: 0 3px 5px 2px $shadow;
+        transition: 0.1s;
+
+        &:hover {
+          transform: translateY(10px);
+        }
+      }
+    }
+  }
+}

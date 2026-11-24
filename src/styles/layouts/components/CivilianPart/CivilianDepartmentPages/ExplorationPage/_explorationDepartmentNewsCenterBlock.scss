@@ -1,0 +1,5 @@
+.exploration-department-news-center-block {
+  @include flex(column, "", center, center);
+  width: 100vw;
+  background: $darkShadow;
+}

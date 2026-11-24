@@ -1,0 +1,168 @@
+.ship-informations-form-body {
+  @include flex(column, wrap, center, center);
+  padding: 20px 0;
+  width: 100%;
+  backdrop-filter: blur(2px);
+
+  h3 {
+    padding: 5px 0 3px;
+    font-size: 1.2rem;
+    color: $blue5;
+    text-shadow: 0 0 5px $blue2;
+  }
+
+  h4 {
+    width: 100%;
+    margin: 10px 0;
+    padding: 5px 0 3px;
+    font-size: 1.2rem;
+    color: $yellow3;
+    text-shadow: 0 0 5px $yellow1;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
+  select {
+    padding: 5px 5px 3px;
+    margin-top: 5px;
+    font-size: 1.1rem;
+    width: fit-content;
+    outline: none;
+    border-top: 1px solid $grey4;
+    border-left: 1px solid $grey6;
+    border-right: 1px solid $grey6;
+    border-bottom: 1px solid $black4;
+    border-radius: 3px;
+  }
+
+  .ship-informations-form-ship-employment {
+    @include flex(row, wrap, space-around, center);
+    width: 100%;
+
+    .ship-informations-form-ship-employment-sub-container {
+      @include flex(column, wrap, center, center);
+      padding: 5px;
+
+      h4 {
+        width: 100%;
+        margin: 0;
+        padding: 5px 0 3px;
+        font-size: 1.2rem;
+        color: $yellow3;
+        text-shadow: 0 0 5px $yellow1;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      select {
+        padding: 5px 5px 3px;
+        margin-top: 5px;
+        font-size: 1.1rem;
+        width: fit-content;
+        outline: none;
+        border-top: 1px solid $grey4;
+        border-left: 1px solid $grey6;
+        border-right: 1px solid $grey6;
+        border-bottom: 1px solid $black4;
+        border-radius: 3px;
+      }
+
+      input {
+        padding: 5px 5px 3px;
+        margin-top: 5px;
+        width: 100%;
+        outline: none;
+        font-size: 1.1rem;
+
+        ::placeholder {
+          font-size: 1.1rem;
+          color: $grey4;
+        }
+      }
+
+      .error-message {
+        background: linear-gradient(
+          90deg,
+          $translucent 0%,
+          $darkShadow 50%,
+          $translucent 100%
+        );
+        color: $red5;
+        text-shadow: 0 0 5px $red3;
+      }
+    }
+  }
+
+  p {
+    text-align: justify;
+    padding: 0 20px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    line-height: 30px;
+    background: linear-gradient(
+      90deg,
+      $translucent 0%,
+      $darkShadow 50%,
+      $translucent 100%
+    );
+  }
+
+  input {
+    padding: 5px 5px 3px;
+    margin-top: 5px;
+    width: 100%;
+    outline: none;
+    font-size: 1.1rem;
+
+    ::placeholder {
+      font-size: 1.1rem;
+      color: $grey4;
+    }
+  }
+
+  .error-message {
+    background: linear-gradient(
+      90deg,
+      $translucent 0%,
+      $darkShadow 50%,
+      $translucent 100%
+    );
+    color: $red5;
+    text-shadow: 0 0 5px $red3;
+  }
+
+  #ship-informations-form-submit-button {
+    height: 30px;
+    padding: 5px 10px;
+    margin: 20px 0;
+    border-top: 1px solid $grey3;
+    border-right: 1px solid $grey5;
+    border-left: 1px solid $grey5;
+    border-bottom: 1px solid $grey7;
+    box-shadow: 0 0 5px 1px $darkShadow;
+    border-radius: 3px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: 0.1s;
+    color: $white1;
+    width: fit-content;
+
+    &:hover {
+      cursor: pointer;
+      background: $yellow3;
+      box-shadow: 0 0 5px 1px $yellow1;
+      border: 1px solid $yellow1;
+      color: $black1;
+    }
+
+    &:focus {
+      background: $green5;
+      box-shadow: 0 0 5px 1px $green2;
+      border: 1px solid $green2;
+      color: $black1;
+    }
+  }
+}

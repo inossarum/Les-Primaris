@@ -1,0 +1,33 @@
+.exploration-department-location-displayer-body {
+  @include flex(column, "", top, center);
+  height: fit-content;
+  padding: 0 100px 50px;
+  width: 100%;
+
+  .exploration-department-location-displayer-title {
+    margin: 20px auto;
+    padding: 5px;
+    width: 20%;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $blue5;
+    background: linear-gradient(
+      90deg,
+      $translucent 0%,
+      $shadow 25%,
+      $darkShadow 50%,
+      $shadow 75%,
+      $translucent 100%
+    );
+    text-align: center;
+  }
+
+  .exploration-department-location-displayer-main-container {
+    background: $darkShadow;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+  }
+}

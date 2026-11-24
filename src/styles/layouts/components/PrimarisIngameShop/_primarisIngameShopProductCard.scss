@@ -1,0 +1,274 @@
+.primaris-ingame-shop-product-card-body {
+  position: relative;
+  width: 100%;
+  margin: 10px;
+  height: fit-content;
+  @include flex(column, "", flex-start, center);
+  padding: 10px;
+  @include borders($black5, $grey7, $black1);
+  border-radius: 10px;
+  background: $black2;
+  box-shadow: 0 0 5px $darkShadow;
+  font-size: 1.3rem;
+  z-index: 20;
+  transition: 0.1s ease;
+
+  &:hover {
+    border: 1px solid $green5;
+    box-shadow: 0 0px 5px 1px $green2;
+  }
+
+  .primaris-ingame-shop-product-card-header {
+    @include flex(row, "", space-between, center);
+    width: 81.5%;
+    padding: 10px 0 20px 0;
+    letter-spacing: 1px;
+  }
+
+  .primaris-ingame-shop-product-card-main-container {
+    margin: 0 auto;
+    @include flex(row, wrap, center, center);
+
+    .primaris-ingame-shop-product-card-sub-container-name {
+      @include flex(column, "", center, center);
+      @include borders($black1, $grey7, $black5);
+      width: 40%;
+      margin: 5px 100px;
+      padding: 10px;
+      border-radius: 3px;
+      background: $black3;
+      box-shadow: inset 0 0 5px $darkShadow;
+      letter-spacing: 1px;
+
+      span {
+        &:first-child {
+          margin: 0 0 10px;
+        }
+      }
+    }
+
+    .primaris-ingame-shop-product-card-sub-container {
+      @include flex(column, "", flex-start, flex-start);
+      @include borders($black1, $grey7, $black5);
+      width: 40%;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 3px;
+      background: $black3;
+      box-shadow: inset 0 0 5px $darkShadow;
+      letter-spacing: 1px;
+      span {
+        &:first-child {
+          margin: 0 0 10px;
+        }
+      }
+    }
+    .primaris-ingame-shop-product-card-description-container {
+      @include flex(column, "", flex-start, flex-start);
+      @include borders($black1, $grey7, $black5);
+      width: 81%;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 3px;
+      background: $black3;
+      box-shadow: inset 0 0 5px $darkShadow;
+      letter-spacing: 1px;
+      text-align: justify;
+
+      span {
+        &:first-child {
+          margin: 0 0 10px;
+        }
+      }
+    }
+
+    .primaris-ingame-shop-product-card-sub-container-separator {
+      display: block;
+      width: 81%;
+      height: 1px;
+      background: $grey4;
+      margin: 9px 0;
+      span {
+        &:first-child {
+          margin: 0 0 10px;
+        }
+      }
+    }
+
+    .primaris-ingame-shop-product-card-messages-container {
+      @include flex(column, "", center, flex-start);
+      margin: 10px 0 0;
+      width: 81.5%;
+      box-sizing: border-box;
+    }
+
+    .primaris-ingame-shop-product-card-main-button-container {
+      @include flex(column, "", center, center);
+      margin: 10px 0 0;
+      width: 81.5%;
+      box-sizing: border-box;
+
+      textarea {
+        box-sizing: border-box;
+        width: 100%;
+        @include borders($black1, $grey7, $black5);
+        background: $black4;
+        outline: none;
+        font-size: 1.3rem;
+        padding: 5px;
+        margin: 0 0 5px 0;
+        letter-spacing: 1px;
+        resize: none;
+        border-radius: 5px;
+
+        &:focus {
+          background: $black5;
+          border-bottom: 1px solid $green3;
+        }
+      }
+
+      .primaris-ingame-shop-new-product-form-button-green {
+        @include primaris-button(
+          1px,
+          $black2,
+          $grey7,
+          $black5,
+          $darkShadow,
+          $black3,
+          $white1,
+          $green2,
+          $green5,
+          $green2,
+          $black1,
+          $green2,
+          $green5,
+          $green2,
+          $black1
+        );
+      }
+      .primaris-ingame-shop-new-product-form-button-blue {
+        @include primaris-button(
+          1px,
+          $black2,
+          $grey7,
+          $black5,
+          $darkShadow,
+          $black3,
+          $white1,
+          $blue2,
+          $blue5,
+          $blue2,
+          $black1,
+          $blue2,
+          $blue5,
+          $blue2,
+          $black1
+        );
+      }
+      .primaris-ingame-shop-new-product-form-button-red {
+        @include primaris-button(
+          1px,
+          $black2,
+          $grey7,
+          $black5,
+          $darkShadow,
+          $black3,
+          $white1,
+          $red2,
+          $red5,
+          $red2,
+          $black1,
+          $red2,
+          $red5,
+          $red2,
+          $black1
+        );
+      }
+    }
+  }
+}
+
+.primaris-ingame-shop-product-card-line {
+  width: 100%;
+  @include flex(row, "", flex-start, center);
+
+  .primaris-ingame-shop-new-product-form-button-red {
+    height: 100%;
+    @include flex(row, "", center, center);
+    @include primaris-button(
+      1px,
+      $black2,
+      $grey7,
+      $black5,
+      $darkShadow,
+      $black3,
+      $white1,
+      $red2,
+      $red5,
+      $red2,
+      $black1,
+      $red2,
+      $red5,
+      $red2,
+      $black1
+    );
+  }
+
+  .primaris-ingame-shop-product-card-body-reduced {
+    transition: 0.1s ease;
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+    height: 50px;
+    @include grid(18% 15% 20% 15% 10% 15% 7%, 100%, start, center);
+
+    @include borders($black5, $grey7, $black1);
+    border-radius: 10px;
+    background: $black2;
+    box-shadow: 0 0 5px $darkShadow;
+    font-size: 1.1rem;
+    z-index: 20;
+
+    .primaris-ingame-shop-product-card-sub-container {
+      @include flex(row, "", flex-start, center);
+      width: 100%;
+      height: 80%;
+      padding: 0 0px 0 10px;
+      letter-spacing: 1px;
+      border-right: 1px solid $green5;
+
+      span {
+        margin: 5px 0 0 0;
+
+        &:first-child {
+          margin: 5px 10px 0 0;
+        }
+      }
+
+      &:last-child {
+        @include flex(row, "", space-between, center);
+        border: none;
+
+        span {
+          margin: 0;
+        }
+      }
+
+      .new-event {
+        color: $green5;
+        text-align: center;
+        animation: titleWaveGreen 2s infinite;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 0 5px 0 0;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $green5;
+      box-shadow: 0 0 5px 1px $green2;
+    }
+  }
+}

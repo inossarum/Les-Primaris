@@ -1,0 +1,58 @@
+.encyclopedia-celestial-objects-mini-card-body {
+  margin: 0px 0 0px 10px;
+  animation: opacity 2s forwards;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  border-top: 1px solid $grey7;
+  border-right: 1px solid $grey5;
+  border-left: 1px solid $grey5;
+  border-bottom: 1px solid $grey3;
+
+  .encyclopedia-celestial-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .celestial-object-name {
+      position: absolute;
+      margin: 0;
+      top: 10px;
+      left: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .encyclopedia-celestial-card-image {
+      border-radius: 6px;
+      display: block;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+
+      .encyclopedia-moons-image-wrapper {
+        @include flex(row, "", flex-end, flex-end);
+
+        position: absolute;
+        width: fit-content;
+        height: 100px;
+        z-index: 15;
+        bottom: 10px;
+        right: 5px;
+
+        .encyclopedia-moons-card-image {
+          margin: 0 5px;
+          display: block;
+          width: 100px;
+          height: 100%;
+          box-sizing: border-box;
+          border-top: 1px solid $grey7;
+          border-right: 1px solid $grey5;
+          border-left: 1px solid $grey5;
+          border-bottom: 1px solid $grey3;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}

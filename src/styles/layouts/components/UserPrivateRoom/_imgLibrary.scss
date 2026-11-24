@@ -1,0 +1,40 @@
+.img-library-container {
+  background: $black2;
+  padding: 10px 0 0 0;
+  border-bottom: 1px solid $yellow1;
+
+  .gallery-title {
+    width: fit-content;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 10px auto 10px;
+    padding: 10px;
+    background: $black3;
+    border-radius: 5px;
+    border-top: 1px solid $grey4;
+    border-left: 1px solid $grey6;
+    border-right: 1px solid $grey6;
+    border-bottom: 1px solid $black1;
+    box-shadow: 0 0 5px 1px $shadow;
+  }
+
+  .banner-list-container {
+    margin: 0 auto;
+    padding: 10px 0;
+    box-sizing: border-box;
+    width: 1550px;
+    @include flex(column, wrap, center, center);
+
+    // bannerCard.scss
+  }
+
+  .profile-list-container {
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 1550px;
+    @include flex(row, wrap, center, center);
+
+    // profileCard.scss
+  }
+}

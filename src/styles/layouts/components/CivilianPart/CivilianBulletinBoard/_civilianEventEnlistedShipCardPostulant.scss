@@ -1,0 +1,20 @@
+.civilian-event-enlisted-ship-card-postulant-body {
+  @include flex(row, "", space-between, center);
+  width: 100%;
+  padding: 5px 0;
+  border-bottom: 1px solid $grey6;
+
+  .civilian-event-enlisted-ship-card-postulant-pseudo {
+    margin: 0 10px 0 0;
+  }
+
+  .civilian-event-enlisted-ship-card-postulant-job {
+    margin: 0 10px 0 0;
+  }
+
+  .civilian-event-enlisted-ship-card-postulant-button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

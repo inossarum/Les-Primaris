@@ -1,0 +1,35 @@
+.social-network-body {
+  background: url(../../../../public/assets/img/departments/socialNetworkBackground.webp)
+    center/cover fixed;
+  min-height: 94.5vh;
+
+  .social-network-title-container {
+    @include flex(column, "", center, center);
+    margin: 70px 0 0 0;
+    height: 70px;
+    background: radial-gradient(circle, $red2 3%, #000000 100%);
+    box-shadow: 0 0 10px $black1;
+    border-bottom: 1px solid $red1;
+
+    h2 {
+      @media screen and (max-width: 750px) {
+        font-size: 1.2rem;
+      }
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $yellow1, $white1, $yellow1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $yellow1);
+      letter-spacing: 2px;
+      animation: titleWaveYellow 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+
+  .chat-container {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+}

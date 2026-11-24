@@ -1,0 +1,118 @@
+.military-event-job-selection-panel-body {
+  top: 0;
+  left: 0;
+  @include flex(row, "", center, center);
+  position: fixed;
+  z-index: 25;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(2px);
+
+  .user-search-panel-drop-filter {
+    background: $black2;
+    border-top: 1px solid $grey5;
+    border-right: 1px solid $black3;
+    border-left: 1px solid $black3;
+    border-bottom: 1px solid $black1;
+    border-radius: 5px;
+    @include flex(column, "", "", center);
+    width: 25%;
+    max-height: 700px;
+    overflow-y: auto;
+    box-shadow: 0 3px 5px 1px $darkShadow;
+
+    .user-search-panel-drop-filter-title {
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 3px 0 10px;
+      border: none;
+      border-bottom: 1px solid $black5;
+      border-radius: 0;
+    }
+
+    .user-search-panel-drop-filter-sub-container {
+      padding: 0 0 0 10px;
+      width: 100%;
+      box-sizing: border-box;
+      @include flex(row, "", flex-start, center);
+
+      .label {
+        width: 50%;
+        text-align: left;
+      }
+    }
+
+    .crew-member-search-panel-job-selector {
+      @include flex(row, "", space-between, center);
+      box-sizing: border-box;
+      width: 100%;
+      overflow-y: auto;
+      margin: 10px auto;
+      border-top: 1px solid $grey7;
+      padding: 10px;
+
+      .user-search-panel-user-container {
+        width: 100%;
+      }
+
+      select {
+        width: 50%;
+        outline: none;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        padding: 5px 0 3px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .primaris-ingame-shop-new-product-form-button-green {
+      height: 100%;
+      @include flex(row, "", center, center);
+      @include primaris-button(
+        1px,
+        $black2,
+        $grey7,
+        $black5,
+        $darkShadow,
+        $black3,
+        $white1,
+        $green2,
+        $green5,
+        $green2,
+        $black1,
+        $green2,
+        $green5,
+        $green2,
+        $black1
+      );
+      margin: 0 7px 0 7px;
+    }
+    .primaris-ingame-shop-new-product-form-button-red {
+      height: 100%;
+      @include flex(row, "", center, center);
+      @include primaris-button(
+        1px,
+        $black2,
+        $grey7,
+        $black5,
+        $darkShadow,
+        $black3,
+        $white1,
+        $red2,
+        $red5,
+        $red2,
+        $black1,
+        $red2,
+        $red5,
+        $red2,
+        $black1
+      );
+      margin: 0 7px 10px 7px;
+    }
+  }
+}

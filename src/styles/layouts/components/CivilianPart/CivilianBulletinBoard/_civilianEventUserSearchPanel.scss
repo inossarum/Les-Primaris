@@ -1,0 +1,107 @@
+.civilian-event-user-search-panel-body {
+  display: block;
+  top: 0;
+  left: 0;
+  @include flex(row, "", center, center);
+  position: fixed;
+  z-index: 25;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(2px);
+
+  .civilian-event-user-search-panel-drop-filter {
+    background: $black2;
+    border-top: 1px solid $grey5;
+    border-right: 1px solid $black3;
+    border-left: 1px solid $black3;
+    border-bottom: 1px solid $black1;
+    border-radius: 5px;
+    @include flex(column, "", center, center);
+    width: 600px;
+    max-height: 700px;
+    overflow-y: auto;
+    box-shadow: 0 3px 5px 1px $darkShadow;
+
+    .user-search-panel-drop-filter-title {
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 3px 0 10px;
+      border: none;
+      border-bottom: 1px solid $black5;
+      border-radius: 0;
+    }
+
+    .user-search-panel-drop-filter-sub-container {
+      padding: 0 0 0 10px;
+      width: 100%;
+      box-sizing: border-box;
+      @include flex(row, "", flex-start, center);
+
+      .label {
+        width: 50%;
+        text-align: left;
+      }
+    }
+
+    .civilian-event-user-search-panel-user-list-container {
+      box-sizing: border-box;
+      width: 94%;
+      max-width: 600px;
+      overflow-y: auto;
+      margin: 10px auto;
+      border-top: 1px solid $grey7;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $grey3;
+      border-radius: 5px;
+      background: $black1;
+
+      .civilian-event-user-search-panel-user-container {
+        width: 100%;
+      }
+
+      &::-webkit-scrollbar {
+        background: $black1;
+        width: 5px;
+        border-radius: 0 4px 4px 0;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: $yellow1;
+        border-radius: 4px;
+      }
+    }
+
+    .civilian-event-user-search-panel-user-container-cancel-button {
+      border: none;
+      outline: none;
+      margin: 10px 0px 10px 0;
+      padding: 5px 7px;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      color: $yellow3;
+      text-align: center;
+      background: linear-gradient(
+        135deg,
+        $black1 0%,
+        $black2 50%,
+        $black3 100%
+      );
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $grey7;
+      box-shadow: 0 0 5px 1px $darkShadow;
+      transition: 0.1s;
+
+      &:hover {
+        cursor: pointer;
+        color: $black1;
+        background: $red5;
+        border: 1px solid $red3;
+        box-shadow: 0 0 5px 1px $red3;
+      }
+    }
+  }
+}

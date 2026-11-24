@@ -1,0 +1,5 @@
+.exploration-department-members-right-block-body {
+  @include flex(column, "", center, center);
+  width: 100vw;
+  background: $darkShadow;
+}

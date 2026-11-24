@@ -1,0 +1,263 @@
+.military-infos-card-body {
+  position: relative;
+  @include borders($grey6, $black5, $black1);
+  margin: 5px 0;
+  padding: 10px;
+  background: linear-gradient(45deg, $black1 0%, $black5 100%);
+  border-radius: 10px;
+  box-shadow: 0 0 5px 1px $darkShadow;
+  transition: 0.1s;
+  width: 70%;
+}
+
+.thin {
+  position: relative;
+  @include grid(30% 17.5% 17.5% 17.5% 17.5%, 100%, "", "");
+  height: 70px;
+  transition: 0.3s;
+
+  &:after {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 1px;
+    background: $blue5;
+    box-shadow: 0 0 5px 1px $blue2;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    border: 1px solid $blue3;
+    border-radius: 2px;
+  }
+
+  &:hover {
+    border: 1px solid $blue2;
+    cursor: pointer;
+    box-shadow: 0 0 5px 1px $blue2;
+  }
+
+  .military-infos-card-sub-category-image-wrapper {
+    height: 50px;
+    width: 50px;
+
+    img {
+      height: 50px;
+      width: 50px;
+      box-sizing: border-box;
+    }
+  }
+
+  .military-infos-card-sub-category {
+    @include flex(row, "", flex-start, center);
+    width: 100%;
+
+    span {
+      margin: 0 0 0 10px;
+      font-size: 1.2rem;
+    }
+    .rank {
+      width: 30px;
+      margin: 0 0 0 10px;
+    }
+    .name {
+      width: 100%;
+      margin: 0 0 0 10px;
+    }
+    .label {
+      width: 100px;
+      margin: 0 0 0 10px;
+    }
+
+    &:last-child {
+      margin: 0 0 0 0;
+    }
+  }
+}
+
+.self-card {
+  position: relative;
+  border: 1px solid $green3;
+  background: linear-gradient(45deg, $black1 0%, $grey7 100%);
+  box-shadow: 0 0 5px 1px $green3;
+}
+
+.thick {
+  height: 496px;
+  transition: 0.5s;
+  font-size: 1.2rem;
+
+  span {
+    display: block;
+  }
+
+  &:hover {
+    border: 1px solid $red3;
+    box-shadow: 0 0 5px 1px $red3;
+  }
+
+  .military-infos-card-body-button {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    margin: 0 10px;
+    padding: 5px 10px;
+    border: 1px solid $grey5;
+    border-radius: 5px;
+    background: $black1;
+    color: $white1;
+    box-shadow: 0 0 5px 1px $darkShadow;
+    @include borders($grey6, $black5, $black2);
+    z-index: 20;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    text-align: center;
+
+    &:hover {
+      background: $blue5;
+      color: $black1;
+      border: 1px solid $blue2;
+      box-shadow: 0 0 5px 1px $blue2;
+      cursor: pointer;
+    }
+    &:focus {
+      background: $red5;
+      color: $black1;
+      border: 1px solid $red2;
+      box-shadow: 0 0 5px 1px $red2;
+    }
+  }
+
+  .military-infos-card-header {
+    @include flex(column, "", center, center);
+    width: 100%;
+    margin: 0 0 20px 0;
+
+    .military-infos-card-user-infos {
+      @include flex(row, wrap, flex-start, center);
+
+      span {
+        margin: 0 2px;
+      }
+    }
+
+    .military-infos-card-sub-category-image-wrapper {
+      margin: 0 0 10px 0;
+      height: 70px;
+      width: 70px;
+
+      img {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+
+    h3 {
+      margin: 0;
+    }
+  }
+
+  .military-infos-card-general-informations-container {
+    @include flex(row, wrap, space-between, flex-start);
+    @include borders($black1, $black3, $black5);
+    border-radius: 10px;
+    width: 100%;
+    background: $grey5;
+    padding: 10px 10px 0;
+    box-shadow: inset 0 0 5px 1px $darkShadow;
+
+    .military-infos-card-general-informations-container-sub-category {
+      position: relative;
+      width: 49.6%;
+      @include flex(row, "", center, center);
+      @include borders($black5, $black3, $black1);
+      background: linear-gradient(45deg, $black5 0%, $black1 100%);
+      box-shadow: 0 0 5px 1px $darkShadow;
+      padding: 10px;
+      margin: 0 0 10px 0;
+      border-radius: 7px;
+
+      &:after {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 1px;
+        background: $blue5;
+        box-shadow: 0 0 5px 1px $blue2;
+        right: 10px;
+        border: 1px solid $blue3;
+        border-radius: 2px;
+      }
+
+      .missions,
+      .trainings,
+      .ranks {
+        @include flex(column, "", "", flex-start);
+        width: 100%;
+
+        div {
+          @include flex(row, wrap, flex-start, center);
+          width: 100%;
+          margin: 0 0 10px 0;
+
+          .label {
+            width: 220px;
+          }
+
+          &:last-child {
+            margin: 0 0 0 0;
+          }
+        }
+      }
+
+      .military-infos-card-sub-category-button-container {
+        @include flex(row, "", flex-start, center);
+        width: fit-content;
+        max-width: 250px;
+
+        .military-infos-card-sub-category-button {
+          margin: 0 10px;
+          padding: 10px 20px;
+          border: 1px solid $grey5;
+          border-radius: 5px;
+          background: $black1;
+          color: $white1;
+          box-shadow: 0 0 5px 1px $darkShadow;
+          @include borders($grey6, $black5, $black2);
+        }
+
+        .plus {
+          &:hover {
+            background: $blue5;
+            color: $black1;
+            border: 1px solid $blue2;
+            box-shadow: 0 0 5px 1px $blue2;
+            cursor: pointer;
+          }
+          &:focus {
+            background: $green5;
+            color: $black1;
+            border: 1px solid $green2;
+            box-shadow: 0 0 5px 1px $green2;
+          }
+        }
+        .minus {
+          &:hover {
+            background: $blue5;
+            color: $black1;
+            border: 1px solid $blue2;
+            box-shadow: 0 0 5px 1px $blue2;
+            cursor: pointer;
+          }
+          &:focus {
+            background: $red5;
+            color: $black1;
+            border: 1px solid $red2;
+            box-shadow: 0 0 5px 1px $red2;
+          }
+        }
+      }
+    }
+  }
+}

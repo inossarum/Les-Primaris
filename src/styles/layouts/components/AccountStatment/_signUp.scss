@@ -1,0 +1,193 @@
+.login-container {
+  border: 20px solid $translucent;
+  width: 95%;
+
+  h2 {
+    width: 100%;
+  }
+
+  form {
+    position: relative;
+    width: 100%;
+    height: 300px;
+
+    .mail {
+      @include flex(column, "", center, flex-start);
+      margin: 10px auto 30px;
+      letter-spacing: 2px;
+      font-size: 1.3rem;
+
+      label {
+        margin: 0 0 10px;
+      }
+
+      .input-wrapper {
+        position: relative;
+        width: 100%;
+
+        input {
+          box-sizing: border-box;
+          border-radius: 3px 3px 0 0;
+          padding: 0 5px;
+          height: 40px;
+          width: 100%;
+          max-width: 400px;
+          outline: none;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          border: none;
+          border-bottom: 1px solid $grey4;
+          background: $black3;
+          transition: 0.2s;
+          color: $white2;
+
+          &:focus {
+            border-bottom: 1px solid $yellow1;
+            background: $black4;
+          }
+        }
+      }
+    }
+
+    .pseudo {
+      @include flex(column, "", center, flex-start);
+      margin: 10px auto 30px;
+      letter-spacing: 2px;
+      font-size: 1.3rem;
+
+      label {
+        margin: 0 0 10px;
+      }
+
+      .input-wrapper {
+        position: relative;
+        width: 100%;
+
+        input {
+          box-sizing: border-box;
+          border-radius: 3px 3px 0 0;
+          padding: 0 5px;
+          height: 40px;
+          width: 100%;
+          max-width: 400px;
+          outline: none;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          border: none;
+          border-bottom: 1px solid $grey4;
+          background: $black3;
+          transition: 0.2s;
+          color: $white2;
+
+          &:focus {
+            border-bottom: 1px solid $yellow1;
+            background: $black4;
+          }
+        }
+      }
+    }
+
+    .password {
+      @include flex(column, "", center, flex-start);
+      margin: 10px 0;
+      letter-spacing: 2px;
+      font-size: 1.3rem;
+
+      label {
+        margin: 0 0 10px;
+      }
+
+      .password-input {
+        position: relative;
+        width: 100%;
+
+        input {
+          box-sizing: border-box;
+          border-radius: 3px 3px 0 0;
+          padding: 0 5px;
+          height: 40px;
+          width: 100%;
+          max-width: 400px;
+          outline: none;
+          font-size: 1.3rem;
+          letter-spacing: 1px;
+          border: none;
+          border-bottom: 1px solid $grey4;
+          background: $black3;
+          transition: 0.2s;
+          color: $white2;
+
+          &:focus {
+            border-bottom: 1px solid $yellow1;
+            background: $black4;
+          }
+        }
+
+        .button-password-reveal {
+          position: absolute;
+          right: 10px;
+          top: 9px;
+          border: none;
+          background: none;
+          color: $white2;
+          font-size: 1rem;
+          transition: 0.2s;
+
+          &:hover {
+            cursor: pointer;
+            color: $yellow1;
+          }
+        }
+      }
+    }
+
+    .submit-btn {
+      @include flex(column, "", center, flex-end);
+      width: 100%;
+      font-size: 1.2rem;
+      transform: translate(0, 25px);
+
+      button {
+        position: relative;
+        width: 120px;
+        height: 50px;
+        border-radius: 5px;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background: $black4;
+        color: $white1;
+        font-family: $agFBB;
+        border: none;
+        outline: none;
+        fill: $black3;
+        transition: 0.2s;
+        box-shadow: 0 0 10px $shadow;
+
+        &:hover {
+          cursor: pointer;
+          background: $yellow1;
+          color: $black2;
+        }
+
+        // .clipped-corner {
+        //   position: absolute;
+        //   width: 26px;
+        //   height: 26px;
+        // }
+
+        // .top-left {
+        //   top: 0;
+        //   left: 0;
+        // }
+      }
+
+      span {
+        margin: 20px auto;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        color: $red4;
+      }
+    }
+  }
+}

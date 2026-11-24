@@ -1,0 +1,32 @@
+.decoration-circles-1-container {
+  width: 150px;
+  @include flex(row, "", space-evenly, center);
+
+  .decoration-circles-1-span1 {
+    display: block;
+    border-radius: 50%;
+    border: 1px solid $blue3;
+    background: $blue4;
+    box-shadow: 0 0 10px 2px $blue2;
+    height: 10px;
+    width: 10px;
+  }
+  .decoration-circles-1-span2 {
+    display: block;
+    border-radius: 50%;
+    border: 1px solid $yellow1;
+    background: $yellow3;
+    box-shadow: 0 0 10px 2px $yellow1;
+    height: 10px;
+    width: 10px;
+  }
+  .decoration-circles-1-span3 {
+    display: block;
+    border-radius: 50%;
+    border: 1px solid $red2;
+    background: $red5;
+    box-shadow: 0 0 10px 2px $red3;
+    height: 10px;
+    width: 10px;
+  }
+}

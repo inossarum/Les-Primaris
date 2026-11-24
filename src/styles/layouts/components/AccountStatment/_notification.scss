@@ -1,0 +1,91 @@
+.notification-body {
+  @include flex(column, "", center, center);
+  height: fit-content;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  @include borders($grey5, $grey7, $black5);
+  background: $black2;
+
+  .notification-content {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    line-height: 25px;
+    text-align: justify;
+
+    .info-yellow {
+      color: $yellow3;
+      text-shadow: 0 0 5px $yellow1;
+    }
+    .info-yellow-uppercase {
+      color: $yellow3;
+      text-shadow: 0 0 5px $yellow1;
+      text-transform: uppercase;
+    }
+    .info-green {
+      color: $green5;
+      text-shadow: 0 0 5px $green3;
+    }
+    .info-green-uppercase {
+      color: $green5;
+      text-shadow: 0 0 5px $green3;
+      text-transform: uppercase;
+    }
+    .info-green {
+      color: $green5;
+      text-shadow: 0 0 5px $green3;
+    }
+    .info-green-uppercase {
+      color: $green5;
+      text-shadow: 0 0 5px $green3;
+      text-transform: uppercase;
+    }
+    .info-blue {
+      color: $blue5;
+      text-shadow: 0 0 5px $blue2;
+    }
+    .info-blue-uppercase {
+      color: $blue5;
+      text-shadow: 0 0 5px $blue2;
+      text-transform: uppercase;
+    }
+    .info-red {
+      color: $red5;
+      text-shadow: 0 0 5px $red3;
+    }
+
+    .info-red-uppercase {
+      color: $red5;
+      text-shadow: 0 0 5px $red3;
+      text-transform: uppercase;
+    }
+  }
+
+  .notification-nav-link {
+    margin: 10px;
+    padding: 5px 10px 4px;
+    border-radius: 3px;
+    @include borders($grey5, $grey7, $black5);
+    background: $grey7;
+    color: $white1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.1s;
+    font-size: 1.2rem;
+    box-shadow: 0 0 5px 1px $darkShadow;
+
+    &:hover {
+      background: $yellow3;
+      color: $black1;
+      @include borders($yellow1, $yellow1, $yellow1);
+      box-shadow: 0 0 5px 1px $yellow1;
+    }
+    &:focus {
+      background: $green4;
+      color: $black1;
+      @include borders($green3, $green3, $green3);
+      box-shadow: 0 0 5px 1px $green3;
+    }
+  }
+}

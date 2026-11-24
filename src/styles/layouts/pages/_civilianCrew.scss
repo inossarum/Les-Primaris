@@ -1,0 +1,57 @@
+.civilian-crew-body {
+  width: 100vw;
+  min-height: fit-content;
+  overflow-x: auto;
+
+  .civilian-crew-title-container {
+    @include flex(column, "", center, center);
+    position: fixed;
+    z-index: 2;
+    margin: 70px 0 0 0;
+    height: 70px;
+    width: 100vw;
+    background: radial-gradient(circle, $red2 3%, #000000 100%);
+    box-shadow: 0 0 10px $black1;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $yellow1, $white1, $yellow1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $yellow1);
+      letter-spacing: 10px;
+      animation: titleWaveYellow 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+
+  .civilian-crew-main-container {
+    @include flex(row, "", flex-start, flex-start);
+    width: 100vw;
+
+    .civilian-crew-sub-container {
+      min-width: 100vw;
+      height: 100vh;
+      padding-top: 140px;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+        background: none;
+      }
+      &::-webkit-scrollbar-thumb {
+        width: 10px;
+        background: $yellow1;
+        border-radius: 10px;
+      }
+
+      .civilian-crew-department-name {
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}

@@ -1,0 +1,176 @@
+.civilian-event-ship-selector-body {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $black2;
+  padding: 20px 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 1px $darkShadow;
+  @include borders($grey5, $black3, $black1);
+
+  .ship-search-form {
+    @include flex(column, "wrap", center, center);
+    label {
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      color: $yellow3;
+      text-shadow: 0 0 5px $yellow1;
+      text-transform: uppercase;
+      margin: 0 0 20px 0;
+      padding: 10px;
+    }
+
+    .ship-search-bar {
+      @include flex(row, "wrap", center, center);
+
+      input {
+        outline: none;
+        background: $grey7;
+        border-top: 1px solid $black4;
+        border-left: 1px solid $grey6;
+        border-right: 1px solid $grey6;
+        border-bottom: 1px solid $grey4;
+        box-shadow: inset 0 2px 5px 1px $darkShadow;
+        height: 30px;
+        padding: 5px 10px 4px;
+        border-radius: 3px;
+        color: $yellow1;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        width: 300px;
+        transition: 0.2s;
+
+        &::placeholder {
+          color: $white2;
+        }
+
+        &::selection {
+          color: $black1;
+          background: $yellow1;
+        }
+
+        &:focus {
+          border-bottom: 1px solid $yellow1;
+        }
+      }
+
+      button {
+        height: 30px;
+        padding: 5px 10px 4px;
+        margin: 0 0 0 10px;
+        background: $grey7;
+        border-top: 1px solid $grey6;
+        border-left: 1px solid $black2;
+        border-right: 1px solid $black2;
+        border-bottom: 1px solid $black1;
+        box-shadow: 0 2px 5px 1px $darkShadow;
+        border-radius: 3px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        transition: 0.1s;
+        color: $white1;
+
+        &:hover {
+          cursor: pointer;
+          background: $yellow3;
+          box-shadow: 0 0 5px 1px $yellow1;
+          border: 1px solid $yellow1;
+          color: $black1;
+        }
+
+        &:focus {
+          background: $green5;
+          box-shadow: 0 0 5px 1px $green2;
+          border: 1px solid $green2;
+          color: $black1;
+        }
+      }
+
+      .ship-search-cancel-button {
+        height: 30px;
+        padding: 5px 10px 4px;
+        margin: 0 0 0 10px;
+        background: $grey7;
+        border-top: 1px solid $grey6;
+        border-left: 1px solid $black2;
+        border-right: 1px solid $black2;
+        border-bottom: 1px solid $black1;
+        box-shadow: 0 2px 5px 0px $darkShadow;
+        border-radius: 3px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        transition: 0.1s;
+        color: $white1;
+
+        &:hover {
+          cursor: pointer;
+          background: $yellow3;
+          border: 1px solid $yellow1;
+          box-shadow: 0 0 5px 1px $yellow1;
+          color: $black1;
+        }
+
+        &:focus {
+          background: $red5;
+          box-shadow: 0 0 5px 1px $red2;
+          border: 1px solid $red2;
+          color: $black1;
+        }
+      }
+    }
+  }
+
+  .ship-list-form {
+    @include flex(row, wrap, center, flex-start);
+    height: fit-content;
+    max-height: 660px;
+    margin: 25px 30px 50px;
+    overflow-y: auto;
+    border-radius: 9px;
+    background: $grey7;
+    border-top: 1px solid $black4;
+    border-left: 1px solid $grey6;
+    border-right: 1px solid $grey6;
+    border-bottom: 1px solid $grey4;
+    box-shadow: inset 0 2px 5px 0px $darkShadow;
+
+    &::-webkit-scrollbar {
+      background: $black2;
+      width: 10px;
+      border-radius: 0 9px 9px 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $grey4;
+      border-radius: 0 9px 9px 0;
+      border-right: 1px solid $yellow3;
+    }
+
+    .ship-list-container {
+      @include flex(row, wrap, space-evenly, center);
+      width: 100%;
+      border-right: 1px solid $grey6;
+    }
+  }
+
+  .ship-list-form-empty {
+    @include flex(row, wrap, center, center);
+    width: fit-content;
+    height: 50px;
+    margin: 25px auto 50px;
+    border-radius: 7px;
+
+    .ship-list-container {
+      @include flex(row, wrap, space-evenly, center);
+      width: 100%;
+      background: $grey7;
+      border-radius: 7px;
+      padding: 5px 20px 4px;
+
+      h3 {
+        margin: 5px 0;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}

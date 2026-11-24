@@ -1,0 +1,151 @@
+.home-button-container {
+  position: relative;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  border-radius: 0 0 5px 5px;
+
+  &:hover {
+    .home-switch-shutter {
+      transform: translate(-50%, -100%);
+    }
+  }
+
+  .home-switch-shutter {
+    @include flex("", "", center, center);
+    position: absolute;
+    border-radius: 0 0 5px 5px;
+    height: 69px;
+    width: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.2s;
+    z-index: 0;
+
+    .home-icon {
+      position: relative;
+      width: 30px;
+      height: 30px;
+    }
+
+    .military {
+      color: $blue3;
+      border: none;
+      background: none;
+      animation: homeWaveBlue 2s infinite;
+    }
+
+    .civilian {
+      color: $yellow3;
+      border: none;
+      background: none;
+      animation: homeWaveYellow 2s infinite;
+    }
+
+    .diabloIV {
+      color: $red2;
+      border: none;
+      background: none;
+      animation: homeWaveDiabloIV 2s infinite;
+    }
+
+    .battlefield {
+      color: $blueExt1;
+      border: none;
+      background: none;
+      animation: homeWaveBF 2s infinite;
+    }
+
+    .administration {
+      color: $violet5;
+      border: none;
+      background: none;
+      animation: homeWaveAdmin 2s infinite;
+    }
+
+    .primarisIngameShop {
+      color: $green5;
+      border: none;
+      background: none;
+      animation: homeWaveIngameShop 2s infinite;
+    }
+  }
+
+  .military {
+    box-shadow: none;
+    border-bottom: none;
+    background: linear-gradient($black4, $black1);
+  }
+
+  .civilian {
+    box-shadow: none;
+    border-bottom: none;
+    background: linear-gradient($black4, $black1);
+  }
+
+  .battlefield {
+    box-shadow: none;
+    border-bottom: none;
+    background: linear-gradient($blueExt3, $blueExt5);
+  }
+
+  .administration {
+    box-shadow: none;
+    border-bottom: none;
+    background: linear-gradient($black4, $black1);
+  }
+
+  .diabloIV {
+    box-shadow: none;
+    border-bottom: none;
+    background: linear-gradient($black1, $red1);
+  }
+
+  .primarisIngameShop {
+    box-shadow: none;
+    border-bottom: none;
+    background: linear-gradient($black4, $black1);
+  }
+
+  .img-wrapper-container {
+    @include flex(row, "", center, center);
+    height: 100%;
+
+    .img-container {
+      @include flex(row, "", center, center);
+      margin: 0 auto;
+      height: 60px;
+      width: 40%;
+      border-radius: 5px;
+      transition: 0.1s;
+
+      img {
+        margin: 0 auto;
+        height: 80%;
+      }
+
+      .civilian-img {
+        &:hover {
+          filter: drop-shadow(0 0 5px $yellow1);
+        }
+      }
+      .military-img {
+        &:hover {
+          filter: drop-shadow(0 0 5px $white2);
+        }
+      }
+      .bf2042-img {
+        &:hover {
+          filter: drop-shadow(0 0 5px $blueExt4);
+        }
+      }
+      .diabloIV-img {
+        &:hover {
+          filter: drop-shadow(0 0 5px $red4);
+        }
+      }
+    }
+  }
+}

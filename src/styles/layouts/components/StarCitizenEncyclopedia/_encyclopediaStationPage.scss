@@ -1,0 +1,202 @@
+.encyclopedia-station-page-body {
+  margin: 70px 0 0 0;
+  width: 100%;
+  height: fit-content;
+  overflow-y: auto;
+  background: url(../../../../../public/assets/img/departments/invictus-fleet.webp)
+    center/cover fixed;
+
+  .encyclopedia-station-page-main-container {
+    .encyclopedia-station-page-image-wrapper {
+      border-radius: 0 0 20px 20px;
+      position: relative;
+      width: 100%;
+      height: 800px;
+      border-top: 1px solid $grey5;
+      border-bottom: 1px solid $grey5;
+
+      &:after {
+        position: absolute;
+        content: "";
+        height: 1px;
+        bottom: -1px;
+        width: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 1px;
+        background: $yellow3;
+        box-shadow: 0 0 5px 1px $yellow1;
+      }
+
+      .encyclopedia-station-page-image {
+        border-radius: 0 0 20px 20px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+
+        .encyclopedia-station-page-header {
+          position: relative;
+          @include flex(row, "", space-between, center);
+          width: 100%;
+
+          .encyclopedia-station-page-path {
+            padding: 10px 10px;
+            @include flex(row, "", flex-start, center);
+            z-index: 10;
+            width: 40%;
+
+            a {
+              padding: 2px 0 0 0;
+              margin: 0 0 0 10px;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              font-size: 1.4rem;
+              color: $white1;
+              font-weight: 600;
+
+              &:visited {
+                color: $white1;
+              }
+
+              &:hover {
+                color: $yellow1;
+              }
+            }
+
+            h2 {
+              padding: 2px 0 0 0;
+              margin: 0 0 0 10px;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              font-size: 1.4rem;
+              z-index: 3;
+            }
+          }
+
+          .close-btn-container {
+            position: relative;
+            height: 50px;
+            width: 50px;
+            transition: 0.2s;
+            padding: 5px;
+            z-index: 3;
+
+            &:hover {
+              cursor: pointer;
+              transform: translateX(-10px);
+            }
+
+            span {
+              position: absolute;
+              height: 3px;
+              width: 30px;
+              top: 50%;
+              left: 50%;
+              background: $red3;
+              display: block;
+              border-radius: 7px;
+              margin-top: -3px;
+            }
+
+            .first-bar {
+              transform: translateX(-50%) rotateZ(45deg);
+            }
+            .second-bar {
+              transform: translateX(-50%) rotateZ(-45deg);
+            }
+          }
+        }
+
+        .encyclopedia-station-page-description-container {
+          animation: opacitySlideLeft 1s forwards;
+          position: absolute;
+          bottom: 50px;
+          right: 50px;
+          width: 30%;
+          text-align: justify;
+          background: $darkShadow;
+          padding: 15px;
+          border-radius: 7px;
+          border: 1px solid $yellow3;
+          backdrop-filter: blur(4px);
+
+          .encyclopedia-station-page-description {
+            width: 100%;
+            height: fit-content;
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+          }
+        }
+      }
+    }
+    .encyclopedia-station-page-sub-container {
+      .encyclopedia-station-page-container-title {
+        position: relative;
+        @include flex(row, wrap, space-evenly, center);
+        width: 100%;
+        margin: 0;
+        font-size: 2rem;
+        letter-spacing: 3px;
+        text-align: center;
+
+        h2 {
+          position: relative;
+          width: fit-content;
+          padding: 15px 0 15px;
+          margin: 0;
+          font-size: 2rem;
+
+          &:after {
+            position: absolute;
+            content: "";
+            height: 1px;
+            bottom: -1px;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 1px;
+            background: $yellow3;
+            box-shadow: 0 0 5px 1px $yellow1;
+            z-index: 15;
+          }
+        }
+      }
+
+      .encyclopedia-station-page-sub-container-wrapper {
+        position: relative;
+        @include flex(row, wrap, space-evenly, center);
+        padding: 0 0 0 0;
+        margin: 0 auto 0;
+        width: 90%;
+        max-width: 1500px;
+        height: fit-content;
+
+        .encyclopedia-station-page-container {
+          padding: 10px 0;
+          border-radius: 20px;
+          position: relative;
+          border-top: 1px solid $grey5;
+          border-bottom: 1px solid $grey5;
+          @include flex(row, wrap, space-evenly, center);
+          width: 100%;
+          background: $black2;
+
+          &:after {
+            position: absolute;
+            content: "";
+            height: 1px;
+            bottom: -1px;
+            width: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 1px;
+            background: $yellow3;
+            box-shadow: 0 0 5px 1px $yellow1;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,994 @@
+// CETTE PAGE DE STYLE GERE LES ELEMENTS IMBRIQUES SUIVANTS:
+// pages/civilianCareers.js
+// Components/CivilianDepartments.js
+// Components/CivilianCareerCards.js
+
+// civilianCareers.js ----------------------------------------------------------------------------------------
+.civilian-careers {
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  background: url(../../../../public/assets/img/departments/civilian-careers-background.webp)
+    fixed center/cover;
+}
+
+.slide-btn-container {
+  position: fixed;
+  top: 48vh;
+  width: 100%;
+  z-index: 15;
+
+  .left-btn-container {
+    filter: drop-shadow(0 0 5px $shadow);
+
+    &:hover {
+      filter: drop-shadow(0 0 5px $yellow1);
+    }
+  }
+  .right-btn-container {
+    filter: drop-shadow(0 0 5px $shadow);
+
+    &:hover {
+      filter: drop-shadow(0 0 5px $yellow1);
+    }
+  }
+
+  button {
+    position: fixed;
+    background: none;
+    border: none;
+    height: 3.5vh;
+    width: 1.5vw;
+    font-size: 3rem;
+    transition: 0.1s;
+    background: $white1;
+
+    &:hover {
+      cursor: pointer;
+      color: $yellow1;
+    }
+  }
+  .left-btn {
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+
+    &:hover {
+      transform: translateX(-0.2vw) scale(1.2);
+    }
+  }
+  .right-btn {
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+
+    &:hover {
+      transform: translateX(0.2vw) scale(1.2);
+    }
+  }
+}
+
+.left-btn {
+  left: 1vw;
+}
+
+.right-btn {
+  right: 1vw;
+}
+
+.civilian-career-container {
+  // DEPARTMENTS CONTAINERS //
+
+  .departments-container {
+    @include grid(
+      100vw 100vw 100vw 100vw 100vw 100vw 100vw 100vw 100vw 100vw,
+      "",
+      center,
+      center
+    );
+
+    // CivilianDepartments.js ------------------------------------------------------------------------------
+
+    a {
+      color: $white1;
+      transition: 0.2s ease;
+      letter-spacing: 2px;
+    }
+
+    #container-centralAdministration {
+      @include flex("row", "", center, center);
+      background: url(../../../../public/assets/img/departments/central-administration-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100vw;
+    }
+    #container-primarisAcademy {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/primaris-academy-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+    #container-explorationDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/exploration-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+
+      a {
+        &:visited {
+          color: $white1;
+        }
+
+        &:hover {
+          color: $black1;
+        }
+      }
+
+      .primaris-ingame-shop-new-product-form-button-exploration {
+        height: 100%;
+        transition: 0.2s ease;
+        @include flex(row, "", center, center);
+        @include primaris-button(
+          1px,
+          $black2,
+          $grey7,
+          $black5,
+          $darkShadow,
+          $black3,
+          $black1,
+          $blueExplo,
+          $blue4,
+          $blueExplo,
+          $black1,
+          $blueExplo,
+          $blue4,
+          $blueExplo,
+          $black1
+        );
+
+        margin: 50px 7px 0 7px;
+      }
+    }
+    #container-touringDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/touring-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+    #container-tradingDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/trading-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+    #container-industryDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/industry-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+
+    #container-sciencesDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/sciences-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+    #container-medicineDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/medicine-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+    #container-cultureDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/culture-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+    #container-multiDepartment {
+      @include flex("row", "", "", "");
+      background: url(../../../../public/assets/img/departments/culture-department-background.webp)
+        fixed center/cover;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .departments {
+      position: relative;
+      font-size: 1rem;
+      height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+      @include grid(auto, "", center, center);
+
+      .img-container {
+        position: relative;
+        @include flex(column, "", center, center);
+
+        .logo-centralAdministration {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveViolet, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-primarisAcademy {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveYellow, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-explorationDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveBlueExplo, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-touringDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveYellow, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-tradingDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveGreen, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-industryDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveOrange, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-sciencesDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveWhite, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-medicineDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveRedMed, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-cultureDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(wavePink, 2s);
+            cursor: pointer;
+          }
+        }
+        .logo-multiDepartment {
+          @include departmentLogos($black1);
+
+          &:hover {
+            @include animation(waveYellow, 2s);
+            cursor: pointer;
+          }
+        }
+
+        .not-active {
+          width: 15vw;
+          max-width: 350px;
+          border-radius: 50%;
+        }
+        .active {
+          width: 15vw;
+          max-width: 350px;
+          border-radius: 50%;
+          transform: translateX(-25vw);
+        }
+      }
+
+      .reduced {
+        height: 4vh;
+        transition: 0.5s;
+        animation: waveRed 0.6s 0s forwards;
+        border: 2px solid $translucent;
+        @include flex(column, "", center, center);
+        cursor: pointer;
+      }
+
+      .deployed {
+        height: 45vh;
+        transition: 0.7s;
+        animation: waveBlue 1s 0s infinite;
+      }
+
+      .visible {
+        animation: opacity 0.7s forwards linear;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .career-card-container {
+        transform: translate(-25vw);
+        width: 10vw;
+        height: 10vw;
+        background: $black2;
+        border-radius: 20px;
+
+        &::-webkit-scrollbar {
+          background: none;
+          height: 0.2vh;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background: $grey2;
+        }
+      }
+
+      .department-description-container {
+        @include flex("", "", center, center);
+        position: absolute;
+        left: 96%;
+        top: 25%;
+        width: 46vw;
+        height: 20vh;
+        background: $black2;
+        border-radius: 10px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+
+        .department-description-background {
+          @include flex(column, "", center, center);
+          background: $black2;
+          border-radius: 7px;
+          width: 100%;
+          height: 100%;
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          box-shadow: inset 0 0 10px 2px $shadow;
+
+          .department-title {
+            padding: 5px 10px;
+            border-top: 1px solid $grey4;
+            border-right: 1px solid $grey7;
+            border-left: 1px solid $grey7;
+            border-bottom: 1px solid $black3;
+            background: $black4;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 1.5rem;
+          }
+
+          .department-description-paragraphe {
+            margin: 10px;
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            text-align: justify;
+            line-height: 2.3vh;
+          }
+        }
+      }
+
+      .job-description-container {
+        @include flex("", "", center, center);
+        position: absolute;
+        left: 96%;
+        top: 65%;
+        width: 46vw;
+        height: 50vh;
+        background: $black2;
+        border-radius: 10px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        grid-row-gap: 5vh;
+
+        .centralAdministration {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          background: $black2;
+          border-radius: 7px;
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+        }
+
+        .primarisAcademy {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          background: $black2;
+          border-radius: 7px;
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+        }
+
+        .explorationDepartment {
+          @include grid(25% 25% 25% 25%, auto, center, center);
+          background: $black2;
+          grid-row-gap: 10px;
+          border-radius: 7px;
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          @include scrollY($blueExplo);
+        }
+        .touringDepartment {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          background: $black2;
+          border-radius: 7px;
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+        }
+
+        .tradingDepartment {
+          width: 100%;
+          height: 100%;
+          @include grid(25% 25% 25% 25%, "", center, center);
+          grid-row-gap: 1vh;
+
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          background: $black2;
+          border-radius: 7px;
+          box-shadow: inset 0 0 10px 2px $shadow;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          @include scrollY($green3);
+        }
+        .industryDepartment {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          grid-row-gap: 1vh;
+
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          background: $black2;
+          border-radius: 7px;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+          overflow-y: scroll;
+          overflow-x: hidden;
+
+          @include scrollY($orange3);
+        }
+        .sciencesDepartment {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          grid-row-gap: 1vh;
+
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          background: $black2;
+          border-radius: 7px;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+          overflow-y: scroll;
+          overflow-x: hidden;
+
+          @include scrollY($white1);
+        }
+        .medicineDepartment {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          grid-row-gap: 1vh;
+
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          background: $black2;
+          border-radius: 7px;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+          overflow-y: scroll;
+          overflow-x: hidden;
+
+          @include scrollY($red3);
+        }
+        .cultureDepartment {
+          @include grid(25% 25% 25% 25%, "", center, center);
+          grid-row-gap: 1vh;
+
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          background: $black2;
+          border-radius: 7px;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+          overflow-y: scroll;
+          overflow-x: hidden;
+
+          @include scrollY($pink3);
+        }
+        .multiDepartment {
+          @include grid(33% 34% 33%, "", center, center);
+          grid-row-gap: 1vh;
+
+          border-top: 1px solid $black3;
+          border-right: 1px solid $grey7;
+          border-left: 1px solid $grey7;
+          border-bottom: 1px solid $grey4;
+          background: $black2;
+          border-radius: 7px;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0 0 10px 2px $shadow;
+        }
+      }
+
+      @mixin border-department($color1, $color2) {
+        border: 1px solid $color1;
+        box-shadow: 0 0 10px 2px $color2;
+        padding: 10px;
+        background: linear-gradient(
+          135deg,
+          $black1 0%,
+          $black2 25%,
+          $black3 35%,
+          $black4 50%,
+          $black3 65%,
+          $black2 75%,
+          $black1 100%
+        );
+      }
+
+      .border-centralAdministration {
+        @include border-department($violet3, $violet2);
+      }
+      .border-primarisAcademy {
+        @include border-department($yellow3, $yellow1);
+      }
+      .border-explorationDepartment {
+        @include border-department($blueExplo, $blue2);
+      }
+      .border-touringDepartment {
+        @include border-department($yellow3, $yellow1);
+      }
+      .border-tradingDepartment {
+        @include border-department($green3, $green2);
+      }
+      .border-industryDepartment {
+        @include border-department($orange3, $orange2);
+      }
+      .border-sciencesDepartment {
+        @include border-department($white1, $white1);
+      }
+      .border-medicineDepartment {
+        @include border-department($red4, $red4);
+      }
+      .border-cultureDepartment {
+        @include border-department($pink3, $pink2);
+      }
+      .border-multiDepartment {
+        @include border-department($yellow3, $yellow1);
+      }
+
+      .fade-in {
+        opacity: 1;
+        transform: translate(-100%, -50%);
+      }
+      .fade-out {
+        opacity: 0;
+        transform: translate(0, -50%);
+      }
+
+      // CivilianCareerCards.js ------------------------------------------------------------------------------
+      .job-description-window {
+        .job-title-centralAdministration {
+          @include job-title($violet3, $violet1);
+        }
+        .job-title-primarisAcademy {
+          @include job-title($yellow3, $yellow1);
+        }
+        .job-title-explorationDepartment {
+          @include job-title($blueExplo, $blue2);
+        }
+        .job-title-touringDepartment {
+          @include job-title($yellow3, $yellow1);
+        }
+        .job-title-tradingDepartment {
+          @include job-title($green3, $green1);
+        }
+        .job-title-industryDepartment {
+          @include job-title($orange3, $orange1);
+        }
+        .job-title-sciencesDepartment {
+          @include job-title($white1, $white1);
+        }
+        .job-title-medicineDepartment {
+          @include job-title($red4, $red4);
+        }
+        .job-title-cultureDepartment {
+          @include job-title($pink3, $pink2);
+        }
+        .job-title-multiDepartment {
+          @include job-title($yellow3, $yellow1);
+        }
+
+        .deployed-military {
+          height: 50vh;
+          transition: 0.7s;
+          animation: waveGreen 1s infinite;
+        }
+
+        // Paragraphes de description des métiers
+        .job-description {
+          position: absolute;
+          text-align: justify;
+          width: 143%;
+          top: 31vh;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 1px solid $black1;
+          border-radius: 10px;
+          line-height: 2vh;
+          font-size: 1.1rem;
+          letter-spacing: 2px;
+          background: linear-gradient(
+            135deg,
+            $black1 0%,
+            $black2 5%,
+            $black3 50%,
+            $black2 95%,
+            $black1 100%
+          );
+
+          @include flex("", "", center, flex-start);
+
+          .job-description-paragraphe {
+            border: 1px solid $black2;
+            border-radius: 7px;
+            padding: 10px;
+            margin: 5px;
+            height: 22vh;
+            overflow-y: scroll;
+            background: $black3;
+
+            &::-webkit-scrollbar {
+              background: none;
+              width: 0.2vw;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 10px;
+              background: $grey2;
+            }
+          }
+        }
+      }
+
+      .job-logo-general-container {
+        border-radius: 10px;
+        margin: 10px 0;
+        padding: 10px;
+        border-top: 1px solid $grey4;
+        border-right: 1px solid $grey7;
+        border-left: 1px solid $grey7;
+        border-bottom: 1px solid $black3;
+        background: $black4;
+        @include flex(column, "", center, center);
+        text-align: justify;
+      }
+
+      .job-detail-container {
+        position: absolute;
+        box-sizing: border-box;
+        z-index: 19;
+        width: 100%;
+        height: 100%;
+        background: $black2;
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          $black1 0%,
+          $black2 25%,
+          $black3 35%,
+          $black4 50%,
+          $black3 65%,
+          $black2 75%,
+          $black1 100%
+        );
+
+        .job-detail-background {
+          position: absolute;
+          box-sizing: border-box;
+          border-radius: 10px;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 1px solid $black4;
+          box-shadow: inset 0 0 10px $shadow;
+          z-index: -1;
+        }
+
+        .come-back-btn-container {
+          @include flex(row, "", top, center);
+          position: fixed;
+          margin: 20px 0;
+          height: 4vh;
+          top: 0;
+          left: 2vw;
+          z-index: 25;
+          font-size: 2rem;
+          text-shadow: 0 0 5px $shadow;
+          color: $white1;
+          padding: 5px;
+          border-radius: 5px;
+          transition: 0.1s;
+          border: 1px solid $white1;
+          background: $darkShadow;
+          backdrop-filter: blur(2px);
+
+          &:hover {
+            cursor: pointer;
+            color: $yellow3;
+            border: 1px solid $yellow3;
+            box-shadow: 0 0 5px 1px $yellow1;
+          }
+
+          i {
+            display: block;
+            box-sizing: border-box;
+            font-size: 1rem;
+            padding: 5px;
+          }
+
+          h4 {
+            width: 100%;
+            text-align: left;
+            padding-top: 0.2vh;
+            margin: 0 0.5vw;
+            font-weight: 400;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+          }
+        }
+
+        img {
+          position: fixed;
+          top: 40px;
+          right: 40px;
+        }
+
+        h3 {
+          margin: 7.5vh 0 6vh 0;
+          padding: 1vh 10vw 1vh 2.1vw;
+          text-align: left;
+          text-transform: uppercase;
+          font-size: 1.9rem;
+          letter-spacing: 5px;
+          background: $darkShadow;
+        }
+
+        .category {
+          position: fixed;
+          text-align: left;
+          width: 100%;
+          margin: -6vh 0;
+          padding: 0 2.1vw 1vh;
+          font-size: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 5px;
+          background: $darkShadow;
+          z-index: -1;
+        }
+
+        p {
+          position: fixed;
+          box-sizing: border-box;
+          width: 100%;
+          margin: 2vh 0;
+          padding: 1vh 2.1vw;
+          font-size: 1.3rem;
+          letter-spacing: 3px;
+          text-align: justify;
+          line-height: 2.3vh;
+          background: $darkShadow;
+        }
+
+        .promotion {
+          position: fixed;
+          text-align: center;
+          box-sizing: border-box;
+          top: 88%;
+          width: 100%;
+          margin: 0;
+          padding: 1.5vh 0;
+          font-size: 1.2rem;
+          text-transform: uppercase;
+          letter-spacing: 5px;
+          background: $darkShadow;
+        }
+      }
+
+      .slide-in {
+        top: 0;
+        left: 0;
+      }
+      .slide-out {
+        top: 0;
+        left: -150vh;
+      }
+
+      // MIXIN
+      @mixin deployed-civilian($height, $animationColor, $time) {
+        height: $height;
+        transition: 0.7s;
+        animation: $animationColor $time infinite;
+        border-radius: 50%;
+      }
+      // => Applciation immédiate de la mixin
+      .deployed-civilian-centralAdministration {
+        @include deployed-civilian(15vh, waveViolet, 2s);
+      }
+      .deployed-civilian-primarisAcademy {
+        @include deployed-civilian(15vh, waveYellow, 2s);
+      }
+      .deployed-civilian-explorationDepartment {
+        @include deployed-civilian(15vh, waveBlueExplo, 2s);
+      }
+      .deployed-civilian-touringDepartment {
+        @include deployed-civilian(15vh, waveYellow, 2s);
+      }
+      .deployed-civilian-tradingDepartment {
+        @include deployed-civilian(15vh, waveGreen, 2s);
+      }
+      .deployed-civilian-industryDepartment {
+        @include deployed-civilian(15vh, waveOrange, 2s);
+      }
+      .deployed-civilian-sciencesDepartment {
+        @include deployed-civilian(15vh, waveWhite, 2s);
+      }
+      .deployed-civilian-medicineDepartment {
+        @include deployed-civilian(15vh, waveRedMed, 2s);
+      }
+      .deployed-civilian-cultureDepartment {
+        @include deployed-civilian(15vh, wavePink, 2s);
+      }
+      .deployed-civilian-multiDepartment {
+        @include deployed-civilian(15vh, waveYellow, 2s);
+      }
+
+      .reduced {
+        height: 15vh;
+        transition: 0.5s;
+        border-radius: 50%;
+        animation: waveRed 0.6s 0s forwards;
+        @include flex(column, "", center, center);
+        cursor: pointer;
+      }
+
+      // Fin des paragraphes
+
+      .close-wdw-btn {
+        position: absolute;
+        @include flex(column, "", center, center);
+        top: 15px;
+        right: 5px;
+        padding: 10px;
+        transform: translate(10px, -10px) rotateZ(45deg);
+        transition: 0.2s;
+
+        &:hover {
+          transform: translate(10px, -10px) rotateZ(135deg);
+          cursor: pointer;
+
+          span {
+            background: $yellow1;
+            animation: btnWaveRed 0.5s infinite;
+          }
+        }
+
+        span {
+          height: 2px;
+          width: 20px;
+          background: $white1;
+          transition: 0.2s;
+        }
+
+        .first-bar {
+          transform: translateY(2px) rotatez(90deg);
+        }
+      }
+
+      // CivilianCareerCards.js ENDING ------------------------------------------------------------------------
+
+      .no-active-position {
+        position: relative;
+        top: auto;
+        left: auto;
+      }
+
+      .active-position {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        z-index: 20;
+      }
+
+      .slide-out {
+        position: absolute;
+        transform: translateX(100px);
+      }
+
+      // CivilianDepartments.js ENDING --------------------------------------------------------------------------
+    }
+
+    .career-plan {
+      @include grid(100%, "", center, center);
+
+      p {
+        width: 95%;
+        margin: 0 auto;
+        color: $white2;
+        font-size: 1.5rem;
+        text-align: justify;
+        letter-spacing: 2px;
+        border: 1px solid $black3;
+        padding: 10px;
+        background: linear-gradient(
+          135deg,
+          $black1 0%,
+          $black2 15%,
+          $black3 50%,
+          $black2 85%,
+          $black1 100%
+        );
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+// CivilianCareers.js ENDING -----------------------------------------------------------------------------------

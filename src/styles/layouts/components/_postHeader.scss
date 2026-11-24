@@ -1,0 +1,109 @@
+.user-infos-container {
+  @include flex(row, "", space-between, center);
+  margin: 5px 0 5px 0;
+
+  .author-identity {
+    width: fit-content;
+    margin: 10px 20px 10px 20px;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    color: $yellow1;
+  }
+
+  .role-container {
+    @include flex("row", "wrap", center, center);
+    width: fit-content;
+    margin: 0;
+
+    .role-circle {
+      height: 7px;
+      width: 7px;
+      border-radius: 50%;
+
+      @media screen and (max-width: 750px) {
+        display: none;
+      }
+    }
+
+    .administrateur {
+      background: $red5;
+      border: 1px solid $red3;
+      box-shadow: 0 0 10px 3px $red4;
+    }
+
+    .primarque {
+      background: $red5;
+      border: 1px solid $red3;
+      box-shadow: 0 0 10px 3px $red4;
+    }
+
+    .executeur-militaire {
+      background: $green2;
+      border: 1px solid $green1;
+      box-shadow: 0 0 10px 3px $green2;
+    }
+
+    .executeur-civil {
+      background: $yellow3;
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 10px 3px $yellow1;
+    }
+
+    .membre {
+      background: $blue4;
+      border: 1px solid $blue3;
+      box-shadow: 0 0 10px 3px $blueExplo;
+    }
+
+    .invité {
+      background: $white1;
+      border: 1px solid $grey1;
+      box-shadow: 0 0 10px 3px $grey1;
+    }
+
+    .civil {
+      background: $blue4;
+      border: 1px solid $blue3;
+      box-shadow: 0 0 10px 3px $blueExplo;
+    }
+
+    .militaire {
+      background: $green3;
+      border: 1px solid $green1;
+      box-shadow: 0 0 10px 3px $green1;
+    }
+
+    .civil-militaire {
+      background: $orange2;
+      border: 1px solid $orange1;
+      box-shadow: 0 0 10px 3px $orange2;
+    }
+
+    .representant-exterieur {
+      background: $blueExt1;
+      border: 1px solid $blueExt2;
+      box-shadow: 0 0 10px 3px $blueExt2;
+    }
+
+    .user-role {
+      margin: 5px 20px 5px 10px;
+      letter-spacing: 3px;
+      font-size: 0.9rem;
+      text-transform: capitalize;
+
+      @media screen and (max-width: 750px) {
+        display: none;
+      }
+    }
+
+    img {
+      padding-top: 5px;
+      height: 25px;
+      width: 25px;
+
+      @media screen and (max-width: 750px) {
+        display: none;
+      }
+    }
+  }
+}

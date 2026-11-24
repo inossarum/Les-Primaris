@@ -1,0 +1,162 @@
+.comment-container {
+  width: 100%;
+
+  .comment-title {
+    margin: 10px 0 0 0;
+    padding: 5px 0px;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    color: $grey3;
+  }
+
+  .comment-redaction-container {
+    width: 100%;
+    padding: 0 0 30px 0;
+    position: relative;
+
+    .comment-textarea {
+      box-shadow: inset 0 0 5px 2px $shadow;
+      height: 55px;
+      resize: vertical;
+      border: none;
+      border-radius: 5px 5px 0 5px;
+      padding: 1%;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1.3rem;
+      background: $black5;
+      border-top: 1px solid $grey7;
+      border-left: 1px solid $grey5;
+      border-right: 1px solid $grey5;
+      border-bottom: 1px solid $grey4;
+      letter-spacing: 1px;
+      color: $white2;
+
+      &::-webkit-scrollbar {
+        background: $black4;
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $yellow1;
+        border-radius: 5px;
+      }
+
+      &::-webkit-scrollbar-button {
+        display: none;
+      }
+
+      &::selection {
+        background: $yellow1;
+        color: $black1;
+      }
+
+      &:focus {
+        border: none;
+        outline: none;
+        box-shadow: inset 0 0 5px 2px $shadow;
+        border-top: 1px solid $grey7;
+        border-left: 1px solid $grey5;
+        border-right: 1px solid $grey5;
+        border-bottom: 1px solid $yellow1;
+        background: $black3;
+        color: $white2;
+        letter-spacing: 1px;
+      }
+
+      &::placeholder {
+        color: $white2;
+      }
+    }
+
+    .comment-message {
+      box-shadow: inset 0 3px 5px 2px $shadow;
+      resize: none;
+      border: none;
+      border-radius: 10px;
+      margin: 10px 0;
+      transition: 0.2s;
+      font-size: 1.3rem;
+      background: $black5;
+      border-top: 1px solid $grey7;
+      border-left: 1px solid $grey5;
+      border-right: 1px solid $grey5;
+      border-bottom: 1px solid $grey4;
+      letter-spacing: 1px;
+      color: $white2;
+
+      &::selection {
+        background: $yellow1;
+        color: $black1;
+      }
+
+      &:focus {
+        border: none;
+        outline: none;
+        box-shadow: inset 0 3px 5px 2px $shadow;
+        border-top: 1px solid $grey7;
+        border-left: 1px solid $grey5;
+        border-right: 1px solid $grey5;
+        border-bottom: 1px solid $yellow1;
+        background: $black3;
+        color: $white2;
+        letter-spacing: 1px;
+      }
+    }
+
+    .input-container {
+      .error-displayer {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border-top: 1px solid $grey5;
+        border-right: 1px solid $grey6;
+        border-left: 1px solid $grey6;
+        border-bottom: 1px solid $black2;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.3rem;
+        color: $red5;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px $red4;
+      }
+
+      input {
+        position: absolute;
+        font-size: 1.1rem;
+        font-weight: $agFBB;
+        bottom: 3px;
+        right: 0px;
+        padding: 5px 10px 3px;
+        border-radius: 5px 0px 5px 5px;
+        border-top: 1px solid $grey6;
+        border-left: 1px solid $black3;
+        border-right: 1px solid $black3;
+        border-bottom: 1px solid $black2;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-align: center;
+        transition: 0.2s;
+        background: $black4;
+        color: $yellow1;
+
+        &:hover {
+          border: 1px solid $yellow1;
+          background: linear-gradient(
+            135deg,
+            $black1 0%,
+            $black2 5%,
+            $black3 50%,
+            $black2 95%,
+            $black1 100%
+          );
+          color: $white1;
+          box-shadow: 0 0 5px 2px $yellow1;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

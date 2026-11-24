@@ -1,0 +1,52 @@
+.encyclopedia-lore-body {
+  background: url(../../../../../../public/assets/img/departments/invictus-fleet.webp)
+    center/cover fixed;
+  height: 100vh;
+  position: relative;
+  overflow-y: auto;
+
+  .encyclopedia-lore-title-container {
+    @include flex(column, "", center, center);
+    top: 70px;
+    height: 70px;
+    width: 100%;
+    position: fixed;
+    background: radial-gradient(
+      circle,
+      $yellow1 15%,
+      $darkShadow 95%,
+      $translucent 100%
+    );
+    box-shadow: 0 0 10px $black1;
+    border-bottom: 1px solid $black2;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $grey5, $black1, $grey5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $yellow1);
+      letter-spacing: 10px;
+      animation: titleWaveYellow 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+
+  .encyclopedia-lore-main-container {
+    @include flex(row, "", center, flex-start);
+    position: absolute;
+    top: 0;
+    margin: 400px 5% 0;
+
+    padding: 0 50px 100px;
+    z-index: 10;
+
+    .encyclopedia-lore-main-container-time-line {
+      @include flex(row, "", flex-start, flex-start);
+      width: 100%;
+      height: fit-content;
+    }
+  }
+}

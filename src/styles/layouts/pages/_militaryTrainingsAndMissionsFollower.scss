@@ -1,0 +1,38 @@
+.military-trainings-and-missions-follower-body {
+  width: 100vw;
+  height: 100vh;
+  background: url(../../../../public/assets/img/departments/RSI_galaxy.webp)
+    center/cover fixed;
+  overflow-y: auto;
+
+  .military-crew-title-container {
+    @include flex(column, "", center, center);
+    margin: 70px 0 0 0;
+    height: 70px;
+    background: radial-gradient(circle, #00078a 3%, #000000 100%);
+    box-shadow: 0 0 10px $black1;
+    width: 100%;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $blue4, $white1, $blue4);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $blue1);
+      letter-spacing: 10px;
+      animation: titleWaveBlue 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+  .military-trainings-and-missions-follower-cards-container-wrapper {
+    width: 100%;
+
+    .military-trainings-and-missions-follower-cards-container {
+      @include flex(row, wrap, space-around, flex-start);
+      margin: 10px;
+      box-sizing: border-box;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+.encyclopedia-body {
+  @include flex(row, "", space-between, flex-start);
+  background: url(../../../../public/assets/img/departments/invictus-fleet.webp)
+    center/cover fixed;
+  padding: 70px 0;
+
+  .page-button-container {
+    @include flex(row, wrap, center, center);
+    position: fixed;
+    left: 50%;
+    top: 70px;
+    padding: 10px 0;
+    transform: translateX(-50%);
+    z-index: 15;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      $translucent 0%,
+      $shadow 40%,
+      $darkShadow 50%,
+      $shadow 60%,
+      $translucent 100%
+    );
+
+    .page-index {
+      margin: 0 5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .page-button {
+      @include flex(row, wrap, center, center);
+      margin: 0 5px;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      color: $white2;
+      background: $black4;
+      border-top: 2px solid $grey4;
+      border-right: 2px solid $grey6;
+      border-left: 2px solid $grey6;
+      border-bottom: 2px solid $black2;
+      transition: 0.1s;
+
+      &:hover {
+        color: $black4;
+        background: $white2;
+        cursor: pointer;
+      }
+      &:focus {
+        color: $black1;
+        background: $yellow1;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .encyclopedia-cards-container {
+    margin: 0 auto;
+    width: 90%;
+    padding: 70px 0 0 0;
+    @include flex(row, wrap, space-around, top);
+  }
+}

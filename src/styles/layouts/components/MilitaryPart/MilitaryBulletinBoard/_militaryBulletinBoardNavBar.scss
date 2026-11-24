@@ -1,0 +1,40 @@
+.military-bulletin-board-navBar {
+  @include flex(row, wrap, center, center);
+  background: $black1;
+
+  a {
+    margin: 10px;
+    z-index: 2;
+    @include flex(column, "", center, center);
+    height: fit-content;
+    padding: 5px 10px;
+    width: fit-content;
+    border-top: 1px solid $grey3;
+    border-right: 1px solid $grey5;
+    border-left: 1px solid $grey5;
+    border-bottom: 1px solid $grey7;
+    box-shadow: 0 0 5px 1px $darkShadow;
+    border-radius: 5px;
+    background: $black2;
+    transition: 0.1s all;
+    color: $white1;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    &:hover {
+      background: $blue5;
+      color: $black1;
+      border: 1px solid $blue2;
+      box-shadow: 0 0 5px 1px $blue2;
+      cursor: pointer;
+    }
+
+    &:visited {
+      color: $white1;
+
+      &:hover {
+        color: $black1;
+      }
+    }
+  }
+}

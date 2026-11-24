@@ -1,0 +1,68 @@
+.encyclopedia-celestial-objects-page-card-body {
+  display: block;
+  margin: 10px;
+  animation: opacitySlideUp 1s forwards;
+  width: 90%;
+  max-width: 1500px;
+  height: 500px;
+  border-radius: 7px;
+  border-top: 1px solid $grey2;
+  border-right: 1px solid $grey5;
+  border-left: 1px solid $grey5;
+  border-bottom: 1px solid $grey7;
+  box-shadow: 0 4px 5px 3px $darkShadow;
+  transition: 0.1s;
+
+  &:hover {
+    display: block;
+    box-shadow: none;
+    border-top: 1px solid $yellow3;
+    border-right: 1px solid $yellow2;
+    border-left: 1px solid $yellow2;
+    border-bottom: 1px solid $yellow1;
+
+    .encyclopedia-celestial-objects-card-header {
+      .celestial-object-name {
+        color: $yellow1;
+        transform: translateX(10px);
+      }
+    }
+  }
+
+  .encyclopedia-celestial-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .encyclopedia-celestial-objects-card-header {
+      // @include flex(row, "", space-between, center);
+      position: absolute;
+      top: 0;
+      padding: 5px 10px;
+      border-radius: 8px 8px 0 0;
+      width: 100%;
+      box-sizing: border-box;
+      text-transform: uppercase;
+      background: linear-gradient(
+        90deg,
+        $darkShadow 0%,
+        $shadow 30%,
+        $translucent 60%
+      );
+    }
+
+    .celestial-object-name {
+      letter-spacing: 10px;
+      margin: 0;
+      transition: 0.1s;
+    }
+
+    .encyclopedia-celestial-card-image {
+      border-radius: 7px;
+      display: block;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+  }
+}

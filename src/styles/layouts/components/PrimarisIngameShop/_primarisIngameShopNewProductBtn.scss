@@ -1,0 +1,46 @@
+.primaris-ingame-shop-new-product-body {
+  position: relative;
+  width: 89.7%;
+  margin: 30px auto;
+  height: 108px;
+  @include flex(row, "", center, center);
+  padding: 20px 50px;
+  @include borders($black2, $grey7, $black5);
+  border-radius: 10px;
+  background: $black3;
+
+  .primaris-ingame-shop-new-product-button-green {
+    @include borders($black5, $grey7, $black2);
+    @include flex(row, "", center, center);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+    @include primaris-button(
+      1px,
+      $black2,
+      $grey7,
+      $black5,
+      $darkShadow,
+      $black2,
+      $white1,
+      $green2,
+      $green5,
+      $green2,
+      $black1,
+      $green2,
+      $green5,
+      $green2,
+      $black1
+    );
+    padding: 20px 30px;
+
+    svg {
+      padding: 0 0 2px;
+    }
+
+    span {
+      margin: 0 10px;
+    }
+  }
+}

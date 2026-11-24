@@ -1,0 +1,24 @@
+.user-hangar-body {
+  min-height: 94.5vh;
+
+  .user-hangar-title-container {
+    @include flex(column, "", center, center);
+    margin: 70px 0 0 0;
+    height: 70px;
+    background: radial-gradient(circle, #330000 3%, #000000 100%);
+    border-bottom: 1px solid $red1;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $yellow1, $white1, $yellow1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $yellow1);
+      letter-spacing: 10px;
+      animation: titleWaveYellow 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+}

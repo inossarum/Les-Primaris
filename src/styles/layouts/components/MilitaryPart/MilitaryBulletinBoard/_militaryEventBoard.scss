@@ -1,0 +1,366 @@
+.military-bulletin-board-event-displayer-main-container {
+  @include flex(column, "", space-between, flex-start);
+  background: linear-gradient(
+    135deg,
+    $black1 0%,
+    $black2 25%,
+    $black5 50%,
+    $black2 75%,
+    $black1 100%
+  );
+  position: relative;
+  height: 80vh;
+  margin: 10px 10vw;
+  border-radius: 10px;
+  border-top: 1px solid $black2;
+  border-left: 1px solid $black5;
+  border-right: 1px solid $black5;
+  border-bottom: 1px solid $grey6;
+  box-shadow: inset 0 0 5px 1px $darkShadow;
+  padding: 15px 15px 0 15px;
+  box-sizing: border-box;
+
+  .military-bulletin-board-event-displayer-main-container-header {
+    height: 10%;
+
+    .military-bulletin-board-event-displayer-main-container-header-buttons-container {
+      @include flex(row, "", flex-start, center);
+      margin: 10px 0;
+
+      .military-bulletin-board-add-event-container {
+        z-index: 2;
+        @include flex(column, "", center, center);
+        width: fit-content;
+        padding: 5px 10px;
+        border-top: 1px solid $grey3;
+        border-right: 1px solid $grey5;
+        border-left: 1px solid $grey5;
+        border-bottom: 1px solid $grey7;
+        box-shadow: 0 0 5px 1px $darkShadow;
+        border-radius: 5px;
+        background: $black2;
+        height: 60px;
+        transition: 0.1s all;
+
+        &:hover {
+          background: $green5;
+          color: $black1;
+          border: 1px solid $green2;
+          box-shadow: 0 0 5px 1px $green2;
+          cursor: pointer;
+        }
+
+        svg {
+          margin: 0 0 5px 0;
+        }
+
+        span {
+          text-transform: uppercase;
+          font-size: 1rem;
+          letter-spacing: 2px;
+        }
+
+        &:last-child {
+          margin: 0 0 0 20px;
+        }
+      }
+    }
+
+    .military-bulletin-board-event-displayer-main-container-title {
+      margin: 0;
+      text-transform: uppercase;
+    }
+  }
+
+  .military-bulletin-board-event-options-container {
+    background: $black2;
+    z-index: 3;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include flex(column, "", center, center);
+    width: 1100px;
+    height: fit-content;
+    margin: 0 auto;
+    border-top: 1px solid $grey3;
+    border-right: 1px solid $grey5;
+    border-left: 1px solid $grey5;
+    border-bottom: 1px solid $grey7;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px $darkShadow;
+
+    .military-bulletin-board-cancel-event-container {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      margin: 5px 0;
+      z-index: 2;
+      @include flex(column, "", center, center);
+      height: fit-content;
+      padding: 5px 10px;
+      width: 100px;
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $grey7;
+      box-shadow: 0 0 5px 1px $darkShadow;
+      border-radius: 5px;
+      background: $black2;
+      transition: 0.1s all;
+
+      &:hover {
+        background: $red5;
+        color: $black1;
+        border: 1px solid $red2;
+        box-shadow: 0 0 5px 1px $red2;
+        cursor: pointer;
+      }
+
+      svg {
+        margin: 0 0 5px 0;
+      }
+
+      span {
+        text-transform: uppercase;
+      }
+    }
+
+    h3 {
+      position: relative;
+      padding: 20px;
+      width: 98%;
+      margin: 0 auto;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+
+      &:after {
+        position: absolute;
+        content: "";
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 1px;
+        width: 100%;
+        background: $blue2;
+      }
+    }
+
+    .military-bulletin-board-event-options-container-creator-id {
+      @include flex(row, "", flex-start, center);
+      padding: 10px;
+
+      .military-bulletin-board-event-options-container-creator-id-photo-wrapper {
+        margin-left: 10px;
+        height: 50px;
+        width: 50px;
+
+        img {
+          box-sizing: border-box;
+          width: 100%;
+        }
+      }
+
+      .military-bulletin-board-event-options-container-creator-pseudo {
+        margin-left: 10px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .military-bulletin-board-event-options-sub-container {
+      @include flex(row, "", flex-start, center);
+      margin: 20px 0;
+
+      .military-bulletin-board-event-options-input-container {
+        @include flex(column, "", flex-start, flex-start);
+        margin: 5px;
+        label {
+          font-size: 1.2rem;
+          margin: 10px 0 5px 2px;
+        }
+
+        input {
+          padding: 5px;
+          width: 200px;
+          border-radius: 3px;
+          color: $white1;
+          background: $grey5;
+          font-size: 1.2rem;
+          border-top: 1px solid $black2;
+          border-left: 1px solid $black5;
+          border-right: 1px solid $black5;
+          border-bottom: 1px solid $grey6;
+
+          &::placeholder {
+            color: $white1;
+          }
+
+          &::selection {
+            background: $blue2;
+          }
+
+          &:focus {
+            outline: none;
+            border-top: 1px solid $black2;
+            border-left: 1px solid $black5;
+            border-right: 1px solid $black5;
+            border-bottom: 1px solid $blue2;
+            box-shadow: inset 0 0 5px 1px $shadow;
+          }
+        }
+
+        input[type="datetime-local"] {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      select {
+        border-top: 1px solid $black2;
+        border-left: 1px solid $black5;
+        border-right: 1px solid $black5;
+        border-bottom: 1px solid $grey6;
+        padding: 5px;
+        width: 200px;
+        border-radius: 3px;
+
+        color: $white1;
+        background: $grey5;
+        font-size: 1.2rem;
+
+        &::placeholder {
+          color: $white1;
+        }
+
+        &::selection {
+          background: $blue5;
+        }
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:focus {
+          outline: none;
+          border-top: 1px solid $blue2;
+          border-left: 1px solid $black5;
+          border-right: 1px solid $black5;
+          border-bottom: 1px solid $grey6;
+          box-shadow: inset 0 0 5px 1px $shadow;
+        }
+      }
+
+      textarea {
+        border-top: 1px solid $black2;
+        border-left: 1px solid $black5;
+        border-right: 1px solid $black5;
+        border-bottom: 1px solid $grey6;
+        padding: 5px;
+        width: 620px;
+        height: 300px;
+        border-radius: 3px;
+
+        color: $white1;
+        background: $grey5;
+        font-size: 1.2rem;
+        resize: none;
+
+        &::placeholder {
+          color: $white1;
+        }
+
+        &::selection {
+          background: $blue5;
+        }
+
+        &:focus {
+          border-radius: 3px;
+          outline: none;
+          border-top: 1px solid $black2;
+          border-left: 1px solid $black5;
+          border-right: 1px solid $black5;
+          border-bottom: 1px solid $blue2;
+          // box-shadow: inset 0 0 5px 1px $shadow;
+        }
+      }
+    }
+
+    button {
+      margin: 10px 0;
+      z-index: 2;
+      @include flex(column, "", center, center);
+      height: fit-content;
+      padding: 5px 10px;
+      width: fit-content;
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $grey7;
+      box-shadow: 0 0 5px 1px $darkShadow;
+      border-radius: 5px;
+      background: $black2;
+      transition: 0.1s all;
+      color: $white1;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      margin: 0 0 20px 0;
+
+      &:hover {
+        background: $green5;
+        color: $black1;
+        border: 1px solid $green2;
+        box-shadow: 0 0 5px 1px $green2;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .military-bulletin-board-event-displayer-sub-container {
+    @include flex(row, "", flex-start, flex-start);
+    border-top: 1px solid $grey7;
+    box-sizing: border-box;
+    border-radius: 7px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 87%;
+    transition: 0.5s;
+    transform: translateX(0%);
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background: $blue1;
+      border-radius: 0 7px 7px 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $blue3;
+      border-right: 1px solid $blue4;
+      border-left: 2px solid $blue2;
+      border-radius: 7px;
+    }
+
+    .military-bulletin-board-event-displayer-events {
+      position: fixed;
+      @include flex(row, wrap, flex-start, flex-start);
+      box-sizing: border-box;
+      overflow-y: auto;
+      width: 100%;
+    }
+
+    .military-bulletin-board-event-displayer-events-card {
+      width: 100%;
+      position: absolute;
+      transform: translateX(100vw);
+      transition: 0.5s;
+    }
+
+    .displaced {
+      transition: 0.5s;
+      transform: translateX(0vw);
+    }
+  }
+}

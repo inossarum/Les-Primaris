@@ -1,0 +1,89 @@
+.civilian-event-crew-member-search-result-card-body {
+  @include flex(row, "", space-between, center);
+  box-sizing: border-box;
+  margin: 10px;
+  @include borders($grey5, $grey5, $grey5);
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px $darkShadow;
+  background: $black2;
+  z-index: 30;
+
+  .civilian-event-crew-member-search-result-main-container {
+    padding: 5px;
+    @include flex(row, "", flex-start, center);
+
+    .civilian-event-crew-member-search-panel-image-wrapper {
+      height: 50px;
+      width: 50px;
+
+      img {
+        border-radius: 3px;
+        box-sizing: border-box;
+        height: 50px;
+        width: 50px;
+      }
+
+      svg {
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    .civilian-event-crew-member-search-panel-name {
+      padding-top: 2px;
+      font-weight: 400;
+      font-size: 1.2rem;
+      text-align: left;
+      margin: 0 0 0 10px;
+    }
+  }
+
+  .civilian-event-crew-member-search-panel-job-selector {
+    @include flex(row, "", space-between, center);
+    height: 100%;
+
+    select {
+      border: none;
+      outline: none;
+      margin: 0 10px 0 0;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 1.2rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    button {
+      border: none;
+      outline: none;
+      margin: 0 10px 0 0;
+      padding: 5px 7px;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      color: $yellow3;
+      text-align: center;
+      background: linear-gradient(
+        135deg,
+        $black1 0%,
+        $black2 50%,
+        $black3 100%
+      );
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $grey7;
+      box-shadow: 0 0 5px 1px $darkShadow;
+      transition: 0.1s;
+
+      &:hover {
+        cursor: pointer;
+        color: $black1;
+        background: $yellow3;
+        border: 1px solid $yellow1;
+        box-shadow: 0 0 5px 1px $yellow1;
+      }
+    }
+  }
+}

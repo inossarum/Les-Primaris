@@ -1,0 +1,137 @@
+.filter-main-container {
+  @include flex(column, "", center, center);
+  width: 90%;
+  max-width: 1500px;
+  margin: 20px auto 0;
+  background: $black2;
+  border-radius: 20px;
+  border-top: 1px solid $grey5;
+  border-bottom: 1px solid $grey5;
+
+  h3 {
+    text-transform: uppercase;
+    margin: 10px 0;
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  div {
+    margin: 10px 0;
+  }
+
+  .filter-search-container {
+    input {
+      margin: 0 10px;
+      padding: 4px 7px 2px;
+      letter-spacing: 1px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+    }
+
+    input[type="text"] {
+      margin: 0 10px;
+      padding: 6px 7px 4px;
+      letter-spacing: 1px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      border-top: 1px solid $black1;
+      border-bottom: 1px solid $grey5;
+      border-left: 1px solid $grey7;
+      border-right: 1px solid $grey7;
+      transition: 0.1s;
+      width: 300px;
+      background: $black5;
+      color: $white1;
+
+      &::selection {
+        background: $yellow1;
+        color: $black1;
+      }
+
+      &::placeholder {
+        color: $grey1;
+      }
+
+      &:focus {
+        border-top: 1px solid $black1;
+        border-bottom: 1px solid $yellow1;
+        border-left: 1px solid $yellow1;
+        border-right: 1px solid $yellow1;
+        background: $black5;
+        color: $white1;
+        outline: none;
+
+        &::placeholder {
+          color: $white1;
+        }
+      }
+    }
+
+    input[type="submit"] {
+      margin: 5px 10px;
+      padding: 6px 7px 4px;
+      letter-spacing: 1px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $black5;
+      box-shadow: 0 1px 3px 0px $black1;
+      transition: 0.1s;
+      color: $white1;
+      background: $grey7;
+
+      &:hover {
+        border: 1px solid $yellow1;
+        background: $yellow3;
+        box-shadow: 0 0 5px 1px $yellow1;
+        cursor: pointer;
+        color: $black1;
+      }
+      &:focus {
+        border: 1px solid $green3;
+        background: $green5;
+        color: $black1;
+        box-shadow: 0 0 5px 1px $green4;
+      }
+    }
+  }
+
+  .filter-buttons-container {
+    width: 70%;
+    margin: 10px auto;
+    @include flex(row, wrap, space-around, center);
+
+    button {
+      margin: 5px 10px;
+      padding: 6px 7px 4px;
+      letter-spacing: 1px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $black5;
+      box-shadow: 0 1px 3px 0px $black1;
+      transition: 0.1s;
+      color: $white1;
+      background: $grey7;
+
+      &:hover {
+        border: 1px solid $yellow1;
+        background: $yellow3;
+        box-shadow: 0 0 5px 1px $yellow1;
+        cursor: pointer;
+        color: $black1;
+      }
+
+      &:focus {
+        border: 1px solid $red3;
+        background: $red5;
+        color: $white1;
+        box-shadow: 0 0 5px 1px $red4;
+      }
+    }
+  }
+}

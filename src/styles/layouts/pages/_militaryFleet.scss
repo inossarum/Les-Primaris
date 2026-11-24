@@ -1,0 +1,108 @@
+.military-fleet-body {
+    width: 100vw;
+    min-height: fit-content;
+    overflow-x: auto;
+
+    .military-fleet-title-container {
+        @include flex(column, "", center, center);
+        position: fixed;
+        z-index: 2;
+        margin: 70px 0 0 0;
+        height: 70px;
+        width: 100vw;
+        background: radial-gradient(circle, #00078a 3%, #000000 100%);
+        box-shadow: 0 0 10px $black1;
+
+        h2 {
+            font-size: 2rem;
+            padding: 5px;
+            background: -webkit-linear-gradient(95deg, $blue4, $white1, $blue4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-filter: drop-shadow(0 0 5px $blue1);
+            letter-spacing: 10px;
+            animation: titleWaveBlue 3s infinite;
+            text-transform: uppercase;
+        }
+    }
+    .military-department-title-container {
+        @include flex(row, "", center, center);
+        position: fixed;
+        z-index: 2;
+        margin: 140px 0;
+        height: 50px;
+        width: 100vw;
+        background: radial-gradient(circle, $blue2 3%, #00000062 75%);
+        box-shadow: 0 0 10px $black1;
+
+        .navlink {
+            font-size: 1.5rem;
+            background: -webkit-linear-gradient(95deg, $blue4, $white1, $blue4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-filter: drop-shadow(0 0 5px $blue1);
+            letter-spacing: 10px;
+            animation: titleWaveBlue 3s infinite;
+            text-transform: uppercase;
+            margin: 0 20px 0 20px;
+        }
+    }
+
+    .military-fleet-main-container {
+        @include flex(row, "", center, flex-start);
+        width: 100vw;
+
+        .military-fleet-sub-container {
+            max-width: 1920px;
+            margin-top: 200px;
+            padding: 0;
+
+            @include flex(column, "", center, center);
+
+            &::-webkit-scrollbar {
+                width: 10px;
+                background: none;
+            }
+            &::-webkit-scrollbar-thumb {
+                width: 10px;
+                background: $yellow1;
+                border-radius: 10px;
+            }
+
+            .military-fleet-department-name {
+                text-align: center;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            h4 {
+                font-size: 1.3rem;
+                letter-spacing: 2px;
+            }
+
+            .military-fleet-card-admiral-ship-main-container {
+                @include flex(column, "", center, center);
+                padding: 10px;
+                margin: 10px 0 10px 0;
+            }
+
+            .military-fleet-card-main-container-ship-rank {
+                text-transform: capitalize;
+                font-size: 2rem;
+            }
+
+            .military-fleet-card-main-container {
+                @include flex(column, "", center, center);
+                padding: 10px;
+                margin: 10px 0 10px 0;
+            }
+
+            .military-fleet-card-sub-container {
+                @include flex(column, wrap, center, center);
+                margin: 10px;
+            }
+        }
+    }
+}

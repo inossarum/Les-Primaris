@@ -1,0 +1,36 @@
+.civilian-event-player-card-body {
+  margin: 10px;
+  border-top: 1px solid $grey3;
+  border-left: 1px solid $grey5;
+  border-right: 1px solid $grey5;
+  border-bottom: 1px solid $black5;
+  box-shadow: 0 0 5px 1px $darkShadow;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+  font-size: 1.2rem;
+  @include flex(row, "", center, center);
+  height: 60px;
+
+  .civilian-event-player-card-main-container {
+    @include flex(row, "", center, center);
+    padding: 10px;
+    background: $darkShadow;
+    backdrop-filter: blur(2px);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+
+    img {
+      border-radius: 5px;
+      margin-right: 10px;
+      width: 40px;
+    }
+  }
+}
+
+.actual-user {
+  border: 1px solid $red2;
+  color: $white2;
+  box-shadow: 0 0 5px 1px $red2;
+}

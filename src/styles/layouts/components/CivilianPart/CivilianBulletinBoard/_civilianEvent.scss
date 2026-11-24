@@ -1,0 +1,197 @@
+.civilian-event-body {
+  @include flex(row, "", space-between, center);
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-top: 1px solid $grey4;
+  border-right: 1px solid $grey6;
+  border-left: 1px solid $grey6;
+  border-bottom: 1px solid $black4;
+  box-shadow: 0 3px 5px 1px $darkShadow;
+  border-radius: 10px;
+  margin: 5px;
+  transition: 0.1s;
+
+  &:hover {
+    border-bottom: 1px solid $red3;
+  }
+
+  .civilian-event-sub-container {
+    @include flex(column, "", center, center);
+    width: 100%;
+    height: 100%;
+    margin: 10px 0;
+    padding: 5px 10px;
+    border-left: 1px solid $black4;
+    // border-right: 1px solid $grey3;
+    box-shadow: inset 0 0px 5px 1px $black1;
+
+    .civilian-event-main-container-event-button {
+      margin: 10px;
+      z-index: 2;
+      @include flex(column, "", center, center);
+      height: fit-content;
+      padding: 5px 10px;
+      width: fit-content;
+      border-top: 1px solid $grey3;
+      border-right: 1px solid $grey5;
+      border-left: 1px solid $grey5;
+      border-bottom: 1px solid $grey7;
+      box-shadow: 0 0 5px 1px $darkShadow;
+      border-radius: 5px;
+      background: $black2;
+      transition: 0.1s all;
+
+      &:hover {
+        background: $red5;
+        color: $black1;
+        border: 1px solid $red2;
+        box-shadow: 0 0 5px 1px $red2;
+        cursor: pointer;
+      }
+
+      &:focus {
+        background: $green5;
+        color: $black1;
+        border: 1px solid $green2;
+        box-shadow: 0 0 5px 1px $green2;
+        cursor: pointer;
+      }
+
+      svg {
+        margin: 0 0 5px 0;
+      }
+
+      span {
+        text-transform: uppercase;
+        font-size: 1rem;
+      }
+    }
+
+    .delete {
+      color: $red5;
+      border: 1px solid $red2;
+      box-shadow: 0 0 5px 1px $red2;
+    }
+    .archive {
+      color: $yellow3;
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 5px 1px $yellow1;
+
+      &:hover {
+        background: $yellow3;
+        color: $black1;
+        border: 1px solid $yellow1;
+        box-shadow: 0 0 5px 1px $yellow1;
+        cursor: pointer;
+      }
+    }
+
+    &:first-child {
+      border-left: none;
+      border-radius: 10px 0 0 10px;
+    }
+    &:last-child {
+      border-radius: 0px 10px 10px 0px;
+    }
+
+    span {
+      box-sizing: border-box;
+      margin: 5px 10px 0 5px;
+      width: 100%;
+      text-align: center;
+      letter-spacing: 2px;
+      font-size: 1.3rem;
+    }
+
+    .value {
+      color: $yellow3;
+      text-shadow: 0 0 5px $yellow1;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+    }
+
+    .corporation {
+      animation: titleWaveRed 2s infinite;
+      color: $red5;
+      margin-top: 5px;
+      text-transform: capitalize;
+    }
+    .mission-departementale {
+      animation: titleWaveBlue 2s infinite;
+      color: $blue5;
+      margin-top: 5px;
+      text-transform: capitalize;
+    }
+    .sortie-detente {
+      animation: titleWaveGreen 2s infinite;
+      color: $green5;
+      margin-top: 5px;
+      text-transform: capitalize;
+    }
+
+    .new-event {
+      color: $green5;
+      width: 60%;
+      padding: 10px 0;
+      text-align: center;
+      animation: titleWaveGreen 2s infinite;
+      font-size: 1.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .archived-event {
+      color: $red5;
+      width: 60%;
+      padding: 10px 0;
+      text-align: center;
+      animation: titleWaveRed 2s infinite;
+      font-size: 1.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .civilian-event-name {
+      position: relative;
+      box-sizing: border-box;
+      margin-top: 5px;
+      width: 100%;
+      text-transform: capitalize;
+      text-align: center;
+      letter-spacing: 2px;
+      color: $green5;
+      text-shadow: 0 0 5px $green2;
+      font-size: 1.3rem;
+    }
+
+    h3 {
+      width: fit-content;
+      padding: 12px 10px 10px;
+      border-radius: 4px;
+      background: $black2;
+      box-shadow: 2px 2px 5px 1px $darkShadow;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      // border-top: 1px solid $grey5;
+      // border-left: 1px solid $grey5;
+      border-right: 1px solid $red3;
+      border-bottom: 1px solid $red3;
+    }
+  }
+
+  .details {
+    padding: 10px 15px;
+
+    span {
+      font-size: 1.3rem;
+    }
+
+    &:hover {
+      background: $yellow3;
+      color: $black1;
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 5px 1px $yellow1;
+      cursor: pointer;
+    }
+  }
+}

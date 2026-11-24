@@ -1,0 +1,49 @@
+.primaris-ingame-shop-body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: auto;
+  background: url(../../../../../public/assets/img/ingameShop.webp) center/cover
+    fixed;
+
+  .primaris-ingame-shop-title-container {
+    @include flex(column, "", center, center);
+    position: fixed;
+    z-index: 2;
+    margin: 70px 0 0 0;
+    height: 70px;
+    width: 100vw;
+    background: radial-gradient(circle, $green1 3%, #000000 100%);
+    box-shadow: 0 0 10px $black1;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $green5, $white1, $green5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $green2);
+      letter-spacing: 10px;
+      animation: titleWaveYellow 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+
+  .primaris-ingame-shop-main-container {
+    margin: 140px 0 0;
+    @include flex(column, "", flex-start, flex-start);
+    height: fit-content;
+    overflow-x: hidden;
+
+    .primaris-ingame-shop-form-and-list-container {
+      width: 200vw;
+      @include flex(row, "", flex-start, top);
+      transition: 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    .slide-left {
+      transform: translateX(-100vw);
+    }
+  }
+}

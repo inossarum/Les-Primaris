@@ -1,0 +1,142 @@
+.military-event-enlisted-ship-card-body {
+  @include flex(row, "", center, center);
+  min-height: 200px;
+  width: 470px;
+  border: 1px solid $black5;
+  border-radius: 5px;
+  margin: 10px 10px;
+
+  .military-event-enlisted-ship-card-image {
+    @include flex(column, "", space-between, flex-end);
+    border-radius: 5px;
+    min-height: 200px;
+    width: 100%;
+    transition: 0.2s ease;
+
+    .military-event-enlisted-ship-card-upper-container {
+      @include flex(column, "", "", flex-start);
+      width: 100%;
+      height: fit-content;
+      background: $darkShadow;
+      border-radius: 5px 5px 0 0;
+      transition: 0.2s ease;
+
+      .military-event-enlisted-ship-card-header {
+        @include flex(row, wrap, space-between, center);
+        width: 100%;
+        padding: 7px;
+        border-bottom: 1px solid $black5;
+
+        .military-event-enlisted-ship-card-owner-id {
+          @include flex(row, wrap, flex-start, center);
+
+          span {
+            &:first-child {
+              margin-right: 10px;
+            }
+          }
+        }
+
+        svg {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .military-event-enlisted-ship-card-main-container {
+        @include flex(column, "", "", flex-start);
+        width: 100%;
+        padding: 7px;
+        border-bottom: 1px solid $black5;
+        transition: 0.2s ease;
+
+        span {
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+
+        .military-event-enlisted-ship-card-crew-informations {
+          @include flex(row, "", flex-start, center);
+
+          div {
+            span {
+              &:first-child {
+                margin-right: 0;
+              }
+            }
+          }
+        }
+
+        p {
+          margin: 5px 0 0;
+        }
+      }
+    }
+
+    .military-event-enlisted-ship-card-main-footer {
+      @include flex(row, "", flex-end, center);
+      padding: 7px 0;
+      transition: 0.2s ease;
+
+      .primaris-ingame-shop-new-product-form-button-blue {
+        height: 100%;
+        @include flex(row, "", center, center);
+        @include primaris-button(
+          1px,
+          $black2,
+          $grey7,
+          $black5,
+          $darkShadow,
+          $black3,
+          $white1,
+          $blue2,
+          $blue5,
+          $blue2,
+          $black1,
+          $blue2,
+          $blue5,
+          $blue2,
+          $black1
+        );
+        margin: 0 7px 0 7px;
+      }
+    }
+
+    .military-event-enlisted-ship-card-crew-container {
+      transition: 0.2s ease;
+      width: 100%;
+      padding: 7px 0;
+
+      border-bottom: 1px solid $black5;
+
+      span {
+        &:first-child {
+          margin-right: 10px;
+        }
+      }
+
+      .military-event-enlisted-ship-card-crew-informations {
+        @include flex(column, "", flex-start, flex-start);
+        width: 100%;
+        padding: 0 7px;
+
+        .military-event-enlisted-ship-card-crew-list {
+          @include flex(column, "", flex-start, center);
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .base {
+    transition: 0.2s ease;
+    transform: rotateY(0deg);
+  }
+
+  .reverse {
+    transition: 0.2s ease;
+    transform: rotateY(180deg);
+  }
+}

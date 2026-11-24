@@ -1,0 +1,128 @@
+.crew-member-card-body {
+  border-top: 1px solid $grey4;
+  border-left: 1px solid $grey6;
+  border-right: 1px solid $grey6;
+  border-bottom: 1px solid $black4;
+  box-shadow: 0 0 5px 1px $darkShadow;
+  width: 100%;
+  height: fit-content;
+  border-radius: 5px;
+  margin: 0 0 10px;
+  padding: 5px;
+  background: linear-gradient(90deg, $black1 0%, $black5 100%);
+  @include flex(column, "", center, center);
+
+  .crew-member-card-search-container {
+    @include flex(row, "", center, center);
+    width: 100%;
+    height: 100%;
+    transition: 0.05s;
+
+    &:hover {
+      cursor: pointer;
+      color: $yellow3;
+      filter: drop-shadow(0 0 5px $yellow1);
+
+      .crew-member-card-plus {
+        color: $yellow3;
+      }
+    }
+
+    .crew-member-card-plus {
+      margin: 10px 0 0 0;
+      height: 55px;
+      width: 55px;
+      color: $grey3;
+      transition: 0.1s;
+    }
+  }
+
+  .crew-member-card-background {
+    height: 100%;
+    width: 100%;
+
+    .crew-member-card-main-container {
+      @include flex(row, "", flex-start, center);
+      position: relative;
+      backdrop-filter: blur(0.5px);
+      height: 100%;
+      background: linear-gradient(90deg, $black1 0%, $translucent 100%);
+      border-radius: 5px;
+
+      button {
+        position: absolute;
+        padding: 2px 5px;
+        top: 3px;
+        right: 0;
+        border-radius: 0 4px 0 0;
+        border: none;
+        color: $white1;
+        background: none;
+        font-size: 0.9rem;
+        transition: 0.1s;
+
+        &:hover {
+          cursor: pointer;
+          color: $yellow3;
+          filter: drop-shadow(0 0 5px $yellow1);
+        }
+      }
+
+      .crew-member-card-sub-container {
+        @include flex(row, "", flex-start, center);
+        width: 100%;
+
+        h3 {
+          text-transform: capitalize;
+          margin: 0 0 0 0px;
+          padding: 10px;
+          letter-spacing: 2px;
+        }
+
+        .crew-member-card-rank {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          width: 40%;
+          text-transform: capitalize;
+          font-weight: 400;
+          font-size: 1.2rem;
+        }
+
+        .crew-member-card-rank-logo {
+          height: 50px;
+          padding: 2px;
+
+          img {
+            box-sizing: border-box;
+            height: 100%;
+            border-radius: 5px;
+          }
+        }
+
+        .crew-member-card-job {
+          font-size: 1.2rem;
+          font-weight: 400;
+          margin: 5px 0 0 0;
+          padding: 5px 10px 5px 0;
+          border-radius: 0 0 4px 4px;
+
+          span {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: $yellow3;
+            text-shadow: 0 0 5px $yellow1;
+            text-transform: uppercase;
+            margin: 0 0 0 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.actual-user {
+  background: linear-gradient(90deg, $red1 0%, $red5 100%);
+  border: 1px solid $red3;
+  box-shadow: 0 0 5px 1px $red2;
+}

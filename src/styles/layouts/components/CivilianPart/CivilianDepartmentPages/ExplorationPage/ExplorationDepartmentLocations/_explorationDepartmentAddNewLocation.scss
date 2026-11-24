@@ -1,0 +1,24 @@
+.primaris-ingame-shop-new-product-form-button-exploration {
+  height: 34px;
+  transition: 0.2s ease;
+  @include flex(row, "", center, center);
+  @include primaris-button(
+    1px,
+    $black2,
+    $grey7,
+    $black5,
+    $darkShadow,
+    $black3,
+    $white1,
+    $blueExplo,
+    $blue4,
+    $blueExplo,
+    $black1,
+    $blueExplo,
+    $blue4,
+    $blueExplo,
+    $black1
+  );
+  letter-spacing: 2px;
+  margin: 0;
+}

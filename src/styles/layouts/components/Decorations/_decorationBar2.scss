@@ -1,0 +1,113 @@
+.deco-bar2 {
+  @include flex(row, "", flex-start, flex-end);
+  position: absolute;
+  width: 100%;
+  height: fit-content;
+  top: 20px;
+  left: 0;
+  align-items: baseline;
+
+  .deco1 {
+    display: block;
+    bottom: 0;
+    width: 33%;
+    height: 1px;
+    background: $yellow1;
+  }
+
+  .deco-block1 {
+    @include flex(row, "", space-between, flex-end);
+    width: 80px;
+    padding: 0 10px;
+
+    .deco2 {
+      display: block;
+      bottom: 0;
+      width: 10px;
+      height: 26px;
+      background: $yellow3;
+      transform: skew(-45deg);
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 5px 2px $yellow1;
+      z-index: 2;
+      margin: 0;
+    }
+    .deco2-1 {
+      display: block;
+      bottom: 0;
+      width: 10px;
+      height: 26px;
+      background: $red6;
+      transform: skew(-45deg);
+      border: 1px solid $red4;
+      box-shadow: 0 0 5px 2px $red4;
+      z-index: 2;
+    }
+    .deco2-2 {
+      display: block;
+      bottom: 0;
+      width: 10px;
+      height: 26px;
+      background: $yellow3;
+      transform: skew(-45deg);
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 5px 2px $yellow1;
+      z-index: 2;
+    }
+  }
+
+  .deco2 {
+    display: block;
+    width: 30%;
+    height: 1px;
+    background: none;
+    margin: 0 0 40px 0;
+  }
+
+  .deco-block2 {
+    @include flex(row, "", space-between, flex-end);
+    width: 80px;
+    padding: 0 10px;
+
+    .deco3 {
+      display: block;
+      bottom: 0;
+      width: 10px;
+      height: 26px;
+      background: $yellow3;
+      transform: skew(45deg, 0deg);
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 5px 2px $yellow1;
+      z-index: 2;
+    }
+    .deco3-1 {
+      display: block;
+      bottom: 0;
+      width: 10px;
+      height: 26px;
+      background: $red6;
+      transform: skew(45deg, 0deg);
+      border: 1px solid $red4;
+      box-shadow: 0 0 5px 2px $red4;
+      z-index: 2;
+    }
+    .deco3-2 {
+      display: block;
+      bottom: 0;
+      width: 10px;
+      height: 26px;
+      background: $yellow3;
+      transform: skew(45deg, 0deg);
+      border: 1px solid $yellow1;
+      box-shadow: 0 0 5px 2px $yellow1;
+      z-index: 2;
+    }
+  }
+
+  .deco5 {
+    display: block;
+    width: 33%;
+    height: 1px;
+    background: $yellow1;
+  }
+}

@@ -1,0 +1,155 @@
+.new-post-modal {
+  margin: 5vh 0 2vh 0;
+  background: linear-gradient(
+    135deg,
+    $black1 0%,
+    $black3 25%,
+    $black5 50%,
+    $black3 75%,
+    $black1 100%
+  );
+  padding: 0.5vh 1vw;
+  border-radius: 10px;
+  box-shadow: 0 3px 5px 2px $shadow;
+  border-top: 1px solid $grey6;
+  border-left: 1px solid $black3;
+  border-right: 1px solid $black3;
+  border-bottom: 1px solid $black2;
+
+  .new-post-header {
+    @include flex(row, "", space-between, center);
+
+    .new-post-author-infos-container {
+      @include flex(row, "", space-between, center);
+      margin: 0;
+    }
+    .upload-image-button {
+      transition: 0.1s;
+      color: $yellow1;
+
+      &:hover {
+        transform: translateX(-5px);
+        cursor: pointer;
+        color: $white1;
+        filter: drop-shadow(0 0 10px $yellow1);
+      }
+    }
+  }
+  form {
+    position: relative;
+    padding: 0 0 30px 0;
+
+    .selected-photo-container {
+      width: 100%;
+      box-sizing: border-box;
+
+      img {
+        width: 100%;
+        border-radius: 5px;
+        border-top: 1px solid $grey7;
+        border-left: 1px solid $grey5;
+        border-right: 1px solid $grey5;
+        border-bottom: 1px solid $grey4;
+      }
+    }
+
+    .create-post-textarea {
+      box-shadow: inset 0 3px 5px 2px $shadow;
+      resize: none;
+      border: none;
+      border-radius: 0px 0px 0 10px;
+      padding: 1%;
+      margin: 10px 0;
+      width: 100%;
+      height: 10vh;
+      transition: 0.2s;
+      font-size: 1.3rem;
+      background: $black5;
+      border-top: 1px solid $grey7;
+      border-left: 1px solid $grey5;
+      border-right: 1px solid $grey5;
+      border-bottom: 1px solid $grey4;
+      letter-spacing: 1px;
+      color: $white2;
+
+      &::selection {
+        background: $yellow1;
+        color: $black1;
+      }
+
+      &:focus {
+        border: none;
+        outline: none;
+        box-shadow: inset 0 0 5px 2px $shadow;
+        border-top: 1px solid $grey7;
+        border-left: 1px solid $grey5;
+        border-right: 1px solid $grey5;
+        border-bottom: 1px solid $yellow1;
+        background: $black3;
+        color: $white2;
+        letter-spacing: 1px;
+      }
+
+      &::placeholder {
+        color: $white2;
+      }
+    }
+
+    .input-container {
+      span {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border-top: 1px solid $grey5;
+        border-right: 1px solid $grey6;
+        border-left: 1px solid $grey6;
+        border-bottom: 1px solid $black2;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.3rem;
+        color: $red5;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px $red4;
+      }
+
+      input {
+        @media screen and (max-width: 750px) {
+          right: 10px;
+        }
+        position: absolute;
+        font-size: 1.1rem;
+        font-weight: $agFBB;
+        bottom: 3px;
+        right: -1px;
+        padding: 5px 10px 3px;
+        border-radius: 5px 0px 5px 5px;
+        border-top: 1px solid $grey6;
+        border-left: 1px solid $black3;
+        border-right: 1px solid $black3;
+        border-bottom: 1px solid $black2;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-align: center;
+        transition: 0.2s;
+        background: $black4;
+        color: $yellow1;
+
+        &:hover {
+          border: 1px solid $yellow1;
+          background: linear-gradient(
+            135deg,
+            $black1 0%,
+            $black2 5%,
+            $black3 50%,
+            $black2 95%,
+            $black1 100%
+          );
+          color: $white1;
+          box-shadow: 0 0 5px 2px $yellow1;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

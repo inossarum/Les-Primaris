@@ -1,0 +1,16 @@
+.primaris-ingame-shop-products-list-container-body {
+  position: relative;
+  width: 100vw;
+  height: fit-content;
+  margin: 30px 100px 0;
+  @include flex(row, wrap, center, center);
+  padding: 20px 50px;
+  // @include borders($black2, $grey7, $black5);
+  border-radius: 10px;
+  background: $darkShadow;
+  backdrop-filter: blur(2px);
+}
+
+.hidden {
+  visibility: hidden;
+}

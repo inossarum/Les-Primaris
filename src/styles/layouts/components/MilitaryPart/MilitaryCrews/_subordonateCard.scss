@@ -1,0 +1,14 @@
+.subordonate-card-main-container {
+    @include flex(row, "", center, center);
+    margin: 10px;
+    min-width: 400px;
+    max-width: 1920px;
+
+    .subordonate-card-ship-rank-container {
+        @include borders($green2, $green2, $green2);
+        padding: 50px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 400px;
+    }
+}

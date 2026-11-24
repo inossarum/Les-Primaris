@@ -1,0 +1,120 @@
+.encyclopedia-lore-event-container {
+  position: relative;
+  width: 700px;
+  margin: 0 50px 0 0;
+  padding: 10px;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  @include flex(column, "", center, center);
+
+  .encyclopedia-lore-date {
+    position: absolute;
+    left: 50%;
+    top: -80px;
+    transform: translate(-50%, 0);
+    display: block;
+    width: fit-content;
+    margin: 0 0 10px 0;
+    padding: 5px 10px;
+    border: 1px solid $yellow1;
+    border-radius: 5px;
+    background: $black2;
+    box-shadow: 0 2px 5px 1px $darkShadow;
+  }
+
+  .encyclopedia-lore-point-after {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    left: 50%;
+    top: -30px;
+    border-radius: 50%;
+    transform: translate(-50%, 0);
+
+    &:after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      width: 748px;
+      transform: translateX(100%);
+      right: -2px;
+      top: 8px;
+      background: $yellow3;
+    }
+  }
+  .encyclopedia-lore-point {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    left: 50%;
+    top: -30px;
+    border-radius: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .inactive {
+    background: $yellow3;
+    animation: waveYellow 2s infinite;
+  }
+  .active {
+    background: $green5;
+    animation: waveGreen 2s infinite;
+  }
+
+  .encyclopedia-lore-description-title {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 7px;
+    border: 1px solid $yellow1;
+    box-shadow: 0 2px 5px 1px $darkShadow;
+    background: $darkShadow;
+    backdrop-filter: blur(3px);
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    margin: 10px 0;
+  }
+
+  .encyclopedia-lore-description-container {
+    @include flex(column, "", center, center);
+    border-radius: 7px;
+    border: 2px solid $yellow1;
+    box-shadow: 0 0 10px 1px $darkShadow;
+    background: $darkShadow;
+    backdrop-filter: blur(3px);
+
+    .encyclopedia-lore-description {
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  .container-reduced {
+    width: 400px;
+    height: auto;
+    padding: 0;
+
+    img {
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 7px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      animation: waveGreen 1.5s infinite ease;
+    }
+  }
+
+  .container-deployed {
+    padding: 10px;
+
+    &:hover {
+      cursor: pointer;
+      animation: waveRedMed 1.5s infinite ease;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.administration-body {
+  margin: 70px auto 0;
+  position: relative;
+
+  .ember-effect {
+    top: 0;
+    height: 100vh;
+  }
+
+  .administration-title-container {
+    @include flex(column, "", center, center);
+    top: 0;
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    background: radial-gradient(circle, $violet3 3%, #000000 100%);
+    box-shadow: 0 0 10px $black1;
+    border-bottom: 1px solid $violet1;
+
+    h2 {
+      font-size: 2rem;
+      padding: 5px;
+      background: -webkit-linear-gradient(95deg, $violet4, $white1, $violet4);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-filter: drop-shadow(0 0 5px $yellow1);
+      letter-spacing: 10px;
+      animation: titleWaveViolet 3s infinite;
+      text-transform: uppercase;
+    }
+  }
+
+  .users-cards-container {
+    @include grid(25% 25% 25% 25%, auto, center, center);
+    top: 80px;
+    left: 50%;
+    max-width: 70vw;
+    min-width: 1350px;
+    margin: 0 auto;
+    position: absolute;
+    transform: translate(-50%, 0);
+  }
+}

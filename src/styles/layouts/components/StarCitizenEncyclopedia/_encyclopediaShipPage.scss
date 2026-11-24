@@ -1,0 +1,374 @@
+.encyclopedia-ship-page-body {
+  margin: 70px 0 0 0;
+  padding: 0 0 70px 0;
+  width: 100%;
+  height: fit-content;
+  overflow-y: auto;
+  background: url(../../../../../public/assets/img/departments/invictus-fleet.webp)
+    center/cover fixed;
+  height: 100vh;
+
+  .encyclopedia-ship-page-main-container {
+    .encyclopedia-ship-page-image-wrapper {
+      border-radius: 0 0 20px 20px;
+      position: relative;
+      width: 100%;
+      height: 800px;
+      border-top: 1px solid $grey5;
+      border-bottom: 1px solid $grey5;
+
+      &:after {
+        position: absolute;
+        content: "";
+        height: 1px;
+        bottom: -1px;
+        width: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 1px;
+        background: $yellow3;
+        box-shadow: 0 0 5px 1px $yellow1;
+      }
+
+      .encyclopedia-ship-page-image {
+        border-radius: 0 0 20px 20px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+
+        .encyclopedia-ship-page-header {
+          position: relative;
+          @include flex(row, "", space-between, center);
+          width: 100%;
+
+          .encyclopedia-ship-page-path {
+            padding: 10px 10px;
+            @include flex(row, "", flex-start, center);
+            z-index: 10;
+            width: 50%;
+
+            a {
+              padding: 2px 0 0 0;
+              margin: 0 0 0 10px;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              font-size: 1.4rem;
+              color: $white1;
+              font-weight: 600;
+
+              &:visited {
+                color: $white1;
+              }
+
+              &:hover {
+                color: $yellow1;
+              }
+            }
+
+            h2 {
+              padding: 2px 0 0 0;
+              margin: 0 0 0 10px;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              font-size: 1.4rem;
+              z-index: 3;
+            }
+          }
+
+          .close-btn-container {
+            position: relative;
+            height: 50px;
+            width: 50px;
+            transition: 0.2s;
+            padding: 5px;
+            z-index: 3;
+
+            &:hover {
+              cursor: pointer;
+              transform: translateX(-10px);
+            }
+
+            span {
+              position: absolute;
+              height: 3px;
+              width: 30px;
+              top: 50%;
+              left: 50%;
+              background: $red3;
+              display: block;
+              border-radius: 7px;
+              margin-top: -3px;
+            }
+
+            .first-bar {
+              transform: translateX(-50%) rotateZ(45deg);
+            }
+            .second-bar {
+              transform: translateX(-50%) rotateZ(-45deg);
+            }
+          }
+        }
+      }
+
+      .encyclopedia-ship-page-buttons-container {
+        @include flex(row, wrap, space-between, flex-end);
+        position: absolute;
+        bottom: 50px;
+        right: 0px;
+        margin: 0 50px;
+
+        .encyclopedia-ship-page-description-container {
+          animation: opacitySlideLeft 1s forwards;
+          bottom: 50px;
+          right: 50px;
+          width: 30%;
+          text-align: justify;
+          background: $darkShadow;
+          padding: 15px;
+          border-radius: 7px;
+          border: 1px solid $yellow3;
+          backdrop-filter: blur(4px);
+
+          .encyclopedia-ship-page-description {
+            width: 100%;
+            height: fit-content;
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+          }
+        }
+
+        .encyclopedia-ship-page-button-container {
+          animation: opacitySlideUp 1s forwards;
+          width: 220px;
+          text-align: center;
+          background: $darkShadow;
+          padding: 15px;
+          border-radius: 7px;
+          border: 1px solid $yellow3;
+          backdrop-filter: blur(4px);
+
+          .encyclopedia-ship-page-brochure {
+            width: 100%;
+            height: fit-content;
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: $white1;
+
+            &:visited {
+              color: $white1;
+            }
+          }
+
+          &:hover {
+            border: 1px solid $red3;
+
+            span {
+              height: 25%;
+              width: 20%;
+            }
+
+            .border-left-top {
+              border-top: 3px solid $red5;
+              border-left: 3px solid $red5;
+              filter: drop-shadow(0 0 7px $red3);
+            }
+            .border-top-right {
+              border-top: 3px solid $red5;
+              border-right: 3px solid $red5;
+              filter: drop-shadow(0 0 7px $red3);
+            }
+            .border-right-bottom {
+              border-right: 3px solid $red5;
+              border-bottom: 3px solid $red5;
+              filter: drop-shadow(0 0 7px $red3);
+            }
+            .border-bottom-left {
+              border-bottom: 3px solid $red5;
+              border-left: 3px solid $red5;
+              filter: drop-shadow(0 0 7px $red3);
+            }
+          }
+        }
+      }
+    }
+
+    .encyclopedia-ship-page-sub-container {
+      position: relative;
+      @include flex(row, wrap, space-evenly, center);
+      padding: 0 0 0 0;
+      margin: 0 auto 0;
+      width: 100%;
+      height: fit-content;
+
+      .encyclopedia-ship-page-container-title {
+        @include flex(row, wrap, space-evenly, center);
+        width: 100%;
+        margin: 0;
+        letter-spacing: 3px;
+        text-align: center;
+
+        h2 {
+          position: relative;
+          width: fit-content;
+          margin: 0 auto;
+          padding: 15px 0 15px;
+          margin: 0;
+          font-size: 2rem;
+
+          &:after {
+            position: absolute;
+            content: "";
+            height: 1px;
+            bottom: -1px;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 1px;
+            background: $yellow3;
+            box-shadow: 0 0 5px 1px $yellow1;
+            z-index: 15;
+          }
+        }
+      }
+
+      .encyclopedia-ship-page-container {
+        padding: 10px 0;
+        border-radius: 20px;
+        position: relative;
+        border-top: 1px solid $grey5;
+        border-bottom: 1px solid $grey5;
+        @include flex(row, wrap, space-evenly, center);
+        width: 90%;
+        max-width: 1500px;
+        background: $black2;
+
+        &:after {
+          position: absolute;
+          content: "";
+          height: 1px;
+          bottom: -1px;
+          width: 25%;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 1px;
+          background: $yellow3;
+          box-shadow: 0 0 5px 1px $yellow1;
+        }
+
+        .encyclopedia-ship-page-sub-container {
+          border: 1px solid $yellow1;
+        }
+
+        .encyclopedia-ship-image-wrapper {
+          width: 48%;
+          height: 250px;
+          margin: 10px auto;
+          z-index: 2;
+
+          .encyclopedia-ship-image {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border-top: 1px solid $grey3;
+            border-right: 1px solid $grey6;
+            border-left: 1px solid $grey6;
+            border-bottom: 1px solid $black1;
+            box-shadow: 0 3px 5px 2px $darkShadow;
+            transition: 0.1s;
+
+            &:hover {
+              cursor: pointer;
+              border: 1px solid $red5;
+
+              span {
+                height: 15%;
+                width: 15%;
+              }
+
+              .border-thin-left-top {
+                top: -2px;
+                left: -2px;
+                border-top: 3px solid $red3;
+                border-left: 3px solid $red3;
+                filter: drop-shadow(0 0 7px $red3);
+              }
+              .border-thin-top-right {
+                top: -2px;
+                right: -2px;
+                border-top: 3px solid $red3;
+                border-right: 3px solid $red3;
+                filter: drop-shadow(0 0 7px $red3);
+              }
+              .border-thin-right-bottom {
+                right: -2px;
+                bottom: -2px;
+                border-right: 3px solid $red3;
+                border-bottom: 3px solid $red3;
+                filter: drop-shadow(0 0 7px $red3);
+              }
+              .border-thin-bottom-left {
+                bottom: -2px;
+                left: -2px;
+                border-bottom: 3px solid $red3;
+                border-left: 3px solid $red3;
+                filter: drop-shadow(0 0 7px $red3);
+              }
+            }
+          }
+        }
+
+        .encyclopedia-ship-video-container {
+          @include flex(row, wrap, space-evenly, center);
+          width: 100%;
+          position: relative;
+
+          .ship-video {
+            margin: 10px auto;
+            display: block;
+            border-radius: 7px;
+
+            video {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    .encyclopedia-ship-page-details-main-container {
+      @include flex(column, wrap, space-evenly, center);
+      width: 90%;
+      max-width: 1500px;
+
+      .encyclopedia-ship-page-details-container {
+        padding: 10px 0;
+        border-radius: 20px;
+        position: relative;
+        border-top: 1px solid $grey5;
+        border-bottom: 1px solid $grey5;
+        @include flex(row, wrap, flex-start, flex-start);
+        width: 100%;
+        background: $black2;
+
+        &:after {
+          position: absolute;
+          content: "";
+          height: 1px;
+          bottom: -1px;
+          width: 25%;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 1px;
+          background: $yellow3;
+          box-shadow: 0 0 5px 1px $yellow1;
+        }
+      }
+    }
+  }
+}

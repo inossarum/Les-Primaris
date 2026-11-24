@@ -1,0 +1,343 @@
+.user-informations-main-container {
+  position: relative;
+  background: $black1;
+  border-top: 1px solid $grey6;
+  border-bottom: 1px solid $black2;
+
+  .block1 {
+    position: absolute;
+    height: 22px;
+    width: 1000px;
+    top: -21px;
+    left: 535px;
+    transform: skew(-45deg, 0deg);
+    background: $black1;
+  }
+  .block2 {
+    position: absolute;
+    height: 22px;
+    width: 248px;
+    top: -21px;
+    left: 1350px;
+    background: $black1;
+  }
+
+  .title-container {
+    position: relative;
+    padding: 0 0 20px;
+
+    .title {
+      width: fit-content;
+      padding: 10px 10px;
+      margin: 0 0 0 850px;
+      letter-spacing: 4px;
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      border-radius: 5px;
+      border-top: 1px solid $grey6;
+      border-left: 1px solid $black3;
+      border-right: 1px solid $black3;
+      border-bottom: 1px solid $black2;
+      background: $black2;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      width: 100%;
+      background: $yellow1;
+    }
+  }
+
+  .general-infos-container {
+    padding: 0 25px;
+    background: $black2;
+    border-bottom: 1px solid $yellow2;
+
+    .info-container {
+      position: relative;
+      width: 100%;
+      @include grid(50% 50%, "", space-between, center);
+
+      @mixin info-category($color1, $color2) {
+        box-sizing: border-box;
+        position: relative;
+        width: 100%;
+        margin: 5px 0 5px 0;
+        padding: 5px 0 5px 10px;
+        border-radius: 3px 0 0 0;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-weight: 400;
+        border-top: 1px solid $grey4;
+        border-left: 1px solid $grey6;
+        background: $black4;
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0px;
+          bottom: -5px;
+          height: 1px;
+          width: 98%;
+          background: $color1;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: -5px;
+          right: 20px;
+          height: 20px;
+          width: 5px;
+          border: 1px solid $color1;
+          background: $color2;
+          box-shadow: 0 0 5px 0px $color1;
+          transform: skew(-45deg, 0deg) translateX(20px);
+          z-index: 1;
+        }
+
+        .block3 {
+          position: absolute;
+          height: 35px;
+          width: 30px;
+          bottom: -2px;
+          right: -27px;
+          transform: skew(-45deg, 0deg);
+          background: $black2;
+        }
+
+        .block4 {
+          position: absolute;
+          height: 19px;
+          width: 7px;
+          top: -1px;
+          right: -11px;
+        }
+      }
+
+      // FactionPart
+      .info-category-militaire {
+        @include info-category($green1, $green5);
+      }
+      .info-category-civil {
+        @include info-category($blueExplo, $blue4);
+      }
+      .info-category-civil-militaire {
+        @include info-category($orange2, $orange3);
+      }
+      .info-category-representant-exterieur {
+        @include info-category($blueExt2, $blueExt1);
+      }
+      .info-category-none {
+        @include info-category($grey1, $white2);
+      }
+
+      // FactionRole & webSiteRole
+      .info-category-primarque,
+      .info-category-administrateur {
+        @include info-category($red4, $red5);
+      }
+      .info-category-membre {
+        @include info-category($blueExplo, $blue3);
+      }
+      .info-category-invité {
+        @include info-category($grey1, $white2);
+      }
+
+      // factionRank
+      .info-category-executeur-civil {
+        @include info-category($yellow1, $yellow3);
+      }
+      .info-category-executeur-militaire {
+        @include info-category($green1, $green5);
+      }
+
+      // websiteRole
+
+      .info-category {
+        box-sizing: border-box;
+        position: relative;
+        width: 100%;
+        margin: 5px 0 5px 0;
+        padding: 5px 0 5px 10px;
+        border-radius: 3px 0 0 0;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-weight: 400;
+        border-top: 1px solid $grey4;
+        border-left: 1px solid $grey6;
+        background: $black4;
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0px;
+          bottom: -5px;
+          height: 1px;
+          width: 98%;
+          background: $yellow1;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: -5px;
+          right: 20px;
+          height: 20px;
+          width: 5px;
+          border: 1px solid $yellow1;
+          background: $yellow3;
+          box-shadow: 0 0 5px 0px $yellow1;
+          transform: skew(-45deg, 0deg) translateX(20px);
+          z-index: 1;
+        }
+
+        .block3 {
+          position: absolute;
+          height: 35px;
+          width: 30px;
+          bottom: -2px;
+          right: -27px;
+          transform: skew(-45deg, 0deg);
+          background: $black2;
+        }
+
+        .block4 {
+          position: absolute;
+          height: 19px;
+          width: 7px;
+          top: -1px;
+          right: -11px;
+          border: 1px solid $yellow1;
+          background: $yellow3;
+          box-shadow: 0 0 5px 0px $yellow1;
+        }
+      }
+
+      .info {
+        margin: 0 0 0 50px;
+        @include grid(65% 35%, "", left, center);
+
+        .button-container {
+          padding: 5px 10px;
+          @include flex("", "", center, center);
+          border-radius: 5px;
+          border-top: 1px solid $grey6;
+          border-left: 1px solid $black4;
+          border-right: 1px solid $black4;
+          border-bottom: 1px solid $black2;
+          background: $black3;
+          transition: 0.1s;
+
+          .label {
+            margin: 0 0 0 15px;
+            text-transform: uppercase;
+          }
+
+          &:hover {
+            cursor: pointer;
+            border-top: 1px solid $grey6;
+            border-left: 1px solid $yellow1;
+            border-right: 1px solid $black4;
+            border-bottom: 1px solid $black2;
+            transform: translateX(10px);
+
+            .edit-logo,
+            .label {
+              color: $yellow1;
+            }
+          }
+        }
+      }
+
+      h3 {
+        letter-spacing: 2px;
+        font-size: 2.3rem;
+        font-weight: 400;
+      }
+
+      @mixin block4($color1, $color2) {
+        border: 1px solid $color1;
+        background: $color2;
+        box-shadow: 0 0 5px 0px $color1;
+      }
+
+      // factionRank block4
+      .primarque {
+        @include block4($red4, $red5);
+      }
+      .executeur-civil {
+        @include block4($yellow1, $yellow3);
+      }
+      .executeur-militaire {
+        @include block4($green1, $green5);
+      }
+      .officier-instructeur {
+        @include block4($violet1, $violet3);
+      }
+
+      // factionPart block4
+
+      .militaire {
+        @include block4($green1, $green5);
+      }
+      .civil-militaire {
+        @include block4($orange2, $orange3);
+      }
+      .civil {
+        @include block4($blueExplo, $blue4);
+      }
+      .representant-exterieur {
+        @include block4($blueExt2, $blueExt1);
+      }
+      .none {
+        @include block4($grey1, $white2);
+      }
+
+      // webSiteRole block4
+      .administrateur {
+        @include block4($red4, $red5);
+      }
+      .militaire {
+        @include block4($green1, $green5);
+      }
+      .civil-militaire {
+        @include block4($orange2, $orange3);
+      }
+
+      // Common roles for webSiteRole and factionRank
+
+      .membre {
+        @include block4($blueExplo, $blue4);
+      }
+      .invité {
+        @include block4($grey1, $white2);
+      }
+      .none {
+        @include block4($grey1, $white2);
+      }
+
+      .img-wrapper {
+        width: 113px;
+        height: 113px;
+        border-radius: 5px;
+        background: $black3;
+        border-top: 2px solid $grey4;
+        border-left: 2px solid $black4;
+        border-right: 2px solid $black4;
+        border-bottom: 2px solid $black1;
+
+        img {
+          padding: 5px;
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          filter: drop-shadow(0 1px 3px $black1);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+.thread-response-body {
+  @include flex(row, "", flex-start, flex-start);
+  font-size: 1.2rem;
+  width: 100%;
+  height: fit-content;
+  border-bottom: 1px solid $grey7;
+  margin: 5px 0;
+  padding: 5px 0;
+
+  .thread-response-header {
+    @include flex(row, wrap, flex-start, center);
+    min-width: 30%;
+
+    .response-author {
+      width: 25%;
+    }
+
+    span {
+      margin: 0 10px 0 20px;
+    }
+  }
+
+  p {
+    margin: 0 10px 0 20px;
+    color: $green5;
+    width: 70%;
+    text-align: justify;
+  }
+
+  .thread-response-sub-container {
+    @include flex(row, "", flex-end, center);
+
+    .new-response {
+      padding: 2px 10px 0 0;
+      color: $red5;
+      text-align: center;
+      animation: titleWaveRed 2s infinite;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    svg {
+      &:hover {
+        cursor: pointer;
+        color: $violet5;
+        filter: drop-shadow(0 0 5px $violet3);
+      }
+    }
+  }
+}
