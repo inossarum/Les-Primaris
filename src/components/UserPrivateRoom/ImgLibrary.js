@@ -1,13 +1,9 @@
-import {getDownloadURL, listAll, ref} from "firebase/storage";
-import React, {useEffect, useState} from "react";
-import {storage} from "../../utils/firebase.config";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import {useSelector} from "react-redux";
 import BannerCard from "./BannerCard";
 import ProfileCard from "./ProfileCard";
 
 const ImgLibrary = () => {
-    const actualUser = useSelector((state) => state.user);
-    const dispatch = useDispatch();
     const actualUserBannerList = useSelector(
         (state) => state.user?.uploadedBannersList
     );

@@ -38,10 +38,14 @@ const EncyclopediaCelestialObjectsPlanetPage = () => {
   );
 
   useEffect(() => {
-    dispatch(getRSIActualCelestialObjectInterestPoints([RSIStations, data]));
-    dispatch(getRSIActualCelestialObjectMoons([RSICelestialObjects, data]));
+    if (RSIStations && data) {
+      dispatch(getRSIActualCelestialObjectInterestPoints([RSIStations, data]));
+    }
+    if (RSICelestialObjects && data) {
+      dispatch(getRSIActualCelestialObjectMoons([RSICelestialObjects, data]));
+    }
     window.scrollTo(0, 0);
-  }, []);
+  }, [RSICelestialObjects, RSIStations, data, dispatch]);
 
   return (
     <div className="encyclopedia-celestial-objects-page-body">

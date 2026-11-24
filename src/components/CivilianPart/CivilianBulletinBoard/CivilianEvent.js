@@ -23,6 +23,21 @@ const CivilianEvent = ({event, archive}) => {
     });
   };
 
+  const removeEventNotifications = async () => {
+    const allowedFactionParts = ["militaire", "civil-militaire", "civil"];
+    await Promise.all(
+      (users ?? [])
+        .filter((user) => allowedFactionParts.includes(user.factionPart))
+        .map((user) => {
+          const notifications = (user.notifications ?? []).filter(
+            (notification) =>
+              notification.associatedEvent !== event.notificationId
+          );
+          return updateDoc(doc(db, "users", user.id), {notifications});
+        })
+    );
+  };
+
   const handleDeleteEvent = async (e) => {
     e.preventDefault();
 
@@ -30,48 +45,14 @@ const CivilianEvent = ({event, archive}) => {
       ? await deleteDoc(doc(db, "civilianEventsArchives", event.id))
       : await deleteDoc(doc(db, "civilianEvents", event.id));
 
-    users &&
-      [...users]
-        .filter(
-          (user) =>
-            user.factionPart === "militaire" ||
-            user.factionPart === "civil-militaire" ||
-            user.factionPart === "civil"
-        )
-        .map((user) => {
-          const userNotificationsAfterRemoval = user.notifications.filter(
-            (notification) =>
-              notification.associatedEvent !== event.notificationId
-          );
-
-          updateDoc(doc(db, "users", user.id), {
-            notifications: userNotificationsAfterRemoval,
-          });
-        });
+    await removeEventNotifications();
   };
 
   const handleArchiveEvent = async (e) => {
     e.preventDefault();
     await setDoc(doc(db, "civilianEventsArchives", event.id), event);
     await deleteDoc(doc(db, "civilianEvents", event.id));
-    users &&
-      [...users]
-        .filter(
-          (user) =>
-            user.factionPart === "militaire" ||
-            user.factionPart === "civil-militaire" ||
-            user.factionPart === "civil"
-        )
-        .map((user) => {
-          const userNotificationsAfterRemoval = user.notifications.filter(
-            (notification) =>
-              notification.associatedEvent !== event.notificationId
-          );
-
-          updateDoc(doc(db, "users", user.id), {
-            notifications: userNotificationsAfterRemoval,
-          });
-        });
+    await removeEventNotifications();
   };
 
   const handleRemoveAssociatedNotification = async (e) => {

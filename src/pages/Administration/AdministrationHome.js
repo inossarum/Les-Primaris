@@ -46,15 +46,13 @@ const AdministrationHome = () => {
               <span>Forum des modérateurs</span>
             </div>
           </NavLink>
-          <NavLink
-            className="administration-home-button right"
-            // to="/administrationPrivateMessagingServices"
-          >
+          <div className="administration-home-button right" aria-disabled="true">
             <div>
               <Folder />
               <span>Documents divers</span>
+              <small>Indisponible</small>
             </div>
-          </NavLink>
+          </div>
         </div>
       </div>
     </div>

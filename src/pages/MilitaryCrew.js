@@ -11,10 +11,6 @@ const MilitaryCrew = () => {
     const aerospatialShips = useSelector(
         (state) => state.sharedShips.aerospatialShips
     );
-    const FirstReconFleet = useSelector(
-        (state) => state.sharedShips.firstReconFleet
-    );
-
     const logisticsShips = useSelector(
         (state) => state.sharedShips.logisticsShips
     );

@@ -7,7 +7,6 @@ import {Close} from "@mui/icons-material";
 import {deleteDoc, doc, updateDoc} from "firebase/firestore";
 import {db} from "../../../utils/firebase.config";
 
-import FleetCard from "./FleetCard";
 import ShipFleetChoice from "../../UserHangar/ShipFleetChoice";
 
 const WingManCard = ({wingManShip}) => {
@@ -50,8 +49,8 @@ const WingManCard = ({wingManShip}) => {
     const deleteShipFromDB = async (e) => {
         e.preventDefault();
 
-        actualShip?.newShipHierarchicalSuperior !== (undefined || null || "")
-            ? await updateDoc(
+        if (actualShip?.newShipHierarchicalSuperior?.id) {
+            await updateDoc(
                   doc(
                       db,
                       "shipsAndCrews",
@@ -63,8 +62,8 @@ const WingManCard = ({wingManShip}) => {
                               (ship) => ship?.id !== actualShip?.id
                           ),
                   }
-              )
-            : console.log("shipSuperior inexistant");
+              );
+        }
 
         await deleteDoc(doc(db, "shipsAndCrews", actualShip.id));
 

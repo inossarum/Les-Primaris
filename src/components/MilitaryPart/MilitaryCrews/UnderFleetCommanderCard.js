@@ -51,8 +51,8 @@ const UnderFleetCommanderCard = ({underFleetCommanderShip}) => {
     const deleteShipFromDB = async (e) => {
         e.preventDefault();
 
-        actualShip?.newShipHierarchicalSuperior !== (undefined || null || "")
-            ? await updateDoc(
+        if (actualShip?.newShipHierarchicalSuperior?.id) {
+            await updateDoc(
                   doc(
                       db,
                       "shipsAndCrews",
@@ -65,8 +65,8 @@ const UnderFleetCommanderCard = ({underFleetCommanderShip}) => {
                                   shipSubordonate?.id !== actualShip?.id
                           ),
                   }
-              )
-            : console.log("shipSuperior inexistant");
+              );
+        }
 
         await deleteDoc(doc(db, "shipsAndCrews", actualShip.id));
 
@@ -285,9 +285,11 @@ const UnderFleetCommanderCard = ({underFleetCommanderShip}) => {
                             <h4>Commandants d'une Aile de Combat: </h4>
                             <div className="fleet-card-subordonate-container">
                                 {actualShip?.subordonateShips?.map((ship) => (
-                                    <span className="info-yellow-capitalize ">
+                                    <span
+                                        className="info-yellow-capitalize "
+                                        key={ship.id}
+                                    >
                                         <BattleWingCommanderCard
-                                            key={Math.random()}
                                             battleWingCommanderShip={ship}
                                         />
                                     </span>

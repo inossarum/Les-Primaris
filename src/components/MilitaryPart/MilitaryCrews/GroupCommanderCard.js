@@ -6,7 +6,6 @@ import {setFleetCardActive} from "../../../feature/window.slice";
 import {Close} from "@mui/icons-material";
 import {deleteDoc, doc, updateDoc} from "firebase/firestore";
 import {db} from "../../../utils/firebase.config";
-import SubordonateCard from "./SubordonateCard";
 import SquadronChiefCard from "./SquadronChiefCard";
 import ShipFleetChoice from "../../UserHangar/ShipFleetChoice";
 
@@ -51,8 +50,8 @@ const GroupCommanderCard = ({groupCommandership}) => {
     const deleteShipFromDB = async (e) => {
         e.preventDefault();
 
-        actualShip?.newShipHierarchicalSuperior !== (undefined || null || "")
-            ? await updateDoc(
+        if (actualShip?.newShipHierarchicalSuperior?.id) {
+            await updateDoc(
                   doc(
                       db,
                       "shipsAndCrews",
@@ -64,8 +63,8 @@ const GroupCommanderCard = ({groupCommandership}) => {
                               (ship) => ship?.id !== actualShip?.id
                           ),
                   }
-              )
-            : console.log("shipSuperior inexistant");
+              );
+        }
 
         await deleteDoc(doc(db, "shipsAndCrews", actualShip.id));
 
@@ -284,9 +283,11 @@ const GroupCommanderCard = ({groupCommandership}) => {
                         <h4>Chefs d'escadrilles: </h4>
                         <div className="fleet-card-subordonate-container">
                             {actualShip?.subordonateShips?.map((ship) => (
-                                <span className="info-yellow-capitalize ">
+                                <span
+                                    className="info-yellow-capitalize "
+                                    key={ship.id}
+                                >
                                     <SquadronChiefCard
-                                        key={Math.random()}
                                         squadronChiefShip={ship}
                                     />
                                 </span>

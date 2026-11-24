@@ -19,28 +19,31 @@ const CommentPosts = ({post}) => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
 
-  let now = new Date();
-  let utcDate = now.toISOString().split("Z")[0] + "+00:00";
-
   const handleComment = async (e) => {
     e.preventDefault();
+    const message = commentContent.current?.value?.trim() ?? "";
+    if (!message) {
+      setError("Vous ne pouvez pas envoyer un contenu vide !");
+      setTimeout(() => setError(""), 3000);
+      return;
+    }
 
     const comment = {
       uid: post.id,
       postAuthorId: post.authorId,
       author: user,
       authorId: userId,
-      message: commentContent.current.value,
+      message,
       authorFactionRank: userFactionRank,
       authorFactionPart: userFactionPart,
       authorWebSiteRole: userWebSiteRole,
       authorPhoto: userPhoto,
       likers: [],
-      createdAt: utcDate,
+      createdAt: new Date().toISOString(),
       notificationId: Date.now() + Math.random(),
     };
 
-    if (commentContent.current.value !== "") {
+    try {
       await addDoc(collection(db, "comments"), comment);
 
       if (userId !== post.authorId) {
@@ -49,24 +52,31 @@ const CommentPosts = ({post}) => {
           postAuthor: post.author,
           postId: post.id,
           commentAuthor: user,
-          commentContent: commentContent.current.value,
+          commentContent: message,
           postContent: post.message,
           createdAt: Date.now(),
           associatedComment: comment.notificationId,
         };
 
-        const postAuthor = users.find((user) => user.id === post.authorId);
-
-        await updateDoc(doc(db, "users", post.authorId), {
-          notifications: [...postAuthor.notifications, notificationData],
-        });
+        const postAuthor = (users ?? []).find(
+          (user) => user.id === post.authorId
+        );
+        if (postAuthor) {
+          await updateDoc(doc(db, "users", post.authorId), {
+            notifications: [
+              ...(postAuthor.notifications ?? []),
+              notificationData,
+            ],
+          });
+        }
       }
-    } else {
-      setError("Vous ne pouvez pas envoyer un contenu vide !");
-      setTimeout(() => setError(""), 3000);
-    }
 
-    commentContent.current.value = null;
+      commentContent.current.value = "";
+      setError("");
+    } catch (error) {
+      setError("Le commentaire n'a pas pu être envoyé.");
+      console.error("Unable to create comment:", error);
+    }
   };
 
   return (

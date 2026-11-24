@@ -10,31 +10,34 @@ const LikeComment = ({comment}) => {
 
   const liker = useSelector((state) => state.user.userId);
 
-  const likePost = () => {
-    updateDoc(doc(db, "comments", comment.id), {
-      likers: arrayUnion(liker),
-    });
-    dispatch(addLike([liker, comment.id]));
-    setUserLiked(true);
+  const likePost = async () => {
+    if (!liker || !comment?.id) return;
+    try {
+      await updateDoc(doc(db, "comments", comment.id), {
+        likers: arrayUnion(liker),
+      });
+      dispatch(addLike([liker, comment.id]));
+      setUserLiked(true);
+    } catch (error) {
+      console.error("Unable to like comment:", error);
+    }
   };
 
-  const disLikePost = () => {
-    updateDoc(doc(db, "comments", comment.id), {
-      likers: arrayRemove(liker),
-    });
-    dispatch(disLike([liker, comment.id]));
-
-    setUserLiked(false);
+  const disLikePost = async () => {
+    if (!liker || !comment?.id) return;
+    try {
+      await updateDoc(doc(db, "comments", comment.id), {
+        likers: arrayRemove(liker),
+      });
+      dispatch(disLike([liker, comment.id]));
+      setUserLiked(false);
+    } catch (error) {
+      console.error("Unable to remove comment like:", error);
+    }
   };
 
   useEffect(() => {
-    if (comment.likers) {
-      if (comment.likers.includes(liker)) {
-        setUserLiked(true);
-      }
-    } else {
-      setUserLiked(false);
-    }
+    setUserLiked(Boolean(comment.likers?.includes(liker)));
   }, [comment.likers, liker]);
 
   return (

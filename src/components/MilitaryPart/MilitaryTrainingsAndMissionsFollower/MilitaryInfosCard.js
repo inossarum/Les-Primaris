@@ -1,5 +1,5 @@
 import {addDoc, collection, doc, updateDoc} from "firebase/firestore";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {db} from "../../../utils/firebase.config";
 import Translator from "../../Administration/AdministrationUsersList/Translator";
@@ -11,11 +11,18 @@ const MilitaryInfosCard = ({military}) => {
   );
   let trainings = military.trainings;
   let missions = military.missions;
-  const [previousRank, setPreviousRank] = useState("");
-  const [nextRank, setNextRank] = useState("");
-  const [nextRankOrder, setNextRankOrder] = useState("");
-  const [previousRankOrder, setPreviousRankOrder] = useState("");
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const currentRank = militaryRanks?.find(
+    (rank) => rank.rank === military.factionRank
+  );
+  const nextRank = currentRank?.nextRank ?? "";
+  const previousRank = currentRank?.previousRank ?? "";
+  const nextRankOrder =
+    militaryRanks?.find((rank) => rank.previousRank === military.factionRank)
+      ?.rankOrder ?? "";
+  const previousRankOrder =
+    militaryRanks?.find((rank) => rank.nextRank === military.factionRank)
+      ?.rankOrder ?? "";
 
   const handleAddOneMission = async (e) => {
     e.preventDefault();
@@ -50,7 +57,7 @@ const MilitaryInfosCard = ({military}) => {
       promotedAt: Date.now(),
     });
 
-    let promotionDatas = {
+    const promotionDatas = {
       militaryId: military.id,
       pseudo: military.pseudo,
       RPName: military.RPName,
@@ -61,7 +68,7 @@ const MilitaryInfosCard = ({military}) => {
       type: "promotion",
     };
 
-    addDoc(collection(db, "militaryPromotions"), promotionDatas);
+    await addDoc(collection(db, "militaryPromotions"), promotionDatas);
   };
   const handleDemoteRank = async (e) => {
     e.preventDefault();
@@ -72,7 +79,7 @@ const MilitaryInfosCard = ({military}) => {
       promotedAt: Date.now(),
     });
 
-    let promotionDatas = {
+    const promotionDatas = {
       militaryId: military.id,
       pseudo: military.pseudo,
       RPName: military.RPName,
@@ -83,37 +90,8 @@ const MilitaryInfosCard = ({military}) => {
       type: "demotion",
     };
 
-    addDoc(collection(db, "militaryPromotions"), promotionDatas);
+    await addDoc(collection(db, "militaryPromotions"), promotionDatas);
   };
-
-  useEffect(() => {
-    militaryRanks &&
-      [...militaryRanks]
-        .filter((rank) => rank.rank === military.factionRank)
-        .map((rank) => {
-          setNextRank(rank.nextRank);
-        });
-
-    militaryRanks &&
-      [...militaryRanks]
-        .filter((rank) => rank.previousRank === military.factionRank)
-        .map((rank) => {
-          setNextRankOrder(rank.rankOrder);
-        });
-
-    militaryRanks &&
-      [...militaryRanks]
-        .filter((rank) => rank.rank === military.factionRank)
-        .map((rank) => {
-          setPreviousRank(rank.previousRank);
-        });
-    militaryRanks &&
-      [...militaryRanks]
-        .filter((rank) => rank.nextRank === military.factionRank)
-        .map((rank) => {
-          setPreviousRankOrder(rank.rankOrder);
-        });
-  }, [military.factionRank]);
 
   return (
     <>

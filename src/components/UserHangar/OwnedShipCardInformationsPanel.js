@@ -13,8 +13,6 @@ import UserSearchPanel from "./UserSearchPanel";
 import JoinCrewCard from "./JoinCrewCard";
 import CrewMemberPostulantCard from "./CrewMemberPostulantCard";
 import DecorationBorderThick from "../Decorations/DecorationBorderThick";
-import ShipRankChoice from "./ShipRankChoice";
-import ShipHierachicalSuperiorChoice from "./ShipHierachicalSuperiorChoice";
 
 const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
     const dispatch = useDispatch();
@@ -41,61 +39,64 @@ const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
         e.preventDefault();
 
         try {
-            users &&
-                [...users]
-                    .filter(
-                        (user) =>
-                            user.factionPart === "civil-militaire" ||
-                            user.factionPart === "militaire" ||
-                            user.factionPart === "civil"
+            await Promise.all(
+                (users ?? [])
+                    .filter((user) =>
+                        ["civil-militaire", "militaire", "civil"].includes(
+                            user.factionPart
+                        )
                     )
                     .map((user) => {
-                        const userNotificationsAfterRemoval =
-                            user.notifications.filter(
-                                (notification) =>
-                                    notification?.associatedSharedShip !==
-                                    ownedShipDatas?.notificationId
-                            );
+                        const notifications = (user.notifications ?? []).filter(
+                            (notification) =>
+                                notification?.associatedSharedShip !==
+                                ownedShipDatas?.notificationId
+                        );
 
-                        updateDoc(doc(db, "users", user.id), {
-                            notifications: userNotificationsAfterRemoval,
+                        return updateDoc(doc(db, "users", user.id), {
+                            notifications,
                         });
-                    });
+                    })
+            );
         } catch (err) {
-            console.log(err);
+            console.error("Unable to remove ship notifications:", err?.code || err?.name);
         }
 
-        await ownedShipDatas?.crewMembers.map((crewMember) =>
-            updateDoc(doc(db, "users", crewMember.userId), {
-                employed: "non",
-            })
+        await Promise.all(
+            (ownedShipDatas?.crewMembers ?? []).map((crewMember) =>
+                updateDoc(doc(db, "users", crewMember.userId), {
+                    employed: "non",
+                })
+            )
         );
 
         await deleteDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id));
     };
 
-    const handleShipNameEditor = (e) => {
+    const handleShipNameEditor = async (e) => {
         e.preventDefault();
-        updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
-            shipName: shipName.current.value,
+        const nextShipName = shipName.current?.value?.trim();
+        if (!nextShipName) return;
+        await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
+            shipName: nextShipName,
         });
         setEditShipName(false);
     };
-    const handleSharedStatus = (e) => {
+    const handleSharedStatus = async (e) => {
         e.preventDefault();
-        updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
+        await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
             shared: shared.current.value,
         });
     };
-    const handleFactionPartSwitch = (e) => {
+    const handleFactionPartSwitch = async (e) => {
         e.preventDefault();
-        updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
+        await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
             factionPart: factionPart.current.value,
         });
     };
-    const handleDepartmentSwitch = (e) => {
+    const handleDepartmentSwitch = async (e) => {
         e.preventDefault();
-        updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
+        await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
             department: department.current.value,
         });
     };
@@ -391,8 +392,9 @@ const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
                             ""
                         )}
                         {ownedShipDatas?.fleet !== "" &&
-                        user.webSiteRole ===
-                            ("administrateur" || "moderateur") ? (
+                        ["administrateur", "moderateur"].includes(
+                            user.webSiteRole
+                        ) ? (
                             <div className="flex-row">
                                 {(ownedShipDatas?.ownerId === user.userId ||
                                     user.webSiteRole === "administrateur") &&
@@ -424,8 +426,9 @@ const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
                             ""
                         )}
                         {ownedShipDatas?.fleet !== "" &&
-                        user.webSiteRole ===
-                            ("administrateur" || "moderateur") ? (
+                        ["administrateur", "moderateur"].includes(
+                            user.webSiteRole
+                        ) ? (
                             <div className="flex-row">
                                 {(ownedShipDatas?.ownerId === user.userId ||
                                     user.webSiteRole === "administrateur") &&

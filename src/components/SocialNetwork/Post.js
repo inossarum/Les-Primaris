@@ -42,14 +42,18 @@ const Post = ({post}) => {
     });
   };
 
-  const handleEdit = () => {
-    setEdit(false);
+  const handleEdit = async () => {
+    const nextMessage = editMess.trim();
+    if (!nextMessage) return;
 
-    if (editMess) {
-      updateDoc(doc(db, "posts", post.id), {
-        message: editMess,
+    try {
+      await updateDoc(doc(db, "posts", post.id), {
+        message: nextMessage,
       });
-      dispatch(editPost([editMess, post.id]));
+      dispatch(editPost([nextMessage, post.id]));
+      setEdit(false);
+    } catch (error) {
+      console.error("Unable to edit post:", error);
     }
   };
 
@@ -68,7 +72,7 @@ const Post = ({post}) => {
           <PostHeader author={post.author} />
         </div>
 
-        {(post.authorId === auth.currentUser.uid ||
+        {(post.authorId === auth.currentUser?.uid ||
           userWebSiteRole === "administrateur") && (
           <div className="post-actions-container">
             <span

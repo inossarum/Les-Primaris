@@ -41,22 +41,21 @@ const Thread = ({thread}) => {
   const handleDeleteThread = async (e) => {
     e.preventDefault();
 
-    users &&
-      [...users]
-        .filter(
-          (users) =>
-            users.webSiteRole === "moderateur" &&
-            users.webSiteRole === "administrateur"
+    await Promise.all(
+      (users ?? [])
+        .filter((user) =>
+          ["moderateur", "administrateur"].includes(user.webSiteRole)
         )
         .map((user) => {
-          const notificationsAfterRemoval = [...user.notifications].filter(
+          const notificationsAfterRemoval = (user.notifications ?? []).filter(
             (notification) =>
               notification.associatedThread !== thread.notificationId
           );
-          updateDoc(doc(db, "users", user.id), {
+          return updateDoc(doc(db, "users", user.id), {
             notifications: notificationsAfterRemoval,
           });
-        });
+        })
+    );
     await deleteDoc(doc(db, "moderatorThreads", thread.id));
   };
 
@@ -138,7 +137,8 @@ const Thread = ({thread}) => {
 
         setIsResponding(false);
       } catch (err) {
-        console.log(err);
+        console.error("Unable to submit moderator response:", err?.code || err?.name);
+        setErrorMessage("La réponse n’a pas pu être envoyée.");
       }
     else {
       setErrorMessage("vous devez remplir les champs");

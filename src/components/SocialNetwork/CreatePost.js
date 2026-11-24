@@ -73,15 +73,18 @@ const CreatePost = () => {
         associatedPost: data.notificationId,
       };
 
-      users &&
-        [...users]
+      await Promise.all(
+        (users ?? [])
           .filter((user) => user.id !== data.authorId)
-          .map((user) => {
-            const userNotifications = user.notifications;
+          .map((user) =>
             updateDoc(doc(db, "users", user.id), {
-              notifications: [...userNotifications, notificationDatas],
-            });
-          });
+              notifications: [
+                ...(user.notifications ?? []),
+                notificationDatas,
+              ],
+            })
+          )
+      );
 
       message.current.value = null;
     } else {

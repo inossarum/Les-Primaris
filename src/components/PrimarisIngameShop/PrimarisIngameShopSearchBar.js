@@ -7,8 +7,6 @@ const PrimarisIngameShopSearchBar = () => {
   const productsSearchResultList = useSelector(
     (state) => state.primarisIngameShop.productsSearchResult
   );
-
-  console.log(productsSearchResultList);
   const productsList = useSelector(
     (state) => state.primarisIngameShop.products
   );

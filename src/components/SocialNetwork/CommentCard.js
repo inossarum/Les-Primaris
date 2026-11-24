@@ -35,9 +35,9 @@ const CommentCard = ({comment, post}) => {
   };
 
   const handleRemoveNotification = async (e) => {
-    const userNotificationsAfterRemoval = user?.users
+    const userNotificationsAfterRemoval = (user?.users
       .find((user) => user.id === post.authorId)
-      ?.notifications.filter(
+      ?.notifications ?? []).filter(
         (notification) =>
           notification?.associatedComment !== comment?.notificationId
       );
@@ -46,23 +46,27 @@ const CommentCard = ({comment, post}) => {
 
     if (post.authorId === userId) {
       try {
-        updateDoc(doc(db, "users", post.authorId), {
+        await updateDoc(doc(db, "users", post.authorId), {
           notifications: userNotificationsAfterRemoval,
         });
       } catch (err) {
-        console.log(err);
+        console.error("Unable to update comment:", err?.code || err?.name);
       }
     }
   };
 
-  const handleEditComment = () => {
-    setEdit(false);
+  const handleEditComment = async () => {
+    const nextMessage = editedComment?.trim();
+    if (!nextMessage) return;
 
-    if (editedComment) {
-      updateDoc(doc(db, "comments", comment.id), {
-        message: editedComment,
+    try {
+      await updateDoc(doc(db, "comments", comment.id), {
+        message: nextMessage,
       });
-      dispatch(editComment([editedComment, comment.id]));
+      dispatch(editComment([nextMessage, comment.id]));
+      setEdit(false);
+    } catch (error) {
+      console.error("Unable to edit comment:", error);
     }
   };
 
@@ -96,7 +100,7 @@ const CommentCard = ({comment, post}) => {
             ""
           )}
         </div>
-        {(comment.authorId === auth.currentUser.uid ||
+        {(comment.authorId === auth.currentUser?.uid ||
           userWebSiteRole === "administrateur") && (
           <div className="comment-actions-container">
             <span

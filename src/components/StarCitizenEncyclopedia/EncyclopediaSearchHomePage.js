@@ -35,75 +35,43 @@ const EncyclopediaSearchHomePage = () => {
   );
   const dispatch = useDispatch();
 
-  const handleRequest = async (e) => {
+  const handleRequest = (e) => {
     e.preventDefault();
+    dispatch(clearRSISearchResult());
 
-    await dispatch(clearRSISearchResult());
+    const query = searchValue.current?.value?.trim().toLowerCase() ?? "";
+    if (!query) return;
 
-    (await RSIStarSystems) &&
-      [...RSIStarSystems].find((starSystems) => {
-        starSystems.slug.includes(searchValue.current.value.toLowerCase());
-        if (
-          starSystems.slug.includes(searchValue.current.value.toLowerCase()) ===
-            true ||
-          starSystems.name.includes(searchValue.current.value) === true
-        ) {
-          dispatch(setRSIStarSystemsSearchResult(starSystems));
-        } else {
-          console.log("aucune correspondance trouvée");
-        }
-      });
+    const includesQuery = (value) =>
+      typeof value === "string" && value.toLowerCase().includes(query);
+    const dispatchMatches = (items, matches, action) => {
+      (items ?? []).filter(matches).forEach((item) => dispatch(action(item)));
+    };
 
-    (await RSICelestialObjects) &&
-      [...RSICelestialObjects].find((celestialObject) => {
-        celestialObject.slug.includes(searchValue.current.value.toLowerCase());
-        if (
-          celestialObject.slug.includes(
-            searchValue.current.value.toLowerCase()
-          ) === true ||
-          celestialObject.name.includes(searchValue.current.value) === true
-        ) {
-          dispatch(setRSICelestialObjectsSearchResult(celestialObject));
-        } else {
-          console.log("aucune correspondance trouvée");
-        }
-      });
-
-    (await RSIStations) &&
-      [...RSIStations].find((stations) => {
-        stations.slug.includes(searchValue.current.value.toLowerCase());
-        if (
-          stations.slug.includes(searchValue.current.value.toLowerCase()) ===
-            true ||
-          stations.name.includes(searchValue.current.value) === true ||
-          (stations.name.toLowerCase().includes(searchValue.current.value) ===
-            true &&
-            RSIStarSystemsSearchResult[0] !== null)
-        ) {
-          dispatch(setRSIStationsSearchResult(stations));
-        } else {
-          console.log("aucune correspondance trouvée");
-        }
-      });
-
-    (await RSIShips) &&
-      [...RSIShips].find((ships) => {
-        ships.slug.includes(searchValue.current.value.toLowerCase());
-        if (
-          ships.slug.includes(searchValue.current.value.toLowerCase()) ===
-            true ||
-          ships.name.includes(searchValue.current.value) === true ||
-          ships.manufacturer.name.includes(searchValue.current.value) ===
-            true ||
-          ships.manufacturer.slug.includes(
-            searchValue.current.value.toLowerCase()
-          ) === true
-        ) {
-          dispatch(setRSIShipsSearchResult(ships));
-        } else {
-          console.log("aucune correspondance trouvée");
-        }
-      });
+    dispatchMatches(
+      RSIStarSystems,
+      (system) => includesQuery(system.slug) || includesQuery(system.name),
+      setRSIStarSystemsSearchResult
+    );
+    dispatchMatches(
+      RSICelestialObjects,
+      (object) => includesQuery(object.slug) || includesQuery(object.name),
+      setRSICelestialObjectsSearchResult
+    );
+    dispatchMatches(
+      RSIStations,
+      (station) => includesQuery(station.slug) || includesQuery(station.name),
+      setRSIStationsSearchResult
+    );
+    dispatchMatches(
+      RSIShips,
+      (ship) =>
+        includesQuery(ship.slug) ||
+        includesQuery(ship.name) ||
+        includesQuery(ship.manufacturer?.name) ||
+        includesQuery(ship.manufacturer?.slug),
+      setRSIShipsSearchResult
+    );
   };
 
   return (

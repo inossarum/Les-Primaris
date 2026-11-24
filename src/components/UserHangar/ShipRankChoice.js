@@ -1,140 +1,120 @@
-import {doc, updateDoc} from "firebase/firestore";
+import {doc, runTransaction} from "firebase/firestore";
 import React, {useRef, useState} from "react";
 import {db} from "../../utils/firebase.config";
-import {useDispatch, useSelector} from "react-redux";
-import {setChosenRank} from "../../feature/militaryRanks.slice";
+
+const RANKS = [
+    "01 - vaisseau amiral",
+    "02 - vaisseau de commandement de sous flotte",
+    "03 - Vaisseau de commandement d'aile de combat",
+    "04 - Vaisseau chef de groupe",
+    "05 - Vaisseau chef d'escadrille",
+    "06 - Ailier",
+];
 
 const ShipRankChoice = ({ownedShipDatas}) => {
     const rank = useRef();
-    const dispatch = useDispatch();
+    const [errorMessage, setErrorMessage] = useState("");
+    const handleRankSwitch = async (event) => {
+        event.preventDefault();
+        const selectedRank = rank.current?.value;
+        if (!ownedShipDatas?.id || !selectedRank) {
+            setErrorMessage("Choisissez un rang avant de valider.");
+            return;
+        }
 
-    const chosenRank = useSelector((state) => state.militaryRanks.chosenRank);
-    const sharedShipList = useSelector(
-        (state) => state.sharedShips.sharedShipsList
-    );
-    const newShipSuperior = ownedShipDatas?.newShipHierarchicalSuperior;
+        const shipRef = doc(db, "shipsAndCrews", ownedShipDatas.id);
+        try {
+            await runTransaction(db, async (transaction) => {
+                const shipSnapshot = await transaction.get(shipRef);
+                if (!shipSnapshot.exists()) {
+                    throw new Error("Le vaisseau n'existe plus.");
+                }
 
-    const oldShipSuperior = sharedShipList.find(
-        (ship) => ship?.id === ownedShipDatas?.newShipHierarchicalSuperior?.id
-    );
+                const shipData = shipSnapshot.data();
+                const parentId = shipData.newShipHierarchicalSuperior?.id;
+                const childIds = (shipData.subordonateShips ?? [])
+                    .map((child) =>
+                        typeof child === "string" ? child : child?.id
+                    )
+                    .filter((id) => id && id !== shipSnapshot.id);
+                const relatedIds = [...new Set([parentId, ...childIds].filter(Boolean))];
+                const relatedRefs = relatedIds.map((id) =>
+                    doc(db, "shipsAndCrews", id)
+                );
+                const relatedSnapshots = await Promise.all(
+                    relatedRefs.map((reference) => transaction.get(reference))
+                );
 
-    const shipSubordonates = ownedShipDatas?.subordonateShips.map(
-        (ship) => ship?.id
-    );
+                const parentIndex = parentId ? relatedIds.indexOf(parentId) : -1;
+                const parentSnapshot =
+                    parentIndex >= 0 ? relatedSnapshots[parentIndex] : null;
+                const previousParent = parentSnapshot?.exists()
+                    ? {
+                          id: parentId,
+                          shipName: parentSnapshot.data().shipName ?? "",
+                      }
+                    : "";
 
-    const handleRankSwitch = async (e) => {
-        e.preventDefault();
+                if (parentSnapshot?.exists()) {
+                    const parentSubordinates =
+                        parentSnapshot.data().subordonateShips ?? [];
+                    transaction.update(relatedRefs[parentIndex], {
+                        subordonateShips: parentSubordinates.filter(
+                            (child) =>
+                                (typeof child === "string" ? child : child?.id) !==
+                                shipSnapshot.id
+                        ),
+                    });
+                }
 
-        // supprimer le vaisseau courant de la liste des subalternes de son ancien supérieur hiérarchique.
+                childIds.forEach((childId) => {
+                    const childIndex = relatedIds.indexOf(childId);
+                    const childSnapshot = relatedSnapshots[childIndex];
+                    if (childSnapshot?.exists()) {
+                        transaction.update(relatedRefs[childIndex], {
+                            rank: "",
+                            oldShipHierarchicalSuperior: {
+                                id: shipSnapshot.id,
+                                shipName: shipData.shipName ?? "",
+                            },
+                            newShipHierarchicalSuperior: "",
+                        });
+                    }
+                });
 
-        if (oldShipSuperior !== undefined && newShipSuperior !== undefined) {
-            await updateDoc(doc(db, "shipsAndCrews", oldShipSuperior?.id), {
-                subordonateShips: oldShipSuperior?.subordonateShips?.filter(
-                    (ship) => ship?.id !== ownedShipDatas?.id
-                ),
+                transaction.update(shipRef, {
+                    rank: selectedRank,
+                    subordonateShips: [],
+                    oldShipHierarchicalSuperior: previousParent,
+                    newShipHierarchicalSuperior: "",
+                });
             });
-        } else {
-            await console.log("ship superior inexistant");
+
+            setErrorMessage("");
+        } catch (error) {
+            setErrorMessage("Le changement de rang a échoué.");
+            console.error("Unable to change ship rank:", error);
         }
-
-        // supprimer le vaisseau courant comme vaisseau hierarchique de tous ses anciens subalternes.
-
-        shipSubordonates !== (undefined || null || []) ||
-        oldShipSuperior !== (undefined || null || "") ||
-        newShipSuperior !== (undefined || null || "")
-            ? await shipSubordonates?.forEach((ship) => {
-                  updateDoc(doc(db, "shipsAndCrews", ship), {
-                      oldShipHierarchicalSuperior: newShipSuperior,
-                      newShipHierarchicalSuperior: "",
-                      rank: "",
-                  });
-              })
-            : console.log("subalternes inexistants");
-
-        // changer le rang, MAJ ancien vaisseau commandement et supprimer tous les vaisseaux subalternes.
-
-        let oldShipHierarchicalSuperior = {};
-
-        if (ownedShipDatas?.newShipHierarchicalSuperior?.id !== undefined) {
-            oldShipHierarchicalSuperior = {
-                id: ownedShipDatas?.newShipHierarchicalSuperior?.id,
-                shipName: ownedShipDatas?.newShipHierarchicalSuperior?.shipName,
-            };
-        } else {
-            oldShipHierarchicalSuperior = "";
-        }
-
-        let subordonateShips = shipSubordonates.filter(
-            (ship) => ship?.id === ownedShipDatas?.id
-        );
-
-        shipSubordonates !== (undefined || null || "")
-            ? await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
-                  rank: chosenRank,
-                  subordonateShips: subordonateShips,
-                  oldShipHierarchicalSuperior: oldShipHierarchicalSuperior,
-                  newShipHierarchicalSuperior: "",
-              })
-            : await console.log("pas de subordonnés à mettre à jour");
     };
-
-    let rankChoiceMenu = "";
 
     return (
         <div>
-            {rankChoiceMenu}
-            <>
-                <select
-                    ref={rank}
-                    onChange={() => dispatch(setChosenRank(rank.current.value))}
-                >
-                    <option value="">Veuillez choisir un rang...</option>
-                    {ownedShipDatas?.rank !== "01 - vaisseau amiral" ? (
-                        <option value="01 - vaisseau amiral">
-                            01 - vaisseau amiral
+            <select ref={rank} defaultValue="">
+                <option value="">Veuillez choisir un rang...</option>
+                {RANKS.filter((option) => option !== ownedShipDatas?.rank).map(
+                    (option) => (
+                        <option key={option} value={option}>
+                            {option}
                         </option>
-                    ) : (
-                        ""
-                    )}
-                    {ownedShipDatas?.rank !==
-                    "02 - vaisseau de commandement de sous flotte" ? (
-                        <option value="02 - vaisseau de commandement de sous flotte">
-                            02 - vaisseau de commandement de sous flotte
-                        </option>
-                    ) : (
-                        ""
-                    )}
-                    {ownedShipDatas?.rank !==
-                    "03 - Vaisseau de commandement d'aile de combat" ? (
-                        <option value="03 - Vaisseau de commandement d'aile de combat">
-                            03 - Vaisseau de commandement d'aile de combat
-                        </option>
-                    ) : (
-                        ""
-                    )}
-                    {ownedShipDatas?.rank !== "04 - Vaisseau chef de groupe" ? (
-                        <option value="04 - Vaisseau chef de groupe">
-                            04 - Vaisseau chef de groupe
-                        </option>
-                    ) : (
-                        ""
-                    )}
-                    {ownedShipDatas?.rank !==
-                    "05 - Vaisseau chef d'escadrille" ? (
-                        <option value="05 - Vaisseau chef d'escadrille">
-                            05 - Vaisseau chef d'escadrille
-                        </option>
-                    ) : (
-                        ""
-                    )}
-                    {ownedShipDatas?.rank !== "06 - Ailier" ? (
-                        <option value="06 - Ailier">06 - Ailier</option>
-                    ) : (
-                        ""
-                    )}
-                </select>
-                <button onClick={(e) => handleRankSwitch(e)}>Valider</button>
-            </>
+                    )
+                )}
+            </select>
+            <button onClick={handleRankSwitch}>Valider</button>
+            {errorMessage && (
+                <span className="error-message" role="alert">
+                    {errorMessage}
+                </span>
+            )}
         </div>
     );
 };

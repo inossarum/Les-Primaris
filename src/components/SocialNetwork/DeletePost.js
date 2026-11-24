@@ -11,31 +11,25 @@ const DeletePost = ({post, imageRef}) => {
   const users = useSelector((state) => state.user.users);
   const comments = useSelector((state) => state.comments.commentsData);
 
-  const handleDelete = () => {
-    deleteDoc(doc(db, "posts", post.id));
-    users &&
-      [...users]
+  const handleDelete = async () => {
+    await Promise.all([
+      deleteDoc(doc(db, "posts", post.id)),
+      ...(users ?? [])
         .filter((user) => user.id !== post.authorId)
         .map((user) => {
-          const userNotificationsAfterRemoval = user.notifications.filter(
+          const notifications = (user.notifications ?? []).filter(
             (notification) =>
               notification?.associatedPost !== post?.notificationId
           );
-          updateDoc(doc(db, "users", user.id), {
-            notifications: userNotificationsAfterRemoval,
-          });
-        });
-
-    let i;
-    for (i = 0; i < comments.length; i++) {
-      if (comments[i].uid === post.id) {
-        deleteDoc(doc(db, "comments", comments[i].id));
-      }
-    }
-    if (imageRef !== undefined || imageRef !== "" || imageRef !== null) {
-      deleteObject(ref(storage, imageRef));
-    }
-
+          return updateDoc(doc(db, "users", user.id), {notifications});
+        }),
+      ...(comments ?? [])
+        .filter((comment) => comment.uid === post.id)
+        .map((comment) => deleteDoc(doc(db, "comments", comment.id))),
+      ...(typeof imageRef === "string" && imageRef.trim() !== ""
+        ? [deleteObject(ref(storage, imageRef))]
+        : []),
+    ]);
     dispatch(deletePost(post.id));
   };
 

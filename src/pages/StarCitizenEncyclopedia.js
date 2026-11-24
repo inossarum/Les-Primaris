@@ -54,7 +54,7 @@ const StarCitizenEncyclopedia = () => {
         .get(`https://api.fleetyards.net/v1/models/?perPage=200`)
         .then((res) => dispatch(getRSIShips(res.data)));
     }
-  }, []);
+  }, [RSICelestialObjects, RSIShips, RSIStarSystems, RSIStations, dispatch]);
 
   switch (RSIEncyclopediaPage) {
     case "home":

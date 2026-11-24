@@ -18,6 +18,7 @@ const UserCard = ({user}) => {
   const dispatch = useDispatch();
   const [editWebSiteRole, setEditWebSiteRole] = useState(false);
   const [editFactionPart, setEditFactionPart] = useState(false);
+  const [passwordResetMessage, setPasswordResetMessage] = useState("");
   const role = useRef();
 
   const handleEditWebSiteRole = async (e) => {
@@ -42,11 +43,19 @@ const UserCard = ({user}) => {
     setEditFactionPart(false);
   };
 
-  const passwordReseter = () => {
-    sendPasswordResetEmail(auth, user.email).then((res) => console.log(res));
+  const passwordReseter = async () => {
+    if (!user?.email) {
+      setPasswordResetMessage("Aucune adresse e-mail n’est enregistrée.");
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, user.email);
+      setPasswordResetMessage("E-mail de réinitialisation envoyé.");
+    } catch (error) {
+      console.error("Password reset failed:", error?.code || error?.name);
+      setPasswordResetMessage("L’e-mail de réinitialisation n’a pas pu être envoyé.");
+    }
   };
-
-  console.log(user);
 
   return (
     <div className="user-card">
@@ -54,7 +63,10 @@ const UserCard = ({user}) => {
         <div className="user-infos-container">
           <div className="profil-img-container">
             {user?.photo ? (
-              <img src={user.photo} alt="photo de profil de l'utilisateur" />
+              <img
+                src={user.photo}
+                alt={user?.pseudo ? `Portrait de ${user.pseudo}` : "Portrait"}
+              />
             ) : (
               <Avatar />
             )}
@@ -217,6 +229,9 @@ const UserCard = ({user}) => {
               <div className="edit-btn" onClick={() => passwordReseter()}>
                 Reset password
               </div>
+              {passwordResetMessage && (
+                <span role="status">{passwordResetMessage}</span>
+              )}
             </div>
           ) : (
             ""

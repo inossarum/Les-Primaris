@@ -9,6 +9,7 @@ import {
 
 const MilitaryShipInformationsForm = ({ship, shipFactionPart}) => {
     const [shared, setShared] = useState("non");
+    const [formError, setFormError] = useState("");
     const department = useRef();
     const [actualDepartment, setActualDepartment] = useState("");
     const fleet = useRef();
@@ -20,94 +21,79 @@ const MilitaryShipInformationsForm = ({ship, shipFactionPart}) => {
     const handleNewShipOwned = async (e) => {
         e.preventDefault();
 
-        if (
-            department?.current?.value !== "" &&
-            shipName?.current?.value !== ""
-        ) {
-            if (shared === "non") {
-                const data = {
-                    owner: currentUser?.currentUser,
-                    ownerId: currentUser?.userId,
-                    ownerFactionRank: currentUser?.factionRank,
-                    ownerFactionPart: currentUser?.factionPart,
-                    ownerWebSiteRole: currentUser?.webSiteRole,
-                    ownerPhoto: currentUser?.photo,
-                    createdAt: Date.now(),
-                    crewMembers: [],
-                    shipName: shipName?.current?.value,
-                    fleet: "",
-                    rank: "",
-                    newShipHierarchicalSuperior: "",
-                    oldShipHierarchicalSuperior: "",
-                    subordonateShips: [],
-                    ship: ship,
-                    shared: shared,
-                    factionPart: shipFactionPart,
-                    notificationId: "",
-                };
+        const shipNameValue = shipName.current?.value?.trim();
+        if (!shipNameValue) {
+            setFormError("Veuillez saisir le nom du vaisseau.");
+            return;
+        }
 
-                await addDoc(collection(db, "shipsAndCrews"), data);
-            }
-            if (shared === "oui") {
-                const data = {
-                    owner: currentUser?.currentUser,
-                    ownerId: currentUser?.userId,
-                    ownerFactionRank: currentUser?.factionRank,
-                    ownerFactionPart: currentUser?.factionPart,
-                    ownerWebSiteRole: currentUser?.webSiteRole,
-                    ownerPhoto: currentUser?.photo,
-                    createdAt: Date.now(),
-                    crewMembers: [],
-                    crewMemberPostulants: [],
-                    department: department?.current?.value,
-                    shipName: shipName?.current?.value,
-                    fleet: "",
-                    rank: "",
-                    newShipHierarchicalSuperior: "",
-                    oldShipHierarchicalSuperior: "",
-                    subordonateShips: [],
-                    ship: ship,
-                    shared: shared,
-                    factionPart: shipFactionPart,
-                    notificationId: Date.now() + Math.random(),
-                };
+        const departmentValue = department.current?.value;
+        const fleetValue = fleet.current?.value;
+        if (shared === "oui" && (!departmentValue || !fleetValue)) {
+            setFormError("Choisissez un département et une flotte.");
+            return;
+        }
+        setFormError("");
 
-                await addDoc(collection(db, "shipsAndCrews"), data);
+        const data = {
+            owner: currentUser?.currentUser,
+            ownerId: currentUser?.userId,
+            ownerFactionRank: currentUser?.factionRank,
+            ownerFactionPart: currentUser?.factionPart,
+            ownerWebSiteRole: currentUser?.webSiteRole,
+            ownerPhoto: currentUser?.photo,
+            createdAt: Date.now(),
+            crewMembers: [],
+            shipName: shipNameValue,
+            fleet: shared === "oui" ? fleetValue : "",
+            rank: "",
+            newShipHierarchicalSuperior: "",
+            oldShipHierarchicalSuperior: "",
+            subordonateShips: [],
+            ship,
+            shared,
+            factionPart: shipFactionPart,
+            notificationId: shared === "oui" ? Date.now() + Math.random() : "",
+        };
 
-                const notificationDatas = {
-                    shipOwner: currentUser?.currentUser,
-                    shipOwnerId: currentUser?.userId,
-                    createdAt: Date.now(),
-                    shipName: ship.name,
-                    associatedSharedShip: data.notificationId,
-                    type: "nouveau vaisseau militaire partagé",
-                };
+        if (shared === "oui") {
+            data.crewMemberPostulants = [];
+            data.department = departmentValue;
+        }
 
-                users &&
-                    [...users]
-                        .filter(
-                            (user) =>
-                                (user.factionPart === "militaire" &&
-                                    user.id !== currentUser?.userId) ||
-                                (user.factionPart === "civil-militaire" &&
-                                    user.id !== currentUser?.userId)
-                        )
-                        .map((user) => {
-                            const userNotifications = user.notifications;
-                            updateDoc(doc(db, "users", user.id), {
-                                notifications: [
-                                    ...userNotifications,
-                                    notificationDatas,
-                                ],
-                            });
-                        });
-            }
+        await addDoc(collection(db, "shipsAndCrews"), data);
 
-            dispatch(
-                dispatch(setSelectedShip(false)),
-                setPrivateRoomShipsListSearchResult("")
+        if (shared === "oui") {
+            const notificationDatas = {
+                shipOwner: currentUser?.currentUser,
+                shipOwnerId: currentUser?.userId,
+                createdAt: Date.now(),
+                shipName: ship.name,
+                associatedSharedShip: data.notificationId,
+                type: "nouveau vaisseau militaire partagé",
+            };
+
+            await Promise.all(
+                (users ?? [])
+                    .filter(
+                        (user) =>
+                            ["militaire", "civil-militaire"].includes(
+                                user.factionPart
+                            ) && user.id !== currentUser?.userId
+                    )
+                    .map((user) =>
+                        updateDoc(doc(db, "users", user.id), {
+                            notifications: [
+                                ...(user.notifications ?? []),
+                                notificationDatas,
+                            ],
+                        })
+                    )
             );
         }
+
+        dispatch(setSelectedShip(false));
+        dispatch(setPrivateRoomShipsListSearchResult(""));
     };
 
     let fleetChoiceMenu = "";
@@ -206,6 +192,11 @@ const MilitaryShipInformationsForm = ({ship, shipFactionPart}) => {
         >
             <h3>Exercitus Primaris sélectionné</h3>
             <h4>Mettre ce vaisseau à disposition de la corporation ?</h4>
+            {formError && (
+                <p role="alert" className="error-message">
+                    {formError}
+                </p>
+            )}
             <select onChange={(e) => setShared(e.target.value)}>
                 <option value="non">Non</option>
                 <option value="oui">Oui</option>
@@ -235,18 +226,19 @@ const MilitaryShipInformationsForm = ({ship, shipFactionPart}) => {
                                 </option>
                                 <option value="aerospatial">Aerospatial</option>
                                 <option value="logistics">Logistique</option>
-                                <option value="militaryTrainingCenter">
+                                <option value="military-training-center">
                                     Académie Militaire
                                 </option>
                                 <option value="staff">Etat Major</option>
-                                <option value="militaryResearch">
+                                <option value="military-research">
                                     Recherche
                                 </option>
-                                <option value="militaryMedicine">
+                                <option value="military-medicine">
                                     Médecine
                                 </option>
                             </select>
                         </div>{" "}
+                        {fleetChoiceMenu}
                         <div className="ship-informations-form-ship-employment-sub-container">
                             <h4>Nom du vaisseau</h4>
                             <input

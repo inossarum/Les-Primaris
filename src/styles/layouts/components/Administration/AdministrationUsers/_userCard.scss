@@ -228,6 +228,7 @@
         width: 100%;
 
         .edit-btn {
+          width: 100%;
           margin: 5px auto;
           padding: 5px;
           border-top: 1px solid $grey4;
@@ -239,7 +240,14 @@
           box-shadow: 0 1px 3px 1px $darkShadow;
           text-transform: uppercase;
           text-align: center;
+          font: inherit;
           transition: 0.1s;
+          cursor: pointer;
+
+          &:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+          }
 
           &:hover {
             background: $violet1;

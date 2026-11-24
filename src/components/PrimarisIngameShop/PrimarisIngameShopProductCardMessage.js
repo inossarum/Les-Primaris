@@ -18,15 +18,25 @@ const PrimarisIngameShopProductCardMessage = ({message, product}) => {
 
   const handleDeleteMessage = async (e) => {
     e.preventDefault();
+    const canDelete =
+      message?.messageAuthorId === currentUser.userId ||
+      ["administrateur", "moderateur"].includes(currentUser.webSiteRole);
+    if (!canDelete || !product?.id) return;
 
-    const messagesAfterDelete = product.messages.filter(
-      (productMessage) =>
-        message.messageCreatedAt !== productMessage.messageCreatedAt
+    const messages = Array.isArray(product.messages) ? product.messages : [];
+    const messagesAfterDelete = messages.filter((productMessage) =>
+      message?.messageId
+        ? productMessage?.messageId !== message.messageId
+        : productMessage !== message
     );
 
-    updateDoc(doc(db, "primarisIngameShop", product.id), {
-      messages: messagesAfterDelete,
-    });
+    try {
+      await updateDoc(doc(db, "primarisIngameShop", product.id), {
+        messages: messagesAfterDelete,
+      });
+    } catch (error) {
+      console.error("Impossible de supprimer le message :", error);
+    }
   };
 
   return (
@@ -43,9 +53,14 @@ const PrimarisIngameShopProductCardMessage = ({message, product}) => {
         {message?.messageAuthorId === currentUser.userId ||
         currentUser.webSiteRole === "administrateur" ||
         currentUser.webSiteRole === "moderateur" ? (
-          <div>
-            <Delete onClick={(e) => handleDeleteMessage(e)} />
-          </div>
+          <button
+            className="primaris-ingame-shop-product-card-message-delete-button"
+            type="button"
+            aria-label="Supprimer le message"
+            onClick={handleDeleteMessage}
+          >
+            <Delete />
+          </button>
         ) : (
           ""
         )}

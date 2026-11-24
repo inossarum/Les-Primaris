@@ -1,12 +1,10 @@
-import {doc, getDoc, updateDoc} from "firebase/firestore";
-import React, {useEffect} from "react";
+import {doc, updateDoc} from "firebase/firestore";
 
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import {useSelector} from "react-redux";
 import {db} from "../../utils/firebase.config";
-import {setShipOwnerDatas} from "../../feature/userPrivateRoom.slice";
 
 const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
-  const dispatch = useDispatch();
   const crewMemberPostulantDatas = useSelector((state) =>
     state.user.users.find((user) => user.id === crewMemberPostulant.userId)
   );
@@ -14,8 +12,6 @@ const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
   const shipOwnerDatas = useSelector((state) =>
     state.user.users.find((user) => user.id === ownedShipDatas.ownerId)
   );
-
-  console.log(ownedShipDatas);
 
   const ownedShipPostulantCardNotificationId =
     ownedShipDatas.crewMemberPostulants.find(
@@ -92,14 +88,6 @@ const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
       notifications: shipOwnerNotificationsAfterActionOnThePostulantCard,
     });
   };
-
-  console.log(crewMemberPostulant);
-
-  useEffect(() => {
-    getDoc(doc(db, "users", ownedShipDatas.ownerId)).then((res) =>
-      dispatch(setShipOwnerDatas({...res.data()}))
-    );
-  }, []);
 
   return (
     <div className="crew-member-postulant-card-body">

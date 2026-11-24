@@ -8,34 +8,33 @@ import {getUserPhoto} from "../../feature/user.slice";
 
 const ProfileCard = ({profileImage}) => {
   const actualUser = useSelector((state) => state.user);
-  const imageRef = ref(storage, profileImage);
+  const imageRef =
+    typeof profileImage === "string" && profileImage.trim()
+      ? ref(storage, profileImage)
+      : null;
 
   const actualUserUploadedImagesList = useSelector(
     (state) => state.user.uploadedImagesList
   );
   const dispatch = useDispatch();
 
-  const deleteProfileImage = (e) => {
+  const deleteProfileImage = async (e) => {
     e.preventDefault();
+    if (!imageRef || !actualUser.userId) return;
 
-    if (
-      profileImage !== undefined ||
-      profileImage !== "" ||
-      profileImage !== null
-    ) {
-      deleteObject(imageRef)
-        .then((res) => console.log("image correctement supprimée de la DB"))
-        .catch((err) => console.log(err));
+    const updateData = {
+      uploadedImagesList: (actualUserUploadedImagesList ?? []).filter(
+        (image) => image !== profileImage
+      ),
+    };
+    if (actualUser.photo === profileImage) updateData.photo = "";
 
-      const imagesListUpdated =
-        actualUserUploadedImagesList &&
-        [...actualUserUploadedImagesList].filter(
-          (image) => JSON.stringify(image) !== JSON.stringify(profileImage)
-        );
-
-      updateDoc(doc(db, "users", actualUser.userId), {
-        uploadedImagesList: imagesListUpdated,
-      });
+    try {
+      await updateDoc(doc(db, "users", actualUser.userId), updateData);
+      if (actualUser.photo === profileImage) dispatch(getUserPhoto(""));
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error("Unable to remove profile image:", error);
     }
   };
 
@@ -46,19 +45,19 @@ const ProfileCard = ({profileImage}) => {
       photo: profileImage,
     };
 
-    updateDoc(doc(db, "users", actualUser.userId), imageDatas);
+    await updateDoc(doc(db, "users", actualUser.userId), imageDatas);
     dispatch(getUserPhoto(profileImage));
   };
 
   return (
     <div className="profile-card-general-container">
       <div className="profile-image-wrapper">
-        {profileImage !== (undefined || null || "") ? (
+        {typeof profileImage === "string" && profileImage.trim() ? (
           <>
             <img
               className="profile-photo"
               src={profileImage}
-              alt={profileImage}
+              alt="Portrait de profil"
               onClick={(e) => handleUpdateUserProfileImage(e)}
             />
             <span>

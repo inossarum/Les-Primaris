@@ -15,22 +15,28 @@ const EditEmail = () => {
 
   const editAuthEmail = async (e) => {
     e.preventDefault();
-    if (editedEmail.current.value === "" || null || undefined) {
+    const nextEmail = editedEmail.current?.value?.trim();
+    if (!nextEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nextEmail)) {
       setErrorMessage(" Vous devez entrer une adresse mail valide !");
-    } else {
-      try {
-        await updateEmail(auth.currentUser, editedEmail.current.value);
-        await updateDoc(doc(db, "users", `${auth.currentUser.uid}`), {
-          email: `${editedEmail.current.value}`,
-        });
-        await updateDoc(doc(db, "onlineUsers", `${auth.currentUser.uid}`), {
-          email: `${editedEmail.current.value}`,
-        });
-        dispatch(getUserEmail(editedEmail.current.value));
-        setIsEditingEmail(false);
-      } catch (err) {
-        console.log(err);
-      }
+      return;
+    }
+
+    if (!auth.currentUser) return;
+
+    try {
+      await updateEmail(auth.currentUser, nextEmail);
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        email: nextEmail,
+      });
+      await updateDoc(doc(db, "onlineUsers", auth.currentUser.uid), {
+        email: nextEmail,
+      });
+      dispatch(getUserEmail(nextEmail));
+      setErrorMessage("");
+      setIsEditingEmail(false);
+    } catch (error) {
+      setErrorMessage("La mise à jour de l’adresse e-mail a échoué.");
+      console.error("Unable to update email:", error);
     }
   };
 

@@ -1,281 +1,156 @@
-import {doc, updateDoc} from "firebase/firestore";
-import React, {useRef} from "react";
+import {doc, runTransaction} from "firebase/firestore";
+import React, {useState} from "react";
+import {useSelector} from "react-redux";
 import {db} from "../../utils/firebase.config";
-import {useDispatch, useSelector} from "react-redux";
-import {setHierarchicalShipSelected} from "../../feature/sharedShips.slice";
+
+const REQUIRED_SUPERIOR_RANK = {
+    "02 - vaisseau de commandement de sous flotte": "01 - vaisseau amiral",
+    "03 - Vaisseau de commandement d'aile de combat":
+        "02 - vaisseau de commandement de sous flotte",
+    "04 - Vaisseau chef de groupe":
+        "03 - Vaisseau de commandement d'aile de combat",
+    "05 - Vaisseau chef d'escadrille": "04 - Vaisseau chef de groupe",
+    "06 - Ailier": "05 - Vaisseau chef d'escadrille",
+};
 
 const ShipHierarchicalSuperiorChoice = ({ownedShipDatas}) => {
-    const dispatch = useDispatch();
-    const shipHierarchicalSuperior = useRef();
-    const dispatchedShipSuperior = useSelector(
-        (state) => state.sharedShips?.hierarchicalShipSelected
+    const [selectedSuperiorId, setSelectedSuperiorId] = useState(
+        ownedShipDatas?.newShipHierarchicalSuperior?.id ?? ""
     );
+    const [errorMessage, setErrorMessage] = useState("");
     const sharedShipList = useSelector(
         (state) => state.sharedShips.sharedShipsList
     );
-    const oldShipSuperior = sharedShipList.find(
-        (ship) => ship?.id === ownedShipDatas?.newShipHierarchicalSuperior?.id
+    const expectedSuperiorRank = REQUIRED_SUPERIOR_RANK[ownedShipDatas?.rank];
+    const superiorCandidates = (sharedShipList ?? []).filter(
+        (ship) =>
+            ship.id !== ownedShipDatas?.id &&
+            ship.fleet === ownedShipDatas?.fleet &&
+            ship.rank === expectedSuperiorRank
     );
 
-    const sameFleetAdmiralShipsList = useSelector((state) =>
-        [...state.sharedShips.sharedShipsList]
-            .filter((ship) => ship.fleet === ownedShipDatas.fleet)
-            .filter((ship) => ship.rank === "01 - vaisseau amiral")
-    );
-
-    const sameFleetUnderFleetShipsList = useSelector((state) =>
-        [...state.sharedShips.sharedShipsList]
-            .filter((ship) => ship.fleet === ownedShipDatas.fleet)
-            .filter(
-                (ship) =>
-                    ship.rank === "02 - vaisseau de commandement de sous flotte"
-            )
-    );
-    const sameFleetBattleWingShipsList = useSelector((state) =>
-        [...state.sharedShips.sharedShipsList]
-            .filter((ship) => ship.fleet === ownedShipDatas.fleet)
-            .filter(
-                (ship) =>
-                    ship.rank ===
-                    "03 - Vaisseau de commandement d'aile de combat"
-            )
-    );
-    const sameFleetGroupChiefShipsList = useSelector((state) =>
-        [...state.sharedShips.sharedShipsList]
-            .filter((ship) => ship.fleet === ownedShipDatas.fleet)
-            .filter((ship) => ship.rank === "04 - Vaisseau chef de groupe")
-    );
-
-    const sameFleetSquadronShipsList = useSelector((state) =>
-        [...state.sharedShips.sharedShipsList]
-            .filter((ship) => ship.fleet === ownedShipDatas.fleet)
-            .filter((ship) => ship.rank === "05 - Vaisseau chef d'escadrille")
-    );
-
-    const handleHierarchicalSuperiorSwitch = async (e) => {
-        e.preventDefault();
-
-        const shipSuperior = sharedShipList.find(
-            (ship) =>
-                ship?.shipName === shipHierarchicalSuperior?.current?.value
-        );
-
-        await dispatch(setHierarchicalShipSelected(shipSuperior));
-
-        console.log(sameFleetBattleWingShipsList);
-    };
-
-    const sendHierarchicalShipDatas = async (e) => {
-        let subordonateShips = dispatchedShipSuperior?.subordonateShips;
-
-        const subordonateShipData = {
-            id: ownedShipDatas.id,
-            shipName: ownedShipDatas.shipName,
-        };
-
-        await console.log("data collectée");
-
-        try {
-            oldShipSuperior !== (undefined && null) ||
-            subordonateShips !== (undefined && null)
-                ? await updateDoc(
-                      doc(db, "shipsAndCrews", oldShipSuperior?.id),
-                      {
-                          subordonateShips:
-                              oldShipSuperior?.subordonateShips.filter(
-                                  (ship) => ship?.id !== ownedShipDatas?.id
-                              ),
-                      }
-                  )
-                : await console.log(
-                      "erreur retrait du vaisseau subalterne de l'ancien supérieur hiérarchique"
-                  );
-        } catch (error) {
-            await console.log(
-                error +
-                    "erreur retrait du vaisseau subalterne de l'ancien supérieur hiérarchique"
-            );
+    const sendHierarchicalShipDatas = async (event) => {
+        event.preventDefault();
+        const currentShipId = ownedShipDatas?.id;
+        if (!currentShipId || !selectedSuperiorId || !expectedSuperiorRank) {
+            setErrorMessage("Choisissez un vaisseau supérieur valide.");
+            return;
         }
 
-        // Modification du vaisseau supérieur
-        if (oldShipSuperior !== undefined && oldShipSuperior !== "") {
-            await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
-                oldShipHierarchicalSuperior: {
-                    id: oldShipSuperior?.id,
-                    shipName: oldShipSuperior?.shipName,
-                },
+        const currentShipRef = doc(db, "shipsAndCrews", currentShipId);
+        const newSuperiorRef = doc(
+            db,
+            "shipsAndCrews",
+            selectedSuperiorId
+        );
+
+        try {
+            await runTransaction(db, async (transaction) => {
+                const [currentShipSnapshot, newSuperiorSnapshot] =
+                    await Promise.all([
+                        transaction.get(currentShipRef),
+                        transaction.get(newSuperiorRef),
+                    ]);
+                if (!currentShipSnapshot.exists() || !newSuperiorSnapshot.exists()) {
+                    throw new Error("Le vaisseau sélectionné est introuvable.");
+                }
+
+                const currentShip = currentShipSnapshot.data();
+                const newSuperior = newSuperiorSnapshot.data();
+                if (
+                    newSuperior.rank !==
+                        REQUIRED_SUPERIOR_RANK[currentShip.rank] ||
+                    newSuperior.fleet !== currentShip.fleet
+                ) {
+                    throw new Error("Le supérieur choisi n'est pas compatible.");
+                }
+
+                const previousSuperiorId =
+                    currentShip.newShipHierarchicalSuperior?.id;
+                const previousSuperiorRef = previousSuperiorId
+                    ? doc(db, "shipsAndCrews", previousSuperiorId)
+                    : null;
+                const previousSuperiorSnapshot =
+                    previousSuperiorRef &&
+                    previousSuperiorId !== selectedSuperiorId
+                        ? await transaction.get(previousSuperiorRef)
+                        : null;
+
+                if (previousSuperiorSnapshot?.exists()) {
+                    const previousSubordinates =
+                        previousSuperiorSnapshot.data().subordonateShips ?? [];
+                    transaction.update(previousSuperiorRef, {
+                        subordonateShips: previousSubordinates.filter(
+                            (ship) =>
+                                (typeof ship === "string" ? ship : ship?.id) !==
+                                currentShipSnapshot.id
+                        ),
+                    });
+                }
+
+                const newSubordinates =
+                    newSuperior.subordonateShips ?? [];
+                transaction.update(newSuperiorRef, {
+                    subordonateShips: [
+                        ...newSubordinates.filter(
+                            (ship) =>
+                                (typeof ship === "string" ? ship : ship?.id) !==
+                                currentShipSnapshot.id
+                        ),
+                        {
+                            id: currentShipSnapshot.id,
+                            shipName: currentShip.shipName ?? "",
+                        },
+                    ],
+                });
+                transaction.update(currentShipRef, {
+                    oldShipHierarchicalSuperior: previousSuperiorId
+                        ? {
+                              id: previousSuperiorId,
+                              shipName:
+                                  previousSuperiorSnapshot?.data()?.shipName ??
+                                  currentShip.newShipHierarchicalSuperior
+                                      ?.shipName ??
+                                  "",
+                          }
+                        : "",
+                    newShipHierarchicalSuperior: {
+                        id: newSuperiorSnapshot.id,
+                        shipName: newSuperior.shipName ?? "",
+                    },
+                });
             });
-        } else await console.log("erreur MAJ ancien supérieur");
 
-        await console.log("MAJ ancien supérieur OK");
-
-        dispatchedShipSuperior !== undefined
-            ? await updateDoc(doc(db, "shipsAndCrews", ownedShipDatas?.id), {
-                  newShipHierarchicalSuperior: {
-                      id: dispatchedShipSuperior?.id,
-                      shipName: dispatchedShipSuperior?.shipName,
-                  },
-              })
-            : await console.log("erreur MAJ du supérieur hiérarchique");
-
-        await console.log("MAJ du supérieur hiérarchique OK");
-
-        // Modification des vaisseaux subalternes
-        dispatchedShipSuperior !== (undefined || null || "") ||
-        subordonateShips !== (undefined || null || "")
-            ? await updateDoc(
-                  doc(db, "shipsAndCrews", dispatchedShipSuperior?.id),
-                  {
-                      subordonateShips: [
-                          ...subordonateShips,
-                          subordonateShipData,
-                      ],
-                  }
-              )
-            : await console.log("erreur ajout du vaisseau subalterne");
-
-        await console.log("ajout du vaisseau subalterne OK");
-
-        // retrait du vaisseau subordonné de l'ancien superieur hiérarchique
-
-        await console.log("datas sent");
+            setErrorMessage("");
+        } catch (error) {
+            setErrorMessage("Le changement de supérieur hiérarchique a échoué.");
+            console.error("Unable to change ship hierarchy:", error);
+        }
     };
 
-    console.log(sameFleetUnderFleetShipsList);
-
-    let selectShipsCommanderList = "";
-
-    switch (ownedShipDatas?.rank) {
-        case "02 - vaisseau de commandement de sous flotte":
-            selectShipsCommanderList = (
-                <>
-                    <select
-                        ref={shipHierarchicalSuperior}
-                        onChange={(e) => handleHierarchicalSuperiorSwitch(e)}
-                    >
-                        <option value="">
-                            Veuillez choisir un vaisseau de commandement...
-                        </option>
-                        {sameFleetAdmiralShipsList.map((ship) =>
-                            oldShipSuperior?.id !== ship?.id ? (
-                                <option>{ship.shipName}</option>
-                            ) : (
-                                ""
-                            )
-                        )}
-                    </select>
-                    <button onClick={(e) => sendHierarchicalShipDatas(e)}>
-                        Valider
-                    </button>
-                </>
-            );
-            break;
-        case "03 - Vaisseau de commandement d'aile de combat":
-            selectShipsCommanderList = (
-                <>
-                    <select
-                        ref={shipHierarchicalSuperior}
-                        onChange={(e) => handleHierarchicalSuperiorSwitch(e)}
-                    >
-                        <option value="">
-                            Veuillez choisir un vaisseau de commandement...
-                        </option>
-                        {sameFleetUnderFleetShipsList.map((ship) =>
-                            oldShipSuperior?.id !== ship?.id ? (
-                                <option>{ship.shipName}</option>
-                            ) : (
-                                ""
-                            )
-                        )}
-                    </select>
-                    <button onClick={(e) => sendHierarchicalShipDatas(e)}>
-                        Valider
-                    </button>
-                </>
-            );
-            break;
-        case "04 - Vaisseau chef de groupe":
-            selectShipsCommanderList = (
-                <>
-                    <select
-                        ref={shipHierarchicalSuperior}
-                        onChange={(e) => handleHierarchicalSuperiorSwitch(e)}
-                    >
-                        <option value="">
-                            Veuillez choisir un vaisseau de commandement...
-                        </option>
-                        {sameFleetBattleWingShipsList.map((ship) =>
-                            oldShipSuperior?.id !== ship?.id ? (
-                                <option>{ship.shipName}</option>
-                            ) : (
-                                ""
-                            )
-                        )}
-                    </select>
-                    <button onClick={(e) => sendHierarchicalShipDatas(e)}>
-                        Valider
-                    </button>
-                </>
-            );
-            break;
-        case "05 - Vaisseau chef d'escadrille":
-            selectShipsCommanderList = (
-                <>
-                    <select
-                        ref={shipHierarchicalSuperior}
-                        onChange={(e) => handleHierarchicalSuperiorSwitch(e)}
-                    >
-                        <option value="">
-                            Veuillez choisir un vaisseau de commandement...
-                        </option>
-                        {sameFleetGroupChiefShipsList.map((ship) =>
-                            oldShipSuperior?.id !== ship?.id ? (
-                                <option>{ship.shipName}</option>
-                            ) : (
-                                ""
-                            )
-                        )}
-                    </select>
-                    <button onClick={(e) => sendHierarchicalShipDatas(e)}>
-                        Valider
-                    </button>
-                </>
-            );
-            break;
-
-        case "06 - Ailier":
-            selectShipsCommanderList = (
-                <>
-                    <select
-                        ref={shipHierarchicalSuperior}
-                        onChange={(e) => handleHierarchicalSuperiorSwitch(e)}
-                    >
-                        <option value="">
-                            Veuillez choisir un vaisseau de commandement...
-                        </option>
-                        {sameFleetSquadronShipsList.map((ship) =>
-                            oldShipSuperior?.id !== ship?.id ? (
-                                <option>{ship.shipName}</option>
-                            ) : (
-                                ""
-                            )
-                        )}
-                    </select>
-                    <button onClick={(e) => sendHierarchicalShipDatas(e)}>
-                        Valider
-                    </button>
-                </>
-            );
-            break;
-        default:
-    }
-
-    let rankChoiceMenu = "";
+    if (!expectedSuperiorRank) return null;
 
     return (
         <div>
-            {rankChoiceMenu}
-            <>{selectShipsCommanderList}</>
+            <select
+                value={selectedSuperiorId}
+                onChange={(event) => setSelectedSuperiorId(event.target.value)}
+            >
+                <option value="">Veuillez choisir un vaisseau de commandement...</option>
+                {superiorCandidates.map((ship) => (
+                    <option key={ship.id} value={ship.id}>
+                        {ship.shipName}
+                    </option>
+                ))}
+            </select>
+            <button type="button" onClick={sendHierarchicalShipDatas}>
+                Valider
+            </button>
+            {errorMessage && (
+                <span className="error-message" role="alert">
+                    {errorMessage}
+                </span>
+            )}
         </div>
     );
 };

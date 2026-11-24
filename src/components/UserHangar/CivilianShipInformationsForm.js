@@ -15,81 +15,86 @@ const CivilianShipInformationsForm = ({ship, shipFactionPart}) => {
   const currentUser = useSelector((state) => state.user);
   const [shipNameErrorMessage, setShipNameErrorMessage] = useState("");
   const [departmentErrorMessage, setDepartmentErrorMessage] = useState("");
+  const [fleetErrorMessage, setFleetErrorMessage] = useState("");
   const [actualDepartment, setActualDepartment] = useState("");
 
   const handleNewShipOwned = async (e) => {
     e.preventDefault();
 
-    if (department?.current?.value !== "" && shipName?.current?.value !== "") {
-      if (shared === "non") {
-        const data = {
-          owner: currentUser?.currentUser,
-          ownerId: currentUser?.userId,
-          ownerFactionRank: currentUser?.factionRank,
-          ownerFactionPart: currentUser?.factionPart,
-          ownerWebSiteRole: currentUser?.webSiteRole,
-          ownerPhoto: currentUser?.photo,
-          createdAt: Date.now(),
-          crewMembers: [],
-          shipName: shipName?.current?.value,
-          ship: ship,
-          shared: shared,
-          factionPart: shipFactionPart,
-        };
-
-        await addDoc(collection(db, "shipsAndCrews"), data);
-      }
-      if (shared === "oui") {
-        const data = {
-          owner: currentUser?.currentUser,
-          ownerId: currentUser?.userId,
-          ownerFactionRank: currentUser?.factionRank,
-          ownerFactionPart: currentUser?.factionPart,
-          ownerWebSiteRole: currentUser?.webSiteRole,
-          ownerPhoto: currentUser?.photo,
-          createdAt: Date.now(),
-          crewMembers: [],
-          crewMemberPostulants: [],
-          department: department?.current?.value,
-          shipName: shipName?.current?.value,
-          fleet: fleet?.current?.value,
-          ship: ship,
-          shipRole: shipRole.current.value,
-          shared: shared,
-          factionPart: shipFactionPart,
-          notificationId: Date.now() + Math.random(),
-        };
-
-        await addDoc(collection(db, "shipsAndCrews"), data);
-
-        const notificationDatas = {
-          shipOwner: currentUser?.currentUser,
-          shipOwnerId: currentUser?.userId,
-          createdAt: Date.now(),
-          shipName: ship.name,
-          associatedSharedShip: data.notificationId,
-          type: "nouveau vaisseau civil partagé",
-        };
-
-        users &&
-          [...users]
-            .filter(
-              (user) =>
-                (user.factionPart === "civil-militaire" &&
-                  user.id !== currentUser?.userId) ||
-                (user.factionPart === "civil" &&
-                  user.id !== currentUser?.userId)
-            )
-            .map((user) => {
-              const userNotifications = user.notifications;
-              updateDoc(doc(db, "users", user.id), {
-                notifications: [...userNotifications, notificationDatas],
-              });
-            });
-      }
-
-      dispatch(dispatch(setSelectedShip(false)));
+    const shipNameValue = shipName.current?.value?.trim();
+    if (!shipNameValue) {
+      setShipNameErrorMessage("Veuillez saisir le nom du vaisseau.");
+      return;
     }
+    setShipNameErrorMessage("");
+
+    const departmentValue = department.current?.value;
+    const fleetValue = fleet.current?.value;
+    if (shared === "oui" && !departmentValue) {
+      setDepartmentErrorMessage("Veuillez choisir un département.");
+      return;
+    }
+    setDepartmentErrorMessage("");
+    if (shared === "oui" && !fleetValue) {
+      setFleetErrorMessage("Veuillez choisir une flotte.");
+      return;
+    }
+    setFleetErrorMessage("");
+
+    const data = {
+      owner: currentUser?.currentUser,
+      ownerId: currentUser?.userId,
+      ownerFactionRank: currentUser?.factionRank,
+      ownerFactionPart: currentUser?.factionPart,
+      ownerWebSiteRole: currentUser?.webSiteRole,
+      ownerPhoto: currentUser?.photo,
+      createdAt: Date.now(),
+      crewMembers: [],
+      shipName: shipNameValue,
+      ship,
+      shared,
+      factionPart: shipFactionPart,
+    };
+
+    if (shared === "oui") {
+      data.crewMemberPostulants = [];
+      data.department = departmentValue;
+      data.fleet = fleetValue;
+      data.shipRole = shipRole.current?.value?.trim() ?? "";
+      data.notificationId = Date.now() + Math.random();
+    }
+
+    await addDoc(collection(db, "shipsAndCrews"), data);
+
+    if (shared === "oui") {
+      const notificationDatas = {
+        shipOwner: currentUser?.currentUser,
+        shipOwnerId: currentUser?.userId,
+        createdAt: Date.now(),
+        shipName: ship.name,
+        associatedSharedShip: data.notificationId,
+        type: "nouveau vaisseau civil partagé",
+      };
+
+      await Promise.all(
+        (users ?? [])
+          .filter(
+            (user) =>
+              ["civil-militaire", "civil"].includes(user.factionPart) &&
+              user.id !== currentUser?.userId
+          )
+          .map((user) =>
+            updateDoc(doc(db, "users", user.id), {
+              notifications: [
+                ...(user.notifications ?? []),
+                notificationDatas,
+              ],
+            })
+          )
+      );
+    }
+
+    dispatch(setSelectedShip(false));
   };
 
   let fleetChoiceMenu = "";
@@ -249,11 +254,11 @@ const CivilianShipInformationsForm = ({ship, shipFactionPart}) => {
             <div className="ship-informations-form-ship-employment-sub-container">
               <h4>Choix de la flotte</h4>
               {fleetChoiceMenu}
+              <span className="error-message">{fleetErrorMessage}</span>
             </div>
             <div className="ship-informations-form-ship-employment-sub-container">
               <h4>Nom du vaisseau</h4>
               <input type="text" placeholder="Nom..." ref={shipName} />
-              <span className="error-message">{shipNameErrorMessage}</span>
             </div>
             <div className="ship-informations-form-ship-employment-sub-container">
               <h4>Mission ou rôle souhaité</h4>
@@ -262,7 +267,6 @@ const CivilianShipInformationsForm = ({ship, shipFactionPart}) => {
                 placeholder="Mission ou rôle souhaité..."
                 ref={shipRole}
               />
-              <span className="error-message">{shipNameErrorMessage}</span>
             </div>
           </div>
         </>

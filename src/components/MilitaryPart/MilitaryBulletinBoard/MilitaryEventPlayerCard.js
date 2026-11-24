@@ -12,8 +12,6 @@ const MilitaryEventPlayerCard = ({player}) => {
     )
   );
 
-  console.log();
-
   return (
     <div
       className={

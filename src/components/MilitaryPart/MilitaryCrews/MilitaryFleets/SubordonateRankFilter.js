@@ -7,31 +7,12 @@ import SquadronChiefCard from "../SquadronChiefCard";
 import WingManCard from "../WingManCard";
 
 function SubordonateRankFilter({fleetCard}) {
-    const user = useSelector((state) => state.user);
-    const sharedShipsList = useSelector(
-        (state) => state.sharedShips.sharedShipsList
-    );
-
-    // Récupération des infos complètes de vaisseau actuel.
     const actualShip = useSelector((state) =>
         state.sharedShips.sharedShipsList.find(
             (ship) => ship.id === fleetCard.id
         )
     );
-
-    // Récupération des infos concernant les vaisseaux subordonnés au vaisseau actuel
-
-    const actualShipSubordonateShipsList = actualShip?.subordonateShips.map(
-        (subordonateShip) => subordonateShip
-    );
-
-    // Récupération des infos détaillées de chaque subordonnés.
-
-    let actualShipSubordonateShipsListDetailed = [];
-
-    const sharedShipsListMapped = sharedShipsList.map((ship) => ship.id);
-
-    console.log(actualShip.id);
+    if (!actualShip) return null;
 
     let rankFilter = "";
 
@@ -40,7 +21,7 @@ function SubordonateRankFilter({fleetCard}) {
             rankFilter = (
                 <>
                     <UnderFleetCommanderCard
-                        key={Math.random()}
+                        key={actualShip.id}
                         underFleetCommanderShip={actualShip}
                     />
                 </>
@@ -50,7 +31,7 @@ function SubordonateRankFilter({fleetCard}) {
             rankFilter = (
                 <>
                     <BattleWingCommanderCard
-                        key={Math.random()}
+                        key={actualShip.id}
                         battleWingCommanderShip={actualShip}
                     />
                 </>
@@ -60,7 +41,7 @@ function SubordonateRankFilter({fleetCard}) {
             rankFilter = (
                 <>
                     <GroupCommanderCard
-                        key={Math.random()}
+                        key={actualShip.id}
                         groupCommandership={actualShip}
                     />
                 </>
@@ -70,17 +51,7 @@ function SubordonateRankFilter({fleetCard}) {
             rankFilter = (
                 <>
                     <SquadronChiefCard
-                        key={Math.random()}
-                        squadronChiefShip={actualShip}
-                    />
-                </>
-            );
-            break;
-        case "05 - Vaisseau chef d'escadrille":
-            rankFilter = (
-                <>
-                    <SquadronChiefCard
-                        key={Math.random()}
+                        key={actualShip.id}
                         squadronChiefShip={actualShip}
                     />
                 </>
@@ -89,7 +60,7 @@ function SubordonateRankFilter({fleetCard}) {
         case "06 - Ailier":
             rankFilter = (
                 <>
-                    <WingManCard key={Math.random()} wingManShip={actualShip} />
+                    <WingManCard key={actualShip.id} wingManShip={actualShip} />
                 </>
             );
             break;

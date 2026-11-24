@@ -1,7 +1,4 @@
-import {
-    sendPasswordResetEmail,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import React, {useRef, useState} from "react";
 import {useDispatch} from "react-redux";
 import {getUser} from "../../feature/user.slice";
@@ -31,7 +28,6 @@ const Login = () => {
                 windowSetNotActiveState();
             })
             .catch((err) => {
-                console.log(err);
                 setError(err);
             });
     };

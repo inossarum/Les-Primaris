@@ -51,6 +51,9 @@ export const userSlice = createSlice({
       state.department = null;
       state.userId = null;
       state.notifications = [];
+      state.users = [];
+      state.civilianUsers = [];
+      state.militaryUsers = [];
       state.promotedAt = null;
       state.officerRecommandation = [];
       state.civilianDiplomasEarned = [];
@@ -83,7 +86,7 @@ export const userSlice = createSlice({
             user.factionPart === "militaire" ||
             user.factionPart === "civil-militaire"
         )
-        .sort((a, b) => a.pseudo.localeCompare(b.pseudo));
+        .sort((a, b) => String(a.pseudo || "").localeCompare(String(b.pseudo || "")));
     },
     getUserWebSiteRole: (state, {payload}) => {
       state.webSiteRole = payload;

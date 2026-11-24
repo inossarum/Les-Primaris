@@ -9,7 +9,6 @@ import Thread from "../../components/Administration/AdministrationPrivateMessagi
 
 const AdministrationPrivateMessagingServices = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.user.users);
   const moderatorThreads = useSelector(
     (state) => state.moderatorThreads.threadsData
   );
@@ -47,7 +46,7 @@ const AdministrationPrivateMessagingServices = () => {
           {moderatorThreads &&
             [...moderatorThreads]
               .sort((a, b) => b?.upVote.length - a?.upVote.length)
-              .map((thread) => <Thread thread={thread} />)}
+              .map((thread) => <Thread thread={thread} key={thread.id} />)}
         </div>
       </div>
     </div>

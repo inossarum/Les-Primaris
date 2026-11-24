@@ -27,25 +27,26 @@ const EncyclopediaShopPage = ({data}) => {
   );
 
   useEffect(() => {
-    dispatch(getRSIShopsItems(data.items.data));
-    dispatch(setRSIShopsItemsFilterResult(data.items.data));
+    const shopItems = data?.items?.data ?? [];
+    dispatch(getRSIShopsItems(shopItems));
+    dispatch(setRSIShopsItemsFilterResult(shopItems));
 
-    RSIStations.filter(
-      (station) => station?.name.split(" ")[0] === data.position.name
-    ).map((station) => {
-      if (station.celestialObject.type === "Satellite") {
-        dispatch(celestialObjectMoonPath(station.celestialObject));
-        dispatch(celestialObjectPlanetPath(station.celestialObject.parent));
-        dispatch(starSystemPath(station.celestialObject.starsystem));
-      } else if (station.celestialObject.type === "Planet") {
-        dispatch(celestialObjectMoonPath(""));
-        dispatch(celestialObjectPlanetPath(station.celestialObject));
-        dispatch(starSystemPath(station.celestialObject.starsystem));
-      }
-    });
+    const station = (RSIStations ?? []).find(
+      (candidate) => candidate?.name?.split(" ")[0] === data?.position?.name
+    );
+    const celestialObject = station?.celestialObject;
+    if (celestialObject?.type === "Satellite") {
+      dispatch(celestialObjectMoonPath(celestialObject));
+      dispatch(celestialObjectPlanetPath(celestialObject.parent));
+      dispatch(starSystemPath(celestialObject.starsystem));
+    } else if (celestialObject?.type === "Planet") {
+      dispatch(celestialObjectMoonPath(""));
+      dispatch(celestialObjectPlanetPath(celestialObject));
+      dispatch(starSystemPath(celestialObject.starsystem));
+    }
 
     window.scrollTo(0, 0);
-  }, []);
+  }, [RSIStations, data, dispatch]);
 
   let backgroundImage = "";
 

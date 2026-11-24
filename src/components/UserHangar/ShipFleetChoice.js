@@ -1,16 +1,88 @@
-import {doc, updateDoc} from "firebase/firestore";
-import React, {useRef} from "react";
+import {doc, runTransaction} from "firebase/firestore";
+import React, {useRef, useState} from "react";
 import {db} from "../../utils/firebase.config";
 
 const ShipFleetChoice = ({ownedShipDatas}) => {
     const fleet = useRef();
+    const [errorMessage, setErrorMessage] = useState("");
 
-    const handleFleetSwitch = (e) => {
+    const handleFleetSwitch = async (e) => {
         e.preventDefault();
-        updateDoc(doc(db, "shipsAndCrews", ownedShipDatas.id), {
-            fleet: fleet.current.value,
-            shipHierachicalSuperior: "",
-        });
+        const nextFleet = fleet.current?.value;
+        if (!ownedShipDatas?.id || !nextFleet) {
+            setErrorMessage("Choisissez une flotte.");
+            return;
+        }
+        if (nextFleet === ownedShipDatas.fleet) return;
+
+        const shipRef = doc(db, "shipsAndCrews", ownedShipDatas.id);
+        try {
+            await runTransaction(db, async (transaction) => {
+                const shipSnapshot = await transaction.get(shipRef);
+                if (!shipSnapshot.exists()) {
+                    throw new Error("Le vaisseau n'existe plus.");
+                }
+
+                const shipData = shipSnapshot.data();
+                const parentId = shipData.newShipHierarchicalSuperior?.id;
+                const childIds = (shipData.subordonateShips ?? [])
+                    .map((child) =>
+                        typeof child === "string" ? child : child?.id
+                    )
+                    .filter((id) => id && id !== shipSnapshot.id);
+                const relatedIds = [
+                    ...new Set([parentId, ...childIds].filter(Boolean)),
+                ];
+                const relatedRefs = relatedIds.map((id) =>
+                    doc(db, "shipsAndCrews", id)
+                );
+                const relatedSnapshots = await Promise.all(
+                    relatedRefs.map((reference) => transaction.get(reference))
+                );
+
+                const parentIndex = parentId ? relatedIds.indexOf(parentId) : -1;
+                const parentSnapshot =
+                    parentIndex >= 0 ? relatedSnapshots[parentIndex] : null;
+                if (parentSnapshot?.exists()) {
+                    transaction.update(relatedRefs[parentIndex], {
+                        subordonateShips: (
+                            parentSnapshot.data().subordonateShips ?? []
+                        ).filter(
+                            (child) =>
+                                (typeof child === "string" ? child : child?.id) !==
+                                shipSnapshot.id
+                        ),
+                    });
+                }
+
+                childIds.forEach((childId) => {
+                    const childIndex = relatedIds.indexOf(childId);
+                    const childSnapshot = relatedSnapshots[childIndex];
+                    if (childSnapshot?.exists()) {
+                        transaction.update(relatedRefs[childIndex], {
+                            rank: "",
+                            oldShipHierarchicalSuperior: {
+                                id: shipSnapshot.id,
+                                shipName: shipData.shipName ?? "",
+                            },
+                            newShipHierarchicalSuperior: "",
+                        });
+                    }
+                });
+
+                transaction.update(shipRef, {
+                    fleet: nextFleet,
+                    rank: "",
+                    oldShipHierarchicalSuperior: "",
+                    newShipHierarchicalSuperior: "",
+                    subordonateShips: [],
+                });
+            });
+            setErrorMessage("");
+        } catch (error) {
+            setErrorMessage("Le changement de flotte a échoué.");
+            console.error("Unable to change ship fleet:", error);
+        }
     };
 
     let fleetChoiceMenu = "";
@@ -50,7 +122,7 @@ const ShipFleetChoice = ({ownedShipDatas}) => {
                 </>
             );
             break;
-        case "militaryTrainingCenter":
+        case "military-training-center":
             fleetChoiceMenu = (
                 <>
                     <select ref={fleet}>
@@ -74,7 +146,7 @@ const ShipFleetChoice = ({ownedShipDatas}) => {
                 </>
             );
             break;
-        case "militaryResearch":
+        case "military-research":
             fleetChoiceMenu = (
                 <>
                     <select ref={fleet}>
@@ -86,7 +158,7 @@ const ShipFleetChoice = ({ownedShipDatas}) => {
                 </>
             );
             break;
-        case "militaryMedicine":
+        case "military-medicine":
             fleetChoiceMenu = (
                 <>
                     <select ref={fleet}>
@@ -219,6 +291,11 @@ const ShipFleetChoice = ({ownedShipDatas}) => {
         <div>
             {fleetChoiceMenu}
             <button onClick={(e) => handleFleetSwitch(e)}>Valider</button>
+            {errorMessage && (
+                <span className="error-message" role="alert">
+                    {errorMessage}
+                </span>
+            )}
         </div>
     );
 };

@@ -32,6 +32,22 @@
       }
     }
 
+    .primaris-ingame-shop-product-card-message-delete-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid $green5;
+        outline-offset: 2px;
+      }
+    }
+
     div {
       width: fit-content;
     }

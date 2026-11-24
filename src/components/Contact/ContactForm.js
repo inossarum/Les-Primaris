@@ -20,8 +20,7 @@ const ContactForm = () => {
         process.env.REACT_APP_ID
       )
       .then(
-        (result) => {
-          console.log(result.text);
+        () => {
           form.current.reset();
           formMess.innerHTML =
             "<p className='success'> Votre message a été envoyé avec succès.</p>";
@@ -31,7 +30,7 @@ const ContactForm = () => {
           }, 2500);
         },
         (error) => {
-          console.log(error.text);
+          console.error("Contact email failed:", error?.status || "unknown");
           formMess.innerHTML =
             "<p className='error'> Echec de l'envoi, veuillez réessayer. </p>";
 

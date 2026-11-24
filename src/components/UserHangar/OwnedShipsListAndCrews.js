@@ -78,7 +78,7 @@ const OwnedShipsListAndCrews = () => {
             .sort((a, b) => a.createdAt - b.createdAt)
             .map((ownedShip) => (
               <OwnedShipCard
-                key={Math.random()}
+                key={ownedShip.id}
                 ownedShip={ownedShip}
                 pageActive={"userPrivateRoom"}
               />

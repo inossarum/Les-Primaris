@@ -8,7 +8,6 @@ const CivilianDepartments = ({department}) => {
   let careerCards = "";
   let departmentDescription = "";
   let departmentButton = "";
-  let departmentPage = "";
 
   const centralAdministration = [
     "primarque",
@@ -260,11 +259,10 @@ const CivilianDepartments = ({department}) => {
             style={{transition: "all .5s"}}
             src={"./assets/img/departments/" + imgName + ".webp"}
             alt={`logo de ${department}`}
-            onClick={() =>
-              opened && departments === department
-                ? (setOpened(false), setDepartments(department))
-                : (setOpened(true), setDepartments(department))
-            }
+            onClick={() => {
+              setOpened(!(opened && departments === department));
+              setDepartments(department);
+            }}
           />
           {departmentButton}
         </div>

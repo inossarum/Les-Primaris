@@ -29,8 +29,14 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-app.use("/post", require("./routes/post.routes"));
-app.use("/user", require("./routes/user.routes"));
+// The legacy Mongo routes have no server-side authentication or ownership
+// checks. The React application no longer calls them, so fail closed until
+// Firebase ID-token verification and per-resource authorization are added.
+app.use(["/post", "/user"], (req, res) => {
+  return res.status(503).json({
+    message: "Cette API est désactivée jusqu'à la mise en place de contrôles d'accès.",
+  });
+});
 
 app.use((req, res) => {
   res.status(404).json({message: "Route introuvable"});

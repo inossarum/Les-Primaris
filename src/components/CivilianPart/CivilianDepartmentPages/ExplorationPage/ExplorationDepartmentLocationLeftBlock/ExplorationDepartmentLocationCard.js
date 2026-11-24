@@ -7,16 +7,37 @@ import {useSelector} from "react-redux";
 const ExplorationDepartmentLocationCard = ({location}) => {
   const actualUser = useSelector((state) => state.user);
   const [isOpened, setIsOpened] = useState(false);
+  const locationImages = Array.isArray(location?.images)
+    ? location.images
+    : [];
+  const canDeleteLocation =
+    ["administrateur", "moderateur"].includes(actualUser.webSiteRole) ||
+    actualUser.userId === location?.creatorId;
 
   const handleDeleteLocationCard = async (e) => {
     e.preventDefault();
+    if (!location?.id || !canDeleteLocation) return;
+    if (!window.confirm("Supprimer ce point d’intérêt et ses images ?")) return;
 
-    (await location?.images) &&
-      [...location?.images].map((image) =>
-        deleteObject(ref(storage, image.storageRef))
+    try {
+      await Promise.all(
+        locationImages
+          .filter((image) => image?.storageRef)
+          .map(async (image) => {
+            try {
+              await deleteObject(ref(storage, image.storageRef));
+            } catch (error) {
+              if (error?.code !== "storage/object-not-found") throw error;
+            }
+          })
       );
-
-    await deleteDoc(doc(db, "explorationLocations", location.id));
+      await deleteDoc(doc(db, "explorationLocations", location.id));
+    } catch (error) {
+      console.error("Échec de la suppression du point d’intérêt :", error);
+      window.alert(
+        "Le point d’intérêt ou l’une de ses images n’a pas pu être supprimé."
+      );
+    }
   };
 
   return (
@@ -30,8 +51,7 @@ const ExplorationDepartmentLocationCard = ({location}) => {
             >
               fermer
             </span>
-            {actualUser.webSiteRole === ("administrateur" || "moderateur") ||
-            actualUser.userId === location?.creatorId ? (
+            {canDeleteLocation ? (
               <span
                 className="primaris-ingame-shop-new-product-form-button-red"
                 onClick={(e) => handleDeleteLocationCard(e)}
@@ -105,14 +125,17 @@ const ExplorationDepartmentLocationCard = ({location}) => {
               Images
             </span>
             <div className="exploration-department-location-card-images-wrapper-sub-container">
-              {location?.images &&
-                [...location?.images].map((image) => {
-                  return (
-                    <div className="exploration-department-location-card-images-sub-container">
-                      <img src={image.URL} alt={image.name} key={image.URL} />
-                    </div>
-                  );
-                })}
+              {locationImages.map((image) => (
+                <div
+                  className="exploration-department-location-card-images-sub-container"
+                  key={image.storageRef || image.URL}
+                >
+                  <img
+                    src={image.URL}
+                    alt={image.name || "Image du point d’intérêt"}
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className="exploration-department-location-card-description-container">
@@ -140,8 +163,7 @@ const ExplorationDepartmentLocationCard = ({location}) => {
             </div>
           </div>
           <div className="exploration-department-location-card-header-buttons-sub-container">
-            {actualUser.webSiteRole === ("administrateur" || "moderateur") ||
-            actualUser.userId === location?.creatorId ? (
+            {canDeleteLocation ? (
               <span
                 className="primaris-ingame-shop-new-product-form-button-red"
                 onClick={(e) => handleDeleteLocationCard(e)}

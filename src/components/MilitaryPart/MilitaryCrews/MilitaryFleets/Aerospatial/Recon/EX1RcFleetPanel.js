@@ -3,29 +3,13 @@ import NavBar from "../../../../../Navbar/NavBar";
 import {useSelector} from "react-redux";
 import FleetCard from "../../../FleetCard";
 import AdmiralCard from "../../../AdmiralCard";
-import {NavLink} from "react-router-dom";
 
 export default function EX1RcFleetPanel() {
     const firstReconFleet = useSelector(
         (state) => state.sharedShips.firstReconFleet
     );
-
     const aerospatial = useSelector(
         (state) => state.sharedShips.aerospatialShips
-    );
-
-    console.log(
-        aerospatial?.filter(
-            (ship) =>
-                ship.rank === "" ||
-                (ship.rank !== "" &&
-                    ship.oldShipHierarchicalSuperior !== "" &&
-                    ship.newShipHierarchicalSuperior === "") ||
-                (ship.rank !== "" &&
-                    ship.oldShipHierarchicalSuperior === "" &&
-                    ship.newShipHierarchicalSuperior === "" &&
-                    ship.rank !== "01 - vaisseau amiral")
-        )
     );
 
     return (
@@ -38,15 +22,9 @@ export default function EX1RcFleetPanel() {
                 <h2>1ère flotte de reconnaissance</h2>
             </div>
             <div className="military-department-title-container ">
-                <NavLink className="navlink" to="">
-                    1ère flotte
-                </NavLink>
-                <NavLink className="navlink" to="/EX1RcFleetPanel">
-                    2ème flotte
-                </NavLink>
-                <NavLink className="navlink" to="">
-                    3ème flotte
-                </NavLink>
+                <span className="navlink" aria-current="page">1ère flotte</span>
+                <span className="navlink" aria-disabled="true">2ème flotte — indisponible</span>
+                <span className="navlink" aria-disabled="true">3ème flotte — indisponible</span>
             </div>
             <div>
                 <div className="military-fleet-main-container">
@@ -93,7 +71,7 @@ export default function EX1RcFleetPanel() {
                                           .map((fleetCard) => (
                                               <FleetCard
                                                   fleetCard={fleetCard}
-                                                  key={Math.random()}
+                                                  key={fleetCard.id}
                                               />
                                           ))
                                     : ""}
@@ -113,7 +91,7 @@ export default function EX1RcFleetPanel() {
                                           .map((fleetCard, index) => (
                                               <AdmiralCard
                                                   fleetCard={fleetCard}
-                                                  key={Math.random()}
+                                                  key={fleetCard.id}
                                               />
                                           ))
                                     : ""}

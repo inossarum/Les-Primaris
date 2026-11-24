@@ -10,22 +10,27 @@ const DeleteComment = ({comment}) => {
   const user = useSelector((state) =>
     state.user.users.find((user) => user.id === comment.postAuthorId)
   );
-  const userNotificationsToRemove = useSelector((state) =>
-    state.user.users
-      .find((user) => user?.id === comment?.postAuthorId)
-      ?.notifications.filter(
-        (notification) =>
-          notification?.associatedComment !== comment?.notificationId
-      )
+  const userNotificationsToRemove = (user?.notifications ?? []).filter(
+    (notification) =>
+      notification?.associatedComment !== comment?.notificationId
   );
 
-  const handleDelete = () => {
-    deleteDoc(doc(db, "comments", comment.id));
-    dispatch(deleteComment(comment.id));
-
-    updateDoc(doc(db, "users", user.id), {
-      notifications: userNotificationsToRemove,
-    });
+  const handleDelete = async () => {
+    try {
+      await Promise.all([
+        deleteDoc(doc(db, "comments", comment.id)),
+        ...(user?.id
+          ? [
+              updateDoc(doc(db, "users", user.id), {
+                notifications: userNotificationsToRemove,
+              }),
+            ]
+          : []),
+      ]);
+      dispatch(deleteComment(comment.id));
+    } catch (error) {
+      console.error("Unable to delete comment:", error);
+    }
   };
 
   return (

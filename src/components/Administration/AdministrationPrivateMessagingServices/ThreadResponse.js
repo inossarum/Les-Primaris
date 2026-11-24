@@ -21,7 +21,7 @@ const ThreadResponse = ({response, thread}) => {
   const handleRemoveAssociatedNotification = async (e) => {
     e.preventDefault();
 
-    const userNotificationsAfterRemoval = currentUser.notifications.filter(
+    const userNotificationsAfterRemoval = (currentUser.notifications ?? []).filter(
       (notification) =>
         notification.associatedResponse !== response.notificationId
     );
@@ -42,12 +42,12 @@ const ThreadResponse = ({response, thread}) => {
       (threadResponse) => response.createdAt !== threadResponse.createdAt
     );
 
-    updateDoc(doc(db, "moderatorThreads", thread.id), {
+    await updateDoc(doc(db, "moderatorThreads", thread.id), {
       responses: threadResponsesAfterRemoval,
     });
 
     const userNotificationsAfterRemoval = [
-      ...threadAuthorDatas?.notifications,
+      ...(threadAuthorDatas?.notifications ?? []),
     ]?.filter(
       (notification) =>
         notification.associatedResponse !== response.notificationId

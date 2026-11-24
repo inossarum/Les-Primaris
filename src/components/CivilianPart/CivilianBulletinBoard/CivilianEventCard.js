@@ -62,7 +62,7 @@ const CivilianEventCard = ({event, isViewingArchives}) => {
 
   const handleRemoveAssociatedNotification = async (e) => {
     e.preventDefault();
-    const userNotificationsAfterRemoval = user.notifications.filter(
+    const userNotificationsAfterRemoval = (user.notifications ?? []).filter(
       (notification) => notification?.associatedEvent !== event?.notificationId
     );
 
@@ -73,31 +73,35 @@ const CivilianEventCard = ({event, isViewingArchives}) => {
 
   const handleAddPlayerParticipation = async (e) => {
     e.preventDefault();
+    if ((activePlayersList ?? []).some((player) => player.id === user.userId)) {
+      return;
+    }
+
     const playerDatas = {
       name: user.currentUser,
       id: user.userId,
       rank: user.factionRank,
     };
 
-    updateDoc(doc(db, "civilianEvents", event?.id), {
-      players: [...activePlayersList, playerDatas],
+    await updateDoc(doc(db, "civilianEvents", event?.id), {
+      players: [...(activePlayersList ?? []), playerDatas],
     });
   };
 
   const handleCancelParticipation = async (e) => {
     e.preventDefault();
-    const listWithOutSelectedPlayer = activePlayersList.filter(
+    const listWithOutSelectedPlayer = (activePlayersList ?? []).filter(
       (player) => player?.id !== user.userId
     );
 
-    updateDoc(doc(db, "civilianEvents", event?.id), {
+    await updateDoc(doc(db, "civilianEvents", event?.id), {
       players: listWithOutSelectedPlayer,
     });
   };
 
   const handleEventDescriptionEdition = async (e) => {
     e.preventDefault();
-    updateDoc(doc(db, "civilianEvents", event?.id), {
+    await updateDoc(doc(db, "civilianEvents", event?.id), {
       description: editedMissionDescription.current.value,
     });
     setMissionDescriptionEditing(false);

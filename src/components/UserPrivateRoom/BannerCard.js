@@ -7,34 +7,33 @@ import {doc, updateDoc} from "firebase/firestore";
 import {getUserBanner} from "../../feature/user.slice";
 
 const BannerCard = ({bannerImage}) => {
-  const imageRef = ref(storage, bannerImage);
+  const imageRef =
+    typeof bannerImage === "string" && bannerImage.trim()
+      ? ref(storage, bannerImage)
+      : null;
   const actualUser = useSelector((state) => state.user);
   const actualUserUploadedBannersList = useSelector(
     (state) => state.user.uploadedBannersList
   );
   const dispatch = useDispatch();
 
-  const deleteProfileImage = (e) => {
+  const deleteProfileImage = async (e) => {
     e.preventDefault();
+    if (!imageRef || !actualUser.userId) return;
 
-    if (
-      bannerImage !== undefined ||
-      bannerImage !== "" ||
-      bannerImage !== null
-    ) {
-      deleteObject(imageRef)
-        .then((res) => console.log("image correctement supprimée de la DB"))
-        .catch((err) => console.log(err));
+    const updateData = {
+      uploadedBannersList: (actualUserUploadedBannersList ?? []).filter(
+        (banner) => banner !== bannerImage
+      ),
+    };
+    if (actualUser.banner === bannerImage) updateData.banner = "";
 
-      const bannersListUpdated =
-        actualUserUploadedBannersList &&
-        [...actualUserUploadedBannersList].filter(
-          (banner) => JSON.stringify(banner) !== JSON.stringify(bannerImage)
-        );
-
-      updateDoc(doc(db, "users", actualUser.userId), {
-        uploadedBannersList: bannersListUpdated,
-      });
+    try {
+      await updateDoc(doc(db, "users", actualUser.userId), updateData);
+      if (actualUser.banner === bannerImage) dispatch(getUserBanner(""));
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error("Unable to remove profile banner:", error);
     }
   };
 
@@ -45,25 +44,25 @@ const BannerCard = ({bannerImage}) => {
       banner: bannerImage,
     };
 
-    updateDoc(doc(db, "users", actualUser.userId), imageDatas);
+    await updateDoc(doc(db, "users", actualUser.userId), imageDatas);
     dispatch(getUserBanner(bannerImage));
   };
 
   return (
     <div className="card-general-container">
       <div className="image-wrapper">
-        <img
+        {imageRef && <img
           className="banner"
           src={bannerImage}
-          alt={bannerImage}
+          alt="Bannière de profil"
           onClick={(e) => handleUpdateUserBannerImage(e)}
-        />
-        <span>
+        />}
+        {imageRef && <span>
           <Delete
             className="delete-icon"
             onClick={(e) => deleteProfileImage(e)}
           />
-        </span>
+        </span>}
       </div>
     </div>
   );

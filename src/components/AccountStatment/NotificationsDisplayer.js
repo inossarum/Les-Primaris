@@ -3,7 +3,6 @@ import {useSelector} from "react-redux";
 import Notification from "./Notification";
 
 const NotificationsDisplayer = () => {
-  const user = useSelector((state) => state.user);
   const userPersonnalNotifications = useSelector(
     (state) => state.user.notifications
   );
@@ -17,10 +16,10 @@ const NotificationsDisplayer = () => {
             {userPersonnalNotifications &&
               [...userPersonnalNotifications]
                 ?.sort((a, b) => b.createdAt - a.createdAt)
-                ?.map((notification) => (
+                ?.map((notification, index) => (
                   <Notification
                     notification={notification}
-                    key={Math.random()}
+                    key={notification.id ?? notification.notificationId ?? index}
                   />
                 ))}
           </div>

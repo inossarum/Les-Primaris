@@ -1,23 +1,37 @@
 import React from "react";
 
-import {useDispatch} from "react-redux";
 import {deleteDoc, doc} from "firebase/firestore";
-import {deleteUser} from "firebase/auth";
 import {db} from "../../../utils/firebase.config";
 
 const DeleteUser = ({uid}) => {
-  const dispatch = useDispatch();
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    if (!uid) return;
+    if (
+      !window.confirm(
+        "Supprimer la fiche utilisateur ? Le compte de connexion ne sera pas supprimé."
+      )
+    ) {
+      return;
+    }
 
-  const handleDelete = () => {
-    deleteUser(uid);
-    deleteDoc(doc(db, "users", uid));
-    dispatch(deleteUser(uid));
+    try {
+      await deleteDoc(doc(db, "users", uid));
+    } catch (error) {
+      console.error("Unable to delete user profile:", error);
+      window.alert("La fiche utilisateur n'a pas pu être supprimée.");
+    }
   };
 
   return (
-    <div className="edit-btn" onClick={(e) => handleDelete(e)}>
-      supprimer l'utilisateur
-    </div>
+    <button
+      className="edit-btn"
+      type="button"
+      onClick={handleDelete}
+      disabled={!uid}
+    >
+      Supprimer la fiche utilisateur
+    </button>
   );
 };
 

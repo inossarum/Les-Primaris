@@ -17,10 +17,24 @@ const JobSelectionPanel = ({ownedShipDatas}) => {
   );
 
   useEffect(() => {
-    getDoc(doc(db, "users", actualShipSelected.ownerId)).then((res) =>
-      dispatch(setShipOwnerDatas({...res.data()}))
-    );
-  }, []);
+    const ownerId = actualShipSelected?.ownerId;
+    if (!ownerId) return undefined;
+
+    let isCurrent = true;
+    getDoc(doc(db, "users", ownerId))
+      .then((res) => {
+        if (isCurrent && res.exists()) {
+          dispatch(setShipOwnerDatas(res.data()));
+        }
+      })
+      .catch((error) => {
+        console.error("Unable to load ship owner:", error);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [actualShipSelected?.ownerId, dispatch]);
 
   const handleAddCrewMemberPostulant = async (e) => {
     e.preventDefault();

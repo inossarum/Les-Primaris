@@ -10,7 +10,7 @@ const UserPrivateRoom = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(windowToggleActive(false));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="user-private-room-body">

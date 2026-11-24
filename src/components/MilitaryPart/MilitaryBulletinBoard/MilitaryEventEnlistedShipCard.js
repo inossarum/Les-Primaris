@@ -42,7 +42,7 @@ const MilitaryEventEnlistedShipCard = ({ship}) => {
                     currentEventVehicle.vehicleId !== ship.vehicleId
             );
 
-        updateDoc(doc(db, "militaryEvents", currentEvent.id), {
+        await updateDoc(doc(db, "militaryEvents", currentEvent.id), {
             vehicles: currentEventVehiclesListAfterFilter,
         });
     };

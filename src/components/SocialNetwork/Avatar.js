@@ -6,7 +6,7 @@ const Avatar = ({src}) => {
     <>
       {src ? (
         <div className="profil-img-container">
-          <img src={src} alt="photo de profil" />
+          <img src={src} alt="Avatar" />
         </div>
       ) : (
         <AccountCircle />

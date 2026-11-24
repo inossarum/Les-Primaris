@@ -43,23 +43,27 @@ const CreateThread = () => {
           createdAt: Date.now(),
         };
 
-        users &&
-          [...users]
+        await Promise.all(
+          (users ?? [])
             .filter(
-              (users) =>
-                users.id !== threadData.threadAuthorId &&
-                (users.webSiteRole === "moderateur" ||
-                  users.webSiteRole === "administrateur")
+              (user) =>
+                user.id !== threadData.threadAuthorId &&
+                ["moderateur", "administrateur"].includes(user.webSiteRole)
             )
             .map((user) =>
               updateDoc(doc(db, "users", user.id), {
-                notifications: [...user?.notifications, threadNotification],
+                notifications: [
+                  ...(user.notifications ?? []),
+                  threadNotification,
+                ],
               })
-            );
+            )
+        );
 
         setIsCreatingNewThread(false);
       } catch (err) {
-        console.log(err);
+        console.error("Unable to create moderator thread:", err?.code || err?.name);
+        setErrorMessage("Le sujet n’a pas pu être créé.");
       }
     else {
       setErrorMessage("vous devez remplir les champs");

@@ -15,21 +15,24 @@ const EditDisplayName = () => {
 
   const editAuthDisplayName = async (e) => {
     e.preventDefault();
-    if (editedDisplayName.current.value === "" || null || undefined) {
+    const nextDisplayName = editedDisplayName.current?.value?.trim();
+    if (!nextDisplayName) {
       setErrorMessage(" Vous devez entrer un pseudo valide !");
-    } else {
-      try {
-        await updateProfile(auth.currentUser, {
-          displayName: `${editedDisplayName.current.value}`,
-        });
-        await updateDoc(doc(db, "users", `${auth.currentUser.uid}`), {
-          pseudo: `${editedDisplayName.current.value}`,
-        });
-        dispatch(getUser(editedDisplayName.current.value));
-        setIsEditingDisplayName(false);
-      } catch (err) {
-        console.log(err);
-      }
+      return;
+    }
+    if (!auth.currentUser) return;
+
+    try {
+      await updateProfile(auth.currentUser, {displayName: nextDisplayName});
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        pseudo: nextDisplayName,
+      });
+      dispatch(getUser(nextDisplayName));
+      setErrorMessage("");
+      setIsEditingDisplayName(false);
+    } catch (error) {
+      setErrorMessage("La mise à jour du pseudo a échoué.");
+      console.error("Unable to update display name:", error);
     }
   };
 

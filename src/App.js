@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import CivilianCareers from "./pages/CivilianCareers";
 import SocialNetwork from "./pages/SocialNetwork";
 import Home from "./pages/Home";
@@ -11,7 +11,7 @@ import MilitaryRanks from "./pages/MilitaryRanks";
 import MilitaryPatents from "./pages/MilitaryPatents";
 import MilitaryOutfits from "./pages/MilitaryOutfits";
 import MilitaryFleets from "./pages/MilitaryFleets";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     clearCurrentUser,
     getUser,
@@ -66,20 +66,42 @@ import DiabloIVHome from "./pages/DiabloIV/DiabloIVHome";
 import AerospatialFleetsHome from "./components/MilitaryPart/MilitaryCrews/MilitaryFleets/Aerospatial/AerospatialFleetsHome";
 import EX1RcFleetPanel from "./components/MilitaryPart/MilitaryCrews/MilitaryFleets/Aerospatial/Recon/EX1RcFleetPanel";
 
+const AccessGate = ({authReady, profileReady, roles, children}) => {
+    const {userId, webSiteRole} = useSelector((state) => state.user);
+
+    if (!authReady || (userId && !profileReady)) {
+        return <p role="status">Chargement du compte…</p>;
+    }
+    if (!userId || (roles && !roles.includes(webSiteRole))) {
+        return <Navigate to="/" replace />;
+    }
+    return children;
+};
+
 const App = () => {
     const dispatch = useDispatch();
+    const [authReady, setAuthReady] = React.useState(false);
+    const [profileReady, setProfileReady] = React.useState(false);
 
     useEffect(() => {
         let unsubscribeProfile = null;
+        let unsubscribeUsers = null;
 
         const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+            setAuthReady(true);
+            setProfileReady(!user);
             if (unsubscribeProfile) {
                 unsubscribeProfile();
                 unsubscribeProfile = null;
             }
+            if (unsubscribeUsers) {
+                unsubscribeUsers();
+                unsubscribeUsers = null;
+            }
 
             dispatch(clearCurrentUser());
             if (!user) {
+                dispatch(getUsers([]));
                 return;
             }
 
@@ -87,10 +109,23 @@ const App = () => {
             dispatch(getUserId(user.uid));
             dispatch(getUserEmail(user.email));
 
+            unsubscribeUsers = onSnapshot(
+                collection(db, "users"),
+                (snapshot) => {
+                    const usersData = snapshot.docs.map((userDoc) => ({
+                        ...userDoc.data(),
+                        id: userDoc.id,
+                    }));
+                    dispatch(getUsers(usersData));
+                },
+                (error) => console.error("Unable to load users:", error)
+            );
+
             unsubscribeProfile = onSnapshot(
                 doc(db, "users", user.uid),
                 (userSnapshot) => {
                     if (!userSnapshot.exists()) {
+                        setProfileReady(true);
                         return;
                     }
 
@@ -115,22 +150,14 @@ const App = () => {
                     dispatch(getUserCivilianDiplomasEarned(profile.civilianDiplomasEarned || []));
                     dispatch(getUserMilitaryDiplomasEarned(profile.militaryDiplomasEarned || []));
                     dispatch(getUserEmploymentStatus(profile.employed));
+                    setProfileReady(true);
                 },
-                (error) => console.error("Unable to load user profile:", error)
+                (error) => {
+                    console.error("Unable to load user profile:", error);
+                    setProfileReady(true);
+                }
             );
         });
-
-        const unsubscribeUsers = onSnapshot(
-            collection(db, "users"),
-            (snapshot) => {
-                const usersData = snapshot.docs.map((userDoc) => ({
-                    ...userDoc.data(),
-                    id: userDoc.id,
-                }));
-                dispatch(getUsers(usersData));
-            },
-            (error) => console.error("Unable to load users:", error)
-        );
 
         const unsubscribeMilitaryRanks = onSnapshot(
             collection(db, "militaryRanks"),
@@ -160,7 +187,7 @@ const App = () => {
         return () => {
             unsubscribeAuth();
             unsubscribeProfile?.();
-            unsubscribeUsers();
+            unsubscribeUsers?.();
             unsubscribeMilitaryRanks();
             unsubscribeShipsAndCrews();
         };
@@ -170,8 +197,8 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/userPrivateRoom" element={<UserPrivateRoom />} />
-                <Route path="/userHangar" element={<UserHangar />} />
+                <Route path="/userPrivateRoom" element={<AccessGate authReady={authReady} profileReady={profileReady}><UserPrivateRoom /></AccessGate>} />
+                <Route path="/userHangar" element={<AccessGate authReady={authReady} profileReady={profileReady}><UserHangar /></AccessGate>} />
                 <Route
                     path="/starCitizenEncyclopedia"
                     element={<StarCitizenEncyclopedia />}
@@ -220,15 +247,15 @@ const App = () => {
                 <Route path="/socialNetwork" element={<SocialNetwork />} />
                 <Route
                     path="/administrationHome"
-                    element={<AdministrationHome />}
+                    element={<AccessGate authReady={authReady} profileReady={profileReady} roles={["administrateur", "moderateur"]}><AdministrationHome /></AccessGate>}
                 />
                 <Route
                     path="/administrationUsers"
-                    element={<AdministrationUsers />}
+                    element={<AccessGate authReady={authReady} profileReady={profileReady} roles={["administrateur", "moderateur"]}><AdministrationUsers /></AccessGate>}
                 />
                 <Route
                     path="/administrationPrivateMessagingServices"
-                    element={<AdministrationPrivateMessagingServices />}
+                    element={<AccessGate authReady={authReady} profileReady={profileReady} roles={["administrateur", "moderateur"]}><AdministrationPrivateMessagingServices /></AccessGate>}
                 />
                 <Route path="/battlefield" element={<Battlefield />} />
                 <Route
@@ -236,6 +263,7 @@ const App = () => {
                     element={<BattlefieldBulletinBoard />}
                 />
                 <Route path="/diabloIVHome" element={<DiabloIVHome />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );

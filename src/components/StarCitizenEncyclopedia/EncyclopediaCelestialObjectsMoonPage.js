@@ -27,9 +27,11 @@ const EncyclopediaCelestialObjectsMoonPage = () => {
   );
 
   useEffect(() => {
-    dispatch(getRSIActualCelestialObjectInterestPoints([RSIStations, data]));
+    if (RSIStations && data) {
+      dispatch(getRSIActualCelestialObjectInterestPoints([RSIStations, data]));
+    }
     window.scrollTo(0, 0);
-  }, []);
+  }, [RSIStations, data, dispatch]);
 
   return (
     <div className="encyclopedia-celestial-objects-page-body">

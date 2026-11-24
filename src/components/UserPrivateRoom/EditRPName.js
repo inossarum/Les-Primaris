@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {auth, db} from "../../utils/firebase.config";
 import {doc, updateDoc} from "firebase/firestore";
 import {Edit} from "@mui/icons-material";
+import {getUserRPName} from "../../feature/user.slice";
 
 const EditRPName = () => {
   const user = useSelector((state) => state.user.RPName);
@@ -13,17 +14,23 @@ const EditRPName = () => {
 
   const editAuthRPName = async (e) => {
     e.preventDefault();
-    if (editedRPName.current.value === "" || null || undefined) {
+    const nextRPName = editedRPName.current?.value?.trim();
+    if (!nextRPName) {
       setErrorMessage(" Vous devez entrer un nom valide !");
-    } else {
-      try {
-        await updateDoc(doc(db, "users", `${auth.currentUser.uid}`), {
-          RPName: `${editedRPName.current.value}`,
-        });
-        setIsEditingRPName(false);
-      } catch (err) {
-        console.log(err);
-      }
+      return;
+    }
+    if (!auth.currentUser) return;
+
+    try {
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        RPName: nextRPName,
+      });
+      dispatch(getUserRPName(nextRPName));
+      setErrorMessage("");
+      setIsEditingRPName(false);
+    } catch (error) {
+      setErrorMessage("La mise à jour du nom RP a échoué.");
+      console.error("Unable to update roleplay name:", error);
     }
   };
 

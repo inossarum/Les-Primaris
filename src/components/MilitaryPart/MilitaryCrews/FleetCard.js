@@ -7,7 +7,6 @@ import {Close} from "@mui/icons-material";
 import {deleteDoc, doc, updateDoc} from "firebase/firestore";
 import {db} from "../../../utils/firebase.config";
 import ShipFleetChoice from "../../UserHangar/ShipFleetChoice";
-import SubordonateCard from "./SubordonateCard";
 import SubordonateRankFilter from "./MilitaryFleets/SubordonateRankFilter";
 
 const FleetCard = ({fleetCard}) => {
@@ -53,8 +52,8 @@ const FleetCard = ({fleetCard}) => {
     const deleteShipFromDB = async (e) => {
         e.preventDefault();
 
-        fleetCard?.newShipHierarchicalSuperior !== (undefined || null || "")
-            ? await updateDoc(
+        if (fleetCard?.newShipHierarchicalSuperior?.id) {
+            await updateDoc(
                   doc(
                       db,
                       "shipsAndCrews",
@@ -66,8 +65,8 @@ const FleetCard = ({fleetCard}) => {
                               (ship) => ship?.id !== fleetCard?.id
                           ),
                   }
-              )
-            : console.log("shipSuperior inexistant");
+              );
+        }
 
         await deleteDoc(doc(db, "shipsAndCrews", fleetCard.id));
 
@@ -295,9 +294,8 @@ const FleetCard = ({fleetCard}) => {
                     <>
                         <h4>Subordonnés: </h4>
                         {fleetCard?.subordonateShips?.map((ship) => (
-                            <span className="info-yellow-capitalize">
+                            <span className="info-yellow-capitalize" key={ship.id}>
                                 <SubordonateRankFilter
-                                    key={Math.random()}
                                     fleetCard={ship}
                                 />
                             </span>

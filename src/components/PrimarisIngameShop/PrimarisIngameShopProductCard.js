@@ -22,22 +22,23 @@ const PrimarisIngameShopProductCard = ({product}) => {
     });
   };
 
-  const handleDeleteProduct = (e) => {
+  const handleDeleteProduct = async (e) => {
     e.preventDefault();
 
-    users &&
-      [...users].map((user) => {
-        const userNotificationsAfterRemoval = user.notifications.filter(
+    await Promise.all(
+      (users ?? []).map((user) => {
+        const userNotificationsAfterRemoval = (user.notifications ?? []).filter(
           (notification) =>
             notification.associatedAnnouncement !== product.notificationId
         );
 
-        updateDoc(doc(db, "users", user.id), {
+        return updateDoc(doc(db, "users", user.id), {
           notifications: userNotificationsAfterRemoval,
         });
-      });
+      })
+    );
 
-    deleteDoc(doc(db, "primarisIngameShop", product.id));
+    await deleteDoc(doc(db, "primarisIngameShop", product.id));
   };
 
   const handleRemoveAssociatedNotification = async (e) => {
@@ -57,23 +58,27 @@ const PrimarisIngameShopProductCard = ({product}) => {
 
     const messageDatas = {
       messageCreatedAt: Date.now(),
+      messageId: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
       messageAuthor: currentUser.currentUser,
       messageAuthorId: currentUser.userId,
-      messageContent: announcementMessage.current.value,
-      notificationId: Date.now() + Math.random(),
+      messageContent: announcementMessage.current?.value.trim() || "",
     };
 
-    const productMessages = product?.messages;
+    const productMessages = Array.isArray(product?.messages)
+      ? product.messages
+      : [];
 
-    if (messageDatas.messageContent !== "") {
+    if (!messageDatas.messageAuthorId || !messageDatas.messageContent) return;
+
+    try {
       await updateDoc(doc(db, "primarisIngameShop", product.id), {
         messages: [...productMessages, messageDatas],
       });
-    } else {
-      console.log("veuillez entre un message");
+      if (announcementMessage.current) announcementMessage.current.value = "";
+      setIsWritingMessage(false);
+    } catch (error) {
+      console.error("Impossible d’envoyer le message :", error);
     }
-
-    setIsWritingMessage(false);
   };
 
   if (isCollapsed === true) {
@@ -156,9 +161,9 @@ const PrimarisIngameShopProductCard = ({product}) => {
               {product?.messages &&
                 [...product?.messages]
                   .sort((a, b) => a.messageCreatedAt - b.messageCreatedAt)
-                  .map((message) => (
+                  .map((message, index) => (
                     <PrimarisIngameShopProductCardMessage
-                      key={message?.messageCreatedAt}
+                      key={message?.messageId || `${message?.messageCreatedAt}-${index}`}
                       message={message}
                       product={product}
                     />
