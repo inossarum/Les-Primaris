@@ -1,29 +1,42 @@
 const express = require("express");
-const connectDB = require("./config/db");
-const dotenv = require("dotenv").config();
 const cors = require("cors");
-const port = 5000;
+require("dotenv").config();
 
-//  Connection à la DB
-connectDB();
+const connectDB = require("./config/db");
 
 const app = express();
+const port = Number(process.env.PORT) || 5000;
+const allowedOrigins = new Set(
+  (process.env.CLIENT_ORIGINS || "http://localhost:3000")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+);
 
-//Autorisation CORS
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Origin not allowed by CORS"));
+    },
     credentials: true,
     optionsSuccessStatus: 200,
   })
 );
 
-// middleware qui permet de traiter les données de la "request"
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use("/post", require("./routes/post.routes"));
 app.use("/user", require("./routes/user.routes"));
 
-// Lancer le serveur
-app.listen(port, () => console.log("listening on port " + port));
+connectDB()
+  .then(() => {
+    app.listen(port, () => console.log("listening on port " + port));
+  })
+  .catch((err) => {
+    console.error("MongoDB connection failed:", err.message);
+    process.exitCode = 1;
+  });
