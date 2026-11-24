@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import NavBar from "../components/Navbar/NavBar";
 import {collection, onSnapshot} from "firebase/firestore";
 import {db} from "../utils/firebase.config";
-import {getMilitaryRanks} from "../feature/militaryRanks.slice";
 import MilitaryInfosCard from "../components/MilitaryPart/MilitaryTrainingsAndMissionsFollower/MilitaryInfosCard";
 import {getMilitaryEventsArchivesList} from "../feature/events.slice";
 
