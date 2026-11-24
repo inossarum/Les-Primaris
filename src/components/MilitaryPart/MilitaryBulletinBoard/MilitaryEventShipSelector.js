@@ -53,8 +53,7 @@ const MilitaryEventShipSelector = () => {
           <button
             className="ship-search-cancel-button"
             onClick={(e) =>
-              dispatch(getEventSearchShipsList("")) &
-              dispatch(setIsBringingVehicle(false))
+              (dispatch(getEventSearchShipsList("")), dispatch(setIsBringingVehicle(false)))
             }
           >
             Annuler
