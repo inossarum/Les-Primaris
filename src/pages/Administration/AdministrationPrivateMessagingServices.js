@@ -15,14 +15,15 @@ const AdministrationPrivateMessagingServices = () => {
   );
 
   useEffect(() => {
-    onSnapshot(collection(db, "moderatorThreads"), (snapshot) => {
-      let moderatorThreads = [];
-      snapshot.docs.forEach((doc) => {
-        moderatorThreads.push({...doc.data(), id: doc.id});
-      });
+    const unsubscribe = onSnapshot(collection(db, "moderatorThreads"), (snapshot) => {
+      const moderatorThreads = snapshot.docs.map((threadDoc) => ({
+        ...threadDoc.data(),
+        id: threadDoc.id,
+      }));
       dispatch(getThreads(moderatorThreads));
     });
-  }, []);
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <div
