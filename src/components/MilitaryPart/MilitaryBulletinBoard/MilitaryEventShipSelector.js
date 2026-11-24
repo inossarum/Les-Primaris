@@ -14,29 +14,18 @@ const MilitaryEventShipSelector = () => {
   const searchKeyWord = useRef();
   const dispatch = useDispatch();
 
-  const shipDisplayer = async (e) => {
+  const shipDisplayer = (e) => {
     e.preventDefault();
-    let searchResultArray = [];
-
-    if (searchKeyWord.current.value.toLowerCase() === "") {
+    const query = searchKeyWord.current.value.trim().toLowerCase();
+    if (!query) {
       dispatch(getEventSearchShipsList(""));
-    } else {
-      RSIShipsList &&
-        [...RSIShipsList].find((ship) => {
-          if (
-            ship.name
-              .toLowerCase()
-              .includes(searchKeyWord.current.value.toLowerCase()) === true ||
-            ship.name.includes(searchKeyWord.current.value) === true ||
-            ship.manufacturer.name
-              .toLowerCase()
-              .includes(searchKeyWord.current.value) === true
-          ) {
-            searchResultArray = [...searchResultArray, ship];
-            dispatch(getEventSearchShipsList(searchResultArray));
-          }
-        });
+      return;
     }
+    const results = (RSIShipsList || []).filter((ship) =>
+      String(ship.name || "").toLowerCase().includes(query) ||
+      String(ship.manufacturer?.name || "").toLowerCase().includes(query)
+    );
+    dispatch(getEventSearchShipsList(results));
   };
 
   return (
@@ -53,7 +42,7 @@ const MilitaryEventShipSelector = () => {
           <button
             className="ship-search-cancel-button"
             onClick={(e) =>
-              (dispatch(getEventSearchShipsList("")), dispatch(setIsBringingVehicle(false)))
+              { dispatch(getEventSearchShipsList("")); dispatch(setIsBringingVehicle(false)); }
             }
           >
             Annuler
