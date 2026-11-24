@@ -69,7 +69,7 @@ const MilitaryShipInformationsForm = ({ship, shipFactionPart}) => {
                     ship: ship,
                     shared: shared,
                     factionPart: shipFactionPart,
-                    notificationId: Math.random(Date.now()),
+                    notificationId: Date.now() + Math.random(),
                 };
 
                 await addDoc(collection(db, "shipsAndCrews"), data);
