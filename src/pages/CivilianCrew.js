@@ -65,8 +65,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "central administration"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -88,8 +88,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "academy"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -113,8 +113,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "exploration"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -138,8 +138,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "tourism"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -163,8 +163,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "trade & transport"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -188,8 +188,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "industry"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -213,8 +213,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "sciences"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -238,8 +238,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "medicine"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (
@@ -263,8 +263,8 @@ const CivilianCrew = () => {
                     ownedShip.factionPart === "civil" &&
                     ownedShip.department === "culture & sports"
                 )
-                .map((ownedShip, index) => (
-                  <OwnedShipCard ownedShip={ownedShip} key={index} />
+                .map((ownedShip) => (
+                  <OwnedShipCard ownedShip={ownedShip} key={ownedShip.id} />
                 ))}
           </div>
         ) : (

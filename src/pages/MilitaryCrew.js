@@ -71,10 +71,10 @@ const MilitaryCrew = () => {
                                         ownedShip.factionPart === "militaire" &&
                                         ownedShip.department === "staff"
                                 )
-                                .map((ownedShip, index) => (
+                                .map((ownedShip) => (
                                     <OwnedShipCard
                                         ownedShip={ownedShip}
-                                        key={index}
+                                        key={ownedShip.id}
                                     />
                                 ))}
                     </div>
@@ -101,10 +101,10 @@ const MilitaryCrew = () => {
                                         ownedShip.department ===
                                             "militaryTrainingCenter"
                                 )
-                                .map((ownedShip, index) => (
+                                .map((ownedShip) => (
                                     <OwnedShipCard
                                         ownedShip={ownedShip}
-                                        key={index}
+                                        key={ownedShip.id}
                                     />
                                 ))}
                     </div>
@@ -129,10 +129,10 @@ const MilitaryCrew = () => {
                                         ownedShip.factionPart === "militaire" &&
                                         ownedShip.department === "aerospatial"
                                 )
-                                .map((ownedShip, index) => (
+                                .map((ownedShip) => (
                                     <OwnedShipCard
                                         ownedShip={ownedShip}
-                                        key={index}
+                                        key={ownedShip.id}
                                     />
                                 ))}
                     </div>
@@ -158,10 +158,10 @@ const MilitaryCrew = () => {
                                         ownedShip.factionPart === "militaire" &&
                                         ownedShip.department === "logistics"
                                 )
-                                .map((ownedShip, index) => (
+                                .map((ownedShip) => (
                                     <OwnedShipCard
                                         ownedShip={ownedShip}
-                                        key={index}
+                                        key={ownedShip.id}
                                     />
                                 ))}
                     </div>
@@ -188,10 +188,10 @@ const MilitaryCrew = () => {
                                         ownedShip.department ===
                                             "militaryResearch"
                                 )
-                                .map((ownedShip, index) => (
+                                .map((ownedShip) => (
                                     <OwnedShipCard
                                         ownedShip={ownedShip}
-                                        key={index}
+                                        key={ownedShip.id}
                                     />
                                 ))}
                     </div>
@@ -217,10 +217,10 @@ const MilitaryCrew = () => {
                                         ownedShip.department ===
                                             "militaryMedicine"
                                 )
-                                .map((ownedShip, index) => (
+                                .map((ownedShip) => (
                                     <OwnedShipCard
                                         ownedShip={ownedShip}
-                                        key={index}
+                                        key={ownedShip.id}
                                     />
                                 ))}
                     </div>

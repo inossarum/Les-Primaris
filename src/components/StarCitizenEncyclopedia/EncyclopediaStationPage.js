@@ -317,11 +317,11 @@ const EncyclopediaStationPage = () => {
                     {RSIShopsItemsFilterResult && RSIShopsItemsFilterResult ? (
                       RSIShopsItemsFilterResult &&
                       RSIShopsItemsFilterResult[0] ? (
-                        [...RSIShopsItemsFilterResult].map((item, index) => (
+                        [...RSIShopsItemsFilterResult].map((item) => (
                           <EncyclopediaShopItemsPageCard
                             shopName={data.name}
                             item={item}
-                            key={index}
+                            key={item.id ?? item.uuid ?? item.name}
                           />
                         ))
                       ) : (

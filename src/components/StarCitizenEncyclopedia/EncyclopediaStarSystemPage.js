@@ -65,13 +65,11 @@ const EncyclopediaStarSystemPage = () => {
             <div className="encyclopedia-celestial-objects-page-sub-container-wrapper">
               <div className="encyclopedia-star-system-page-moons-container">
                 {data.celestialObjects &&
-                  data.celestialObjects.map((celestialObject, index) => (
-                    <>
-                      <EncyclopediaObjectPageCard
-                        data={celestialObject}
-                        key={index}
-                      />
-                    </>
+                  data.celestialObjects.map((celestialObject) => (
+                    <EncyclopediaObjectPageCard
+                      data={celestialObject}
+                      key={celestialObject.id ?? celestialObject.name}
+                    />
                   ))}
               </div>
             </div>

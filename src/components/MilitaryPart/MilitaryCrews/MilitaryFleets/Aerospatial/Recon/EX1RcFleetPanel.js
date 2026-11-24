@@ -88,7 +88,7 @@ export default function EX1RcFleetPanel() {
                                                   fleetCard.rank ===
                                                   "01 - vaisseau amiral"
                                           )
-                                          .map((fleetCard, index) => (
+                                          .map((fleetCard) => (
                                               <AdmiralCard
                                                   fleetCard={fleetCard}
                                                   key={fleetCard.id}

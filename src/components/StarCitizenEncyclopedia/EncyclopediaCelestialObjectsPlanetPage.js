@@ -107,13 +107,11 @@ const EncyclopediaCelestialObjectsPlanetPage = () => {
               </div>
               <div className="encyclopedia-celestial-objects-page-sub-container-wrapper">
                 <div className="encyclopedia-celestial-objects-page-moons-container">
-                  {RSIActualCelestialMoons.map((CelestialObject, index) => (
-                    <>
-                      <EncyclopediaObjectPageCard
-                        data={CelestialObject}
-                        key={index}
-                      />
-                    </>
+                  {RSIActualCelestialMoons.map((CelestialObject) => (
+                    <EncyclopediaObjectPageCard
+                      data={CelestialObject}
+                      key={CelestialObject.id ?? CelestialObject.name}
+                    />
                   ))}
                 </div>
               </div>
@@ -131,10 +129,11 @@ const EncyclopediaCelestialObjectsPlanetPage = () => {
               </div>
               <div className="encyclopedia-celestial-objects-page-sub-container-wrapper">
                 <div className="encyclopedia-celestial-objects-page-moons-container">
-                  {RSIActualCelestialObjectStations.map((station, index) => (
-                    <>
-                      <EncyclopediaObjectPageCard data={station} key={index} />
-                    </>
+                  {RSIActualCelestialObjectStations.map((station) => (
+                    <EncyclopediaObjectPageCard
+                      data={station}
+                      key={station.id ?? station.name}
+                    />
                   ))}
                 </div>
               </div>
@@ -152,16 +151,12 @@ const EncyclopediaCelestialObjectsPlanetPage = () => {
               </div>
               <div className="encyclopedia-celestial-objects-page-sub-container-wrapper">
                 <div className="encyclopedia-celestial-objects-page-moons-container">
-                  {RSIActualCelestialObjectLandingZones.map(
-                    (station, index) => (
-                      <>
-                        <EncyclopediaObjectPageCard
-                          data={station}
-                          key={index}
-                        />
-                      </>
-                    )
-                  )}
+                  {RSIActualCelestialObjectLandingZones.map((station) => (
+                    <EncyclopediaObjectPageCard
+                      data={station}
+                      key={station.id ?? station.name}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -178,10 +173,11 @@ const EncyclopediaCelestialObjectsPlanetPage = () => {
               </div>
               <div className="encyclopedia-celestial-objects-page-sub-container-wrapper">
                 <div className="encyclopedia-celestial-objects-page-moons-container">
-                  {RSIActualCelestialObjectOutposts.map((station, index) => (
-                    <>
-                      <EncyclopediaObjectPageCard data={station} key={index} />
-                    </>
+                  {RSIActualCelestialObjectOutposts.map((station) => (
+                    <EncyclopediaObjectPageCard
+                      data={station}
+                      key={station.id ?? station.name}
+                    />
                   ))}
                 </div>
               </div>

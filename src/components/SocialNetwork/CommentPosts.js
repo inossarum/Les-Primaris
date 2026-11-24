@@ -86,8 +86,12 @@ const CommentPosts = ({post}) => {
         [...comments]
           .filter((comment) => comment.uid === post.id)
           .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-          .map((comment, index) => (
-            <CommentCard key={index} comment={comment} post={post} />
+          .map((comment) => (
+            <CommentCard
+              key={comment.id ?? comment.notificationId}
+              comment={comment}
+              post={post}
+            />
           ))}
 
       {user ? (
