@@ -20,10 +20,10 @@ const AdmiralCard = ({fleetCard}) => {
     const fleetCardSuperiorShip = sharedShipList.filter(
         (ship) => ship.id === fleetCard?.newShipHierarchicalSuperior?.id
     );
-    const shipCommander = fleetCard?.crewMembers.find(
+    const shipCommander = fleetCard?.crewMembers?.find(
         (member) => member?.job === "commandant"
     );
-    const shipPilot = fleetCard?.crewMembers.find(
+    const shipPilot = fleetCard?.crewMembers?.find(
         (member) => member?.job === "pilote"
     );
 

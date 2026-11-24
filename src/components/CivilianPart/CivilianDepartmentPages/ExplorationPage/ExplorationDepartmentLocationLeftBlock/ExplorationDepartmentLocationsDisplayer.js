@@ -16,7 +16,10 @@ const ExplorationDepartmentLocationDisplayer = () => {
         <div className="exploration-department-location-displayer-main-container">
           {locations &&
             locations.map((location) => (
-              <ExplorationDepartmentLocationCard location={location} />
+              <ExplorationDepartmentLocationCard
+                key={location.id ?? location.name}
+                location={location}
+              />
             ))}
         </div>
       ) : (

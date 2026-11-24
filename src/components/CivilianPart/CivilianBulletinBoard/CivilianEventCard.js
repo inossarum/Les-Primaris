@@ -26,12 +26,12 @@ const CivilianEventCard = ({event, isViewingArchives}) => {
   const activeCivilianVehiclesList = useSelector((state) =>
     state.events.civilianEvents
       .find((civilianEvent) => civilianEvent.id === event?.id)
-      ?.vehicles.filter((vehicle) => vehicle.vehicleRole === "civil")
+      ?.vehicles?.filter((vehicle) => vehicle.vehicleRole === "civil")
   );
   const activeMilitaryVehiclesList = useSelector((state) =>
     state.events.civilianEvents
       .find((civilianEvent) => civilianEvent.id === event?.id)
-      ?.vehicles.filter((vehicle) => vehicle.vehicleRole === "militaire")
+      ?.vehicles?.filter((vehicle) => vehicle.vehicleRole === "militaire")
   );
   const activePlayersList = useSelector(
     (state) =>

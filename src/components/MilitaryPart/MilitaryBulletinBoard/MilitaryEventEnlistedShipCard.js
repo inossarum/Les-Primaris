@@ -214,7 +214,7 @@ const MilitaryEventEnlistedShipCard = ({ship}) => {
                                 <div className="military-event-enlisted-ship-card-crew-informations">
                                     <span>Employés: </span>
                                     <div className="military-event-enlisted-ship-card-crew-list">
-                                        {ship?.employees.map((employee) => (
+                                        {ship?.employees?.map((employee) => (
                                             <MilitaryEventEnlistedShipCardEmployee
                                                 employee={employee}
                                                 ship={ship}
@@ -232,7 +232,7 @@ const MilitaryEventEnlistedShipCard = ({ship}) => {
                                 <div className="military-event-enlisted-ship-card-crew-informations">
                                     <span>Postulants: </span>
                                     <div className="military-event-enlisted-ship-card-crew-list">
-                                        {ship?.postulants.map((postulant) => (
+                                        {ship?.postulants?.map((postulant) => (
                                             <MilitaryEventEnlistedShipCardPostulant
                                                 postulant={postulant}
                                                 ship={ship}

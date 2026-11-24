@@ -22,11 +22,11 @@ const FleetCard = ({fleetCard}) => {
     );
 
     const shipCommander = fleetCard?.crewMembers[0]
-        ? fleetCard?.crewMembers.find((member) => member?.job === "commandant")
+        ? fleetCard?.crewMembers?.find((member) => member?.job === "commandant")
         : "";
 
     const shipPilot = fleetCard?.crewMembers[0]
-        ? fleetCard?.crewMembers.find((member) => member?.job === "pilote")
+        ? fleetCard?.crewMembers?.find((member) => member?.job === "pilote")
         : "";
 
     const actualShip = sharedShipList[0]

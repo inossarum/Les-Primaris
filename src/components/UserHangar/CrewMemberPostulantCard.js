@@ -14,12 +14,12 @@ const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
   );
 
   const ownedShipPostulantCardNotificationId =
-    ownedShipDatas.crewMemberPostulants.find(
+    (ownedShipDatas?.crewMemberPostulants ?? []).find(
       (postulant) => postulant.id === crewMemberPostulant.id
     )?.notificationId;
 
   const shipOwnerNotificationsAfterActionOnThePostulantCard =
-    shipOwnerDatas?.notifications.filter(
+    (shipOwnerDatas?.notifications ?? []).filter(
       (notification) =>
         notification.associatedPostulate !==
         ownedShipPostulantCardNotificationId
@@ -29,7 +29,7 @@ const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
 
   const handleRefuseCrewMemberPostulant = async (e) => {
     e.preventDefault();
-    const crewMemberPostulants = ownedShipDatas.crewMemberPostulants.filter(
+    const crewMemberPostulants = (ownedShipDatas?.crewMemberPostulants ?? []).filter(
       (shipCrewMemberPostulant) =>
         shipCrewMemberPostulant.userId !== crewMemberPostulant.userId
     );
@@ -48,7 +48,7 @@ const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
 
   const handleCancelCrewMemberPostulant = async (e) => {
     e.preventDefault();
-    const crewMemberPostulants = ownedShipDatas.crewMemberPostulants.filter(
+    const crewMemberPostulants = (ownedShipDatas?.crewMemberPostulants ?? []).filter(
       (shipCrewMemberPostulant) =>
         shipCrewMemberPostulant.userId !== crewMemberPostulant.userId
     );
@@ -67,8 +67,8 @@ const CrewMemberPostulantCard = ({crewMemberPostulant, ownedShipDatas}) => {
 
   const handleAcceptCrewMemberPostulant = async (e) => {
     e.preventDefault();
-    const crewMembers = ownedShipDatas.crewMembers;
-    const crewMemberPostulants = ownedShipDatas.crewMemberPostulants.filter(
+    const crewMembers = ownedShipDatas?.crewMembers ?? [];
+    const crewMemberPostulants = (ownedShipDatas?.crewMemberPostulants ?? []).filter(
       (shipCrewMemberPostulant) =>
         shipCrewMemberPostulant.userId !== crewMemberPostulant.userId
     );

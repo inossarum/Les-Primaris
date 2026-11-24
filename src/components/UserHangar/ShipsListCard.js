@@ -31,7 +31,7 @@ const ShipsListCard = ({ship}) => {
           }}
         >
           <h3 className="ship-list-card-name">
-            {ship?.name.split("-").join(" ")}
+            {String(ship?.name ?? "").replace(/-/g, " ")}
           </h3>
           {mouseIsOver === true ? (
             <div className="selector">Sélectionner ce vaisseau</div>

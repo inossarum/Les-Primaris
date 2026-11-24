@@ -72,7 +72,7 @@ const MilitaryEventShipSearchResultCard = ({ship}) => {
             }}
           >
             <div className="military-event-ship-search-result-card-name">
-              <span>{ship?.name.split("-").join(" ")}</span>
+              <span>{String(ship?.name ?? "").replace(/-/g, " ")}</span>
             </div>
             <div className="military-event-ship-search-result-card-role-container">
               <span>Equipage Maximum</span>
@@ -120,7 +120,7 @@ const MilitaryEventShipSearchResultCard = ({ship}) => {
             }}
           >
             <div className="military-event-ship-search-result-card-name">
-              <span>{ship?.name.split("-").join(" ")}</span>
+              <span>{String(ship?.name ?? "").replace(/-/g, " ")}</span>
             </div>
             {mouseIsOver === true ? (
               <div className="selector">Sélectionner ce vaisseau</div>

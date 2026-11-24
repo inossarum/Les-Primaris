@@ -318,7 +318,10 @@ const EncyclopediaShipPage = () => {
             <div className="encyclopedia-ship-page-container">
               {RSIShipImages &&
                 RSIShipImages.map((image) => (
-                  <div className="encyclopedia-ship-image-wrapper">
+                  <div
+                    className="encyclopedia-ship-image-wrapper"
+                    key={image.id ?? image.url ?? image.bigUrl}
+                  >
                     <a
                       href={image.url}
                       className="encyclopedia-ship-image"
@@ -348,6 +351,7 @@ const EncyclopediaShipPage = () => {
                 {RSIShipVideos &&
                   RSIShipVideos.map((video) => (
                     <iframe
+                      key={video.id ?? video.url}
                       className="ship-video"
                       src={`${video.url}`}
                       no-referrer="true"

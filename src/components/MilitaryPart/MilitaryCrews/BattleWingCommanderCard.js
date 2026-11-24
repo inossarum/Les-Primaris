@@ -25,10 +25,10 @@ const BattleWingCommanderCard = ({battleWingCommanderShip}) => {
     const shipSuperiorShip = sharedShipList.filter(
         (ship) => ship.id === actualShip?.newShipHierarchicalSuperior?.id
     );
-    const shipCommander = actualShip?.crewMembers.find(
+    const shipCommander = actualShip?.crewMembers?.find(
         (member) => member?.job === "commandant"
     );
-    const shipPilot = actualShip?.crewMembers.find(
+    const shipPilot = actualShip?.crewMembers?.find(
         (member) => member?.job === "pilote"
     );
 

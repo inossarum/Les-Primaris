@@ -487,9 +487,10 @@ const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
                         </div>
                         <div className="owned-ship-card-crew-member-cards-container">
                             {ownedShipDatas?.crewMembers &&
-                                ownedShipDatas?.crewMembers.map(
+                                ownedShipDatas?.crewMembers?.map(
                                     (crewMember) => (
                                         <CrewMemberCard
+                                            key={crewMember.id ?? crewMember.userId}
                                             crewMember={crewMember}
                                             ownedShipDatas={ownedShipDatas}
                                         />
@@ -533,9 +534,13 @@ const OwnedShipCardInformationsPanel = ({ownedShipDatas, pageActive}) => {
                                 <h3>Personnels en attente d'affectation</h3>
                                 <div className="owned-ship-card-crew-member-cards-container">
                                     {ownedShipDatas?.crewMemberPostulants &&
-                                        ownedShipDatas?.crewMemberPostulants.map(
+                                        ownedShipDatas?.crewMemberPostulants?.map(
                                             (crewMemberPostulant) => (
                                                 <CrewMemberPostulantCard
+                                                    key={
+                                                        crewMemberPostulant.id ??
+                                                        crewMemberPostulant.userId
+                                                    }
                                                     crewMemberPostulant={
                                                         crewMemberPostulant
                                                     }

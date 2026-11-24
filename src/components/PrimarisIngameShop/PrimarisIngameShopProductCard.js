@@ -139,7 +139,7 @@ const PrimarisIngameShopProductCard = ({product}) => {
           <div className="primaris-ingame-shop-product-card-sub-container">
             <span>Quantité: </span>
             <span className="info-green-capitalize">
-              {product?.productQuantity.toLocaleString("fr-FR")}
+              {Number(product?.productQuantity ?? 0).toLocaleString("fr-FR")}
             </span>{" "}
           </div>
           <div className="primaris-ingame-shop-product-card-sub-container">
@@ -243,7 +243,7 @@ const PrimarisIngameShopProductCard = ({product}) => {
           <div className="primaris-ingame-shop-product-card-sub-container">
             <span>Quantité: </span>
             <span className="info-green-capitalize">
-              {product?.productQuantity.toLocaleString("fr-FR")}
+              {Number(product?.productQuantity ?? 0).toLocaleString("fr-FR")}
             </span>{" "}
           </div>
           <div className="primaris-ingame-shop-product-card-sub-container">

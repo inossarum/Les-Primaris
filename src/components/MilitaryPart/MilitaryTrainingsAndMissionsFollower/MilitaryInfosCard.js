@@ -122,7 +122,9 @@ const MilitaryInfosCard = ({military}) => {
                   .filter((rank) => rank.rank === military.factionRank)
                   .map((rank) => {
                     return (
-                      <span className="info-blue">{rank.shortenedRank}</span>
+                      <span className="info-blue" key={rank.id ?? rank.rank}>
+                        {rank.shortenedRank}
+                      </span>
                     );
                   })}
               {"  "}
@@ -149,11 +151,19 @@ const MilitaryInfosCard = ({military}) => {
                         .map((rank) => {
                           if (rank.missionsNeeded - military.missions <= 0) {
                             return (
-                              <span className="value info-green"> 0 </span>
+                              <span
+                                className="value info-green"
+                                key={rank.id ?? rank.rank}
+                              >
+                                0
+                              </span>
                             );
                           } else {
                             return (
-                              <span className="value info-red">
+                              <span
+                                className="value info-red"
+                                key={rank.id ?? rank.rank}
+                              >
                                 {rank.missionsNeeded - military.missions}
                               </span>
                             );
@@ -213,11 +223,19 @@ const MilitaryInfosCard = ({military}) => {
                         .map((rank) => {
                           if (rank.trainingsNeeded - military.trainings <= 0) {
                             return (
-                              <span className="value info-green"> 0 </span>
+                              <span
+                                className="value info-green"
+                                key={rank.id ?? rank.rank}
+                              >
+                                0
+                              </span>
                             );
                           } else {
                             return (
-                              <span className="value info-red">
+                              <span
+                                className="value info-red"
+                                key={rank.id ?? rank.rank}
+                              >
                                 {rank.trainingsNeeded - military.trainings}
                               </span>
                             );
@@ -268,7 +286,10 @@ const MilitaryInfosCard = ({military}) => {
                       {military.militaryDiplomasEarned &&
                         [...military.militaryDiplomasEarned].map((diploma) => {
                           return (
-                            <span className="value info-green-capitalize">
+                            <span
+                              className="value info-green-capitalize"
+                              key={diploma}
+                            >
                               {diploma} /
                             </span>
                           );
@@ -292,13 +313,19 @@ const MilitaryInfosCard = ({military}) => {
                         .map((rank) => {
                           if (rank.diplomaNeeded === "none") {
                             return (
-                              <span className="value info-yellow-capitalize">
+                              <span
+                                className="value info-yellow-capitalize"
+                                key={rank.id ?? rank.rank}
+                              >
                                 {rank.diplomaNeeded}
                               </span>
                             );
                           } else {
                             return (
-                              <span className="value info-red-capitalize">
+                              <span
+                                className="value info-red-capitalize"
+                                key={rank.id ?? rank.rank}
+                              >
                                 {rank.diplomaNeeded}
                               </span>
                             );
@@ -317,13 +344,19 @@ const MilitaryInfosCard = ({military}) => {
                           .map((rank) => {
                             if (rank.officerRecommandationNeeded === true) {
                               return (
-                                <span className="value info-red-uppercase">
+                                <span
+                                  className="value info-red-uppercase"
+                                  key={rank.id ?? rank.rank}
+                                >
                                   {"oui"}
                                 </span>
                               );
                             } else {
                               return (
-                                <span className="value info-green-uppercase">
+                                <span
+                                  className="value info-green-uppercase"
+                                  key={rank.id ?? rank.rank}
+                                >
                                   {"non"}
                                 </span>
                               );
@@ -355,7 +388,10 @@ const MilitaryInfosCard = ({military}) => {
                         .filter((rank) => rank.rank === military.factionRank)
                         .map((rank) => {
                           return (
-                            <span className="value info-blue-capitalize">
+                            <span
+                              className="value info-blue-capitalize"
+                              key={rank.id ?? rank.rank}
+                            >
                               {rank.nextRank}
                             </span>
                           );
@@ -460,7 +496,12 @@ const MilitaryInfosCard = ({military}) => {
                 .filter((rank) => rank.rank === military.factionRank)
                 .map((rank) => {
                   return (
-                    <span className="info-blue rank">{rank.shortenedRank}</span>
+                    <span
+                      className="info-blue rank"
+                      key={rank.id ?? rank.rank}
+                    >
+                      {rank.shortenedRank}
+                    </span>
                   );
                 })}
             <span className="name">
@@ -485,10 +526,17 @@ const MilitaryInfosCard = ({military}) => {
                     )
                     .map((rank) => {
                       if (rank.missionsNeeded - military.missions <= 0) {
-                        return <span className="info-green"> 0 </span>;
+                        return (
+                          <span className="info-green" key={rank.id ?? rank.rank}>
+                            0
+                          </span>
+                        );
                       } else {
                         return (
-                          <span className="info-red">
+                          <span
+                            className="info-red"
+                            key={rank.id ?? rank.rank}
+                          >
                             {rank.missionsNeeded - military.missions}
                           </span>
                         );
@@ -515,10 +563,17 @@ const MilitaryInfosCard = ({military}) => {
                     )
                     .map((rank) => {
                       if (rank.trainingsNeeded - military.trainings <= 0) {
-                        return <span className="info-green"> 0 </span>;
+                        return (
+                          <span className="info-green" key={rank.id ?? rank.rank}>
+                            0
+                          </span>
+                        );
                       } else {
                         return (
-                          <span className="info-red">
+                          <span
+                            className="info-red"
+                            key={rank.id ?? rank.rank}
+                          >
                             {rank.trainingsNeeded - military.trainings}
                           </span>
                         );

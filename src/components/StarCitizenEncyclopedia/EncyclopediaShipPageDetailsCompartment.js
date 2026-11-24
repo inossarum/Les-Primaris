@@ -130,7 +130,9 @@ const EncyclopediaShipPageDetailsCompartment = ({data, dataCategory}) => {
                 <h3>
                     Vitesse de quantum:{" "}
                     <span className="value">
-                        {data?.quantum_speed.toLocaleString("fr-FR")}
+                        {data?.quantum_speed == null
+                            ? "—"
+                            : Number(data.quantum_speed).toLocaleString("fr-FR")}
                     </span>{" "}
                     m/s
                 </h3>

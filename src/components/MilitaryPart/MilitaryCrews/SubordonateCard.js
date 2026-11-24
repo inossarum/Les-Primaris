@@ -25,10 +25,10 @@ const SubordonateCard = ({fleetCard}) => {
     );
 
     const shipCommander = actualShip?.crewMembers[0]
-        ? actualShip?.crewMembers.find((member) => member?.job === "commandant")
+        ? actualShip?.crewMembers?.find((member) => member?.job === "commandant")
         : "";
     const shipPilot = actualShip?.crewMembers[0]
-        ? actualShip?.crewMembers.find((member) => member?.job === "pilote")
+        ? actualShip?.crewMembers?.find((member) => member?.job === "pilote")
         : "";
 
     const user = useSelector((state) => state.user);
