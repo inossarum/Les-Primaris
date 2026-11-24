@@ -114,7 +114,7 @@ const MilitaryEventCrewMemberSearchResultCard = ({
         <button
           type="submit"
           onClick={(e) =>
-            (handleAddEmployee(e), dispatch(setEventUserSearchingActive(false)))
+            { handleAddEmployee(e); dispatch(setEventUserSearchingActive(false)); }
           }
         >
           Valider le choix
