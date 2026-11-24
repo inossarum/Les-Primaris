@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setIsAddingANewProduct} from "../../feature/primarisIngameShop.slice";
-import {addDoc, collection, doc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, updateDoc} from "firebase/firestore";
 import {db} from "../../utils/firebase.config";
 
 const PrimarisIngameShopNewProductForm = () => {
@@ -9,6 +9,8 @@ const PrimarisIngameShopNewProductForm = () => {
   const users = useSelector((state) => state.user.users);
   const dispatch = useDispatch();
   const [categorySelected, setCategorySelected] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [formError, setFormError] = useState("");
   const newProductCategory = useRef();
   const newProductSubCategory = useRef();
   const newProductName = useRef();
@@ -18,78 +20,99 @@ const PrimarisIngameShopNewProductForm = () => {
   const newProductDeliveryAvailability = useRef();
   const newProductDescription = useRef();
 
-  // useEffect(() => {
-
-  // }, [
-
-  // ])
-
   const handleAddNewProductToDataBase = async (e) => {
     e.preventDefault();
+    if (isSaving) return;
+
+    const name = newProductName.current?.value.trim() || "";
+    const category = newProductCategory.current?.value || "";
+    const subCategory = newProductSubCategory.current?.value || "";
+    const price = Number(newProductSellingPrice.current?.value);
+    const quantity = Number(newProductQuantity.current?.value);
+    const location = newProductLocation.current?.value.trim() || "";
+    const deliveryAvailable = newProductDeliveryAvailability.current?.value || "";
+
+    if (!currentUser?.userId) {
+      setFormError("Connectez-vous pour publier une annonce.");
+      return;
+    }
+    if (!name || !category || !subCategory || !location || !deliveryAvailable ||
+        !Number.isFinite(price) || price < 0 ||
+        !Number.isInteger(quantity) || quantity < 1) {
+      setFormError("Vérifiez les champs requis, le prix et la quantité.");
+      return;
+    }
+
+    setIsSaving(true);
+    setFormError("");
+    const createdAt = Date.now();
+    const notificationId = `${createdAt}-${Math.random().toString(36).slice(2)}`;
     const productDatas = {
-      announcementCreatorName: currentUser.currentUser,
+      announcementCreatorName: currentUser.currentUser || "",
       announcementCreatorId: currentUser.userId,
-      announcementCreatedAt: Date.now(),
-      productName: newProductName.current.value,
-      productCategory: newProductCategory.current.value,
-      productSubCategory: newProductSubCategory.current.value,
-      productSellingPrice: Number(newProductSellingPrice.current.value),
-      productQuantity: Number(newProductQuantity.current.value),
-      productLocation: newProductLocation.current.value,
-      deliveryAvailable: newProductDeliveryAvailability.current.value,
-      productDescription: newProductDescription.current.value,
+      announcementCreatedAt: createdAt,
+      productName: name,
+      productCategory: category,
+      productSubCategory: subCategory,
+      productSellingPrice: price,
+      productQuantity: quantity,
+      productLocation: location,
+      deliveryAvailable,
+      productDescription: newProductDescription.current?.value.trim() || "",
       messages: [],
-      notificationId: Math.random(Date.now()),
+      notificationId,
+    };
+    const notificationDatas = {
+      type: "nouvelle annonce de vente",
+      associatedAnnouncement: notificationId,
+      createdAt,
+      announcementCreatorName: productDatas.announcementCreatorName,
+      announcementCreatorId: productDatas.announcementCreatorId,
+      productSubCategory: subCategory,
+      productQuantity: quantity,
+      productName: name,
     };
 
-    if (
-      newProductName.current.value !== "" &&
-      newProductCategory.current.value !== "" &&
-      newProductSubCategory.current.value !== "" &&
-      newProductSellingPrice.current.value !== "" &&
-      newProductLocation.current.value !== "" &&
-      newProductDeliveryAvailability.current.value !== ""
-    ) {
-      addDoc(collection(db, "primarisIngameShop"), productDatas);
-      dispatch(setIsAddingANewProduct(false));
-
-      const notificationDatas = {
-        type: "nouvelle annonce de vente",
-        associatedAnnouncement: productDatas.notificationId,
-        createdAt: productDatas.announcementCreatedAt,
-        announcementCreatorName: productDatas.announcementCreatorName,
-        announcementCreatorId: productDatas.announcementCreatorId,
-        productSubCategory: productDatas.productSubCategory,
-        productQuantity: productDatas.productQuantity,
-        productName: productDatas.productName,
-      };
-
-      users &&
-        [...users]
-          .filter((user) => user.id !== productDatas?.announcementCreatorId)
-          .map((user) => {
-            const userNotifications = user.notifications;
+    try {
+      await addDoc(collection(db, "primarisIngameShop"), productDatas);
+      const notificationResults = await Promise.allSettled(
+        (users || [])
+          .filter((user) => user?.id && user.id !== currentUser.userId)
+          .map((user) =>
             updateDoc(doc(db, "users", user.id), {
-              notifications: [...userNotifications, notificationDatas],
-            });
-          });
+              notifications: arrayUnion(notificationDatas),
+            })
+          )
+      );
 
-      newProductCategory.current.value = null;
-      newProductSubCategory.current.value = null;
-      newProductName.current.value = null;
-      newProductSellingPrice.current.value = null;
-      newProductQuantity.current.value = null;
-      newProductLocation.current.value = null;
-      newProductDeliveryAvailability.current.value = null;
-      newProductDescription.current.value = null;
-    } else {
-      console.log("Veuillez remplir les champs");
+      dispatch(setIsAddingANewProduct(false));
+      if (notificationResults.some((result) => result.status === "rejected")) {
+        setFormError("Annonce enregistrée, mais certaines notifications n’ont pas pu être envoyées.");
+      }
+      [
+        newProductCategory,
+        newProductSubCategory,
+        newProductName,
+        newProductSellingPrice,
+        newProductQuantity,
+        newProductLocation,
+        newProductDeliveryAvailability,
+        newProductDescription,
+      ].forEach((ref) => {
+        if (ref.current) ref.current.value = "";
+      });
+      setCategorySelected("");
+    } catch (error) {
+      console.error("Impossible d’enregistrer l’annonce :", error);
+      setFormError("L’annonce n’a pas pu être enregistrée. Réessayez.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
   return (
     <div className="primaris-ingame-shop-new-product-form-body">
-      <form className="primaris-ingame-shop-new-product-form-main-container">
+      <form className="primaris-ingame-shop-new-product-form-main-container" onSubmit={handleAddNewProductToDataBase}>
         <span className="primaris-ingame-shop-new-product-form-title">
           {" "}
           Votre annonce
@@ -205,7 +228,6 @@ const PrimarisIngameShopNewProductForm = () => {
             <select
               id="product-delivery-availability"
               ref={newProductDeliveryAvailability}
-              onChange={() => console.log(newProductSubCategory.current.value)}
             >
               <option value="">Livraison</option>
 
@@ -222,19 +244,22 @@ const PrimarisIngameShopNewProductForm = () => {
             ></textarea>
           </div>
         </div>
+        {formError && <p role="alert">{formError}</p>}
         <div className="primaris-ingame-shop-new-product-form-buttons-container">
-          <span
+          <button
             className="primaris-ingame-shop-new-product-form-button-green"
-            onClick={(e) => handleAddNewProductToDataBase(e)}
+            type="submit"
+            disabled={isSaving}
           >
-            Valider
-          </span>
-          <span
+            {isSaving ? "Enregistrement…" : "Valider"}
+          </button>
+          <button
             className="primaris-ingame-shop-new-product-form-button-red"
-            onClick={(e) => dispatch(setIsAddingANewProduct(false))}
+            type="button"
+            onClick={() => dispatch(setIsAddingANewProduct(false))}
           >
             Annuler
-          </span>
+          </button>
         </div>
       </form>
     </div>
