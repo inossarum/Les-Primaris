@@ -29,7 +29,7 @@ const CreateThread = () => {
           likes: [],
           responses: [],
           createdAt: Date.now(),
-          notificationId: Math.random(Date.now()),
+          notificationId: Date.now() + Math.random(),
         };
 
         await addDoc(collection(db, "moderatorThreads"), threadData);
