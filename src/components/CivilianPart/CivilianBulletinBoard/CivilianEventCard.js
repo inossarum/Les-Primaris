@@ -440,8 +440,7 @@ const CivilianEventCard = ({event, isViewingArchives}) => {
             <div
               className="civilian-event-card-main-container-event-button remove"
               onClick={(e) =>
-                dispatch(setEventDetailsWindowActive("")) &
-                resetEventDetailTimeout(e)
+                (dispatch(setEventDetailsWindowActive("")), resetEventDetailTimeout(e))
               }
             >
               <span>Retour à la liste</span>
