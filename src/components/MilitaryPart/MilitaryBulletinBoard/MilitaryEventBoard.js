@@ -135,7 +135,7 @@ const MilitaryEventBoard = () => {
             <div
               className="military-bulletin-board-add-event-container"
               onClick={() =>
-                (setIsViewingArchives(false), dispatch(setEventDetailsWindowActive("")))
+                { setIsViewingArchives(false); dispatch(setEventDetailsWindowActive("")); }
               }
             >
               <span>Evenements en cours</span>
@@ -144,7 +144,7 @@ const MilitaryEventBoard = () => {
             <div
               className="military-bulletin-board-add-event-container"
               onClick={() =>
-                (setIsViewingArchives(true), dispatch(setEventDetailsWindowActive("")))
+                { setIsViewingArchives(true); dispatch(setEventDetailsWindowActive("")); }
               }
             >
               <span>Archives</span>
