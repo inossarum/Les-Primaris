@@ -37,7 +37,7 @@ const CivilianEventCrewMemberSearchResultCard = ({
       factionRank: user.factionRank,
       job: job.current.value,
       shipDesired: actualShipSelected.vehicleId,
-      notificationId: Math.random(Date.now()),
+      notificationId: Date.now() + Math.random(),
     };
 
     const vehicleEmployeesUpdated = [
