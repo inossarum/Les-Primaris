@@ -4,9 +4,12 @@ export const userSlice = createSlice({
   name: "users",
   initialState: {
     currentUser: null,
+    userEmail: null,
     RPName: null,
     photo: null,
+    photoRef: null,
     banner: null,
+    bannerRef: null,
     uploadedBannersList: [],
     uploadedImagesList: [],
     webSiteRole: null,
@@ -28,7 +31,7 @@ export const userSlice = createSlice({
     militaryDiplomasEarned: [],
   },
   reducers: {
-    getUser: (state, {payload}) => {
+    clearCurrentUser: (state) => {\n      state.currentUser = null;\n      state.userEmail = null;\n      state.RPName = null;\n      state.photo = null;\n      state.photoRef = null;\n      state.banner = null;\n      state.bannerRef = null;\n      state.uploadedBannersList = [];\n      state.uploadedImagesList = [];\n      state.webSiteRole = null;\n      state.factionPart = null;\n      state.factionRank = null;\n      state.assignment = null;\n      state.assignmentUnit = null;\n      state.employment = null;\n      state.postulant = null;\n      state.department = null;\n      state.userId = null;\n      state.notifications = [];\n      state.promotedAt = null;\n      state.officerRecommandation = [];\n      state.civilianDiplomasEarned = [];\n      state.militaryDiplomasEarned = [];\n    },\n    getUser: (state, {payload}) => {
       state.currentUser = payload;
     },
     getUserRPName: (state, {payload}) => {
