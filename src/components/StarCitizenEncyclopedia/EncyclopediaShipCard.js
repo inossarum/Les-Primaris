@@ -14,25 +14,30 @@ const EncyclopediaShipCard = ({data}) => {
   const dispatch = useDispatch();
 
   const shipVariantsQuery = async () => {
+    if (!data?.slug || !data?.name) return;
     window.scrollTo(0, 0);
-    axios
-      .get(`https://api.fleetyards.net/v1/models/${data.slug}/variants`)
-      .then((res) => dispatch(getRSIShipVariants(res.data)));
-    axios
-      .get(
-        `https://api.star-citizen.wiki/api/vehicles/${data?.name}?locale=en_EN&include=components`
-      )
-      .then((res) => dispatch(getRSIShipDetail(res.data)));
-    axios
-      .get(`https://api.fleetyards.net/v1/models/${data.slug}/images`)
-      .then((res) => dispatch(getRSIShipImages(res.data)));
-    axios
-      .get(`https://api.fleetyards.net/v1/models/${data.slug}/videos`)
-      .then((res) =>
-        res !== null
-          ? dispatch(getRSIShipVideos(res.data))
-          : dispatch(getRSIShipVideos(null))
-      );
+
+    const results = await Promise.allSettled([
+      axios.get(`https://api.fleetyards.net/v1/models/${encodeURIComponent(data.slug)}/variants`),
+      axios.get(`https://api.star-citizen.wiki/api/vehicles/${encodeURIComponent(data.name)}?locale=en_EN&include=components`),
+      axios.get(`https://api.fleetyards.net/v1/models/${encodeURIComponent(data.slug)}/images`),
+      axios.get(`https://api.fleetyards.net/v1/models/${encodeURIComponent(data.slug)}/videos`),
+    ]);
+
+    const actions = [
+      getRSIShipVariants,
+      getRSIShipDetail,
+      getRSIShipImages,
+      getRSIShipVideos,
+    ];
+    results.forEach((result, index) => {
+      dispatch(actions[index](
+        result.status === "fulfilled" ? result.value.data : null
+      ));
+      if (result.status === "rejected") {
+        console.error("Échec du chargement des données du vaisseau :", result.reason);
+      }
+    });
   };
 
   return (
@@ -44,9 +49,10 @@ const EncyclopediaShipCard = ({data}) => {
             background: `url(${data.storeImageLarge}) center/cover no-repeat `,
           }}
           to="/starCitizenEncyclopediaDetailPage"
-          onClick={() =>
-            dispatch(celestialCardContentDeployed(data)) & shipVariantsQuery()
-          }
+          onClick={() => {
+            dispatch(celestialCardContentDeployed(data));
+            void shipVariantsQuery();
+          }}
         >
           <div className="ship-name-container">
             <div className="ship-name">
