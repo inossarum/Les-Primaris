@@ -29,7 +29,7 @@ const MilitaryEventJobSelectionPanel = ({vehicle}) => {
       factionRank: user.factionRank,
       job: job.current.value,
       shipDesired: actualEventShipSelected.vehicleId,
-      notificationId: Math.random(Date.now()),
+      notificationId: Date.now() + Math.random(),
     };
 
     const vehiclePostulantsUpdated = [...vehicle?.postulants, postulantDatas];
@@ -123,8 +123,7 @@ const MilitaryEventJobSelectionPanel = ({vehicle}) => {
               className="primaris-ingame-shop-new-product-form-button-green"
               type="submit"
               onClick={(e) =>
-                handleAddCrewMemberPostulant(e) &
-                dispatch(setEventJobSelectionActive(false))
+                (handleAddCrewMemberPostulant(e), dispatch(setEventJobSelectionActive(false)))
               }
             >
               Valider le choix
