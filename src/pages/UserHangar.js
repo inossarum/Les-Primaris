@@ -12,18 +12,36 @@ const UserHangar = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios
-            .get(`https://api.fleetyards.net/v1/models/?perPage=200`)
-            .then((res) => dispatch(getRSIShips(res.data)));
-
+        const controller = new AbortController();
         dispatch(windowToggleActive(false));
-        onSnapshot(collection(db, "shipsAndCrews"), (snapshot) => {
-            let shipsAndCrews = [];
-            snapshot.docs.forEach((doc) => {
-                shipsAndCrews.push({...doc.data(), id: doc.id});
+
+        axios
+            .get(`https://api.fleetyards.net/v1/models/?perPage=200`, {
+                signal: controller.signal,
+            })
+            .then((res) => dispatch(getRSIShips(res.data)))
+            .catch((error) => {
+                if (error.code !== "ERR_CANCELED") {
+                    console.error("Échec du chargement des vaisseaux :", error);
+                }
             });
-            dispatch(getOwnedShipsList(shipsAndCrews));
-        });
+
+        const unsubscribe = onSnapshot(
+            collection(db, "shipsAndCrews"),
+            (snapshot) => {
+                const shipsAndCrews = snapshot.docs.map((document) => ({
+                    ...document.data(),
+                    id: document.id,
+                }));
+                dispatch(getOwnedShipsList(shipsAndCrews));
+            },
+            (error) => console.error("Échec de l’écoute du hangar :", error)
+        );
+
+        return () => {
+            controller.abort();
+            unsubscribe();
+        };
     }, [dispatch]);
 
     return (
