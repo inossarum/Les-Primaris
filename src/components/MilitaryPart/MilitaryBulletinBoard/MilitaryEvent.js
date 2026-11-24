@@ -217,7 +217,7 @@ const MilitaryEvent = ({event, archive}) => {
           <div
             className="military-event-main-container-event-button details"
             onClick={(e) =>
-              (handleShowEventDetails(e), handleRemoveAssociatedNotification(e))
+              { handleShowEventDetails(e); handleRemoveAssociatedNotification(e); }
             }
           >
             <span>Details</span>
