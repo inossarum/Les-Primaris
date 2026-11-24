@@ -16,36 +16,41 @@ const EditProfilPhoto = () => {
   );
 
   const photoDisplayer = async (e) => {
-    const imageRef = ref(
-      storage,
-      `images/usersProfilePhoto/${auth.currentUser.uid}/${e.target.files[0].name} `
-    );
-
-    if (
-      filePicker.current.files[0].name !== undefined &&
-      filePicker.current.files[0].size <= 5000000
-    ) {
-      try {
-        uploadBytes(imageRef, e.target.files[0]).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then(
-            (url) =>
-              (dispatch(getUserPhoto(url)),
-              updateDoc(doc(db, "users", `${auth.currentUser.uid}`), {
-                photo: `${url}`,
-                photoRef: `${imageRef}`,
-                uploadedImagesList: [...userUploadedImagesList, url],
-              })
-            )
-          );
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      setFileWeightTooHeavyMessage(
-        "La taille maximale de l'image ne doit pas dépasser 5 Mo"
-      );
+    const file = e.target.files?.[0];
+    const userId = auth.currentUser?.uid;
+    if (!file) return;
+    if (!userId) {
+      setFileWeightTooHeavyMessage("Connectez-vous avant de modifier cette image.");
+      return;
+    }
+    if (!file.type.startsWith("image/") || file.size > 5000000) {
+      setFileWeightTooHeavyMessage("Choisissez une image de 5 Mo maximum.");
       setTimeout(() => setFileWeightTooHeavyMessage(""), 5000);
+      e.target.value = "";
+      return;
+    }
+
+    const storagePath = `images/usersProfilePhoto/${userId}/${Date.now()}-${file.name}`;
+    try {
+      const imageRef = ref(storage, storagePath);
+      const snapshot = await uploadBytes(imageRef, file);
+      const url = await getDownloadURL(snapshot.ref);
+      await updateDoc(doc(db, "users", userId), {
+        photo: url,
+        photoRef: storagePath,
+        uploadedImagesList: [
+          ...(Array.isArray(userUploadedImagesList) ? userUploadedImagesList : []),
+          url,
+        ],
+      });
+      dispatch(getUserPhoto(url));
+      setFileWeightTooHeavyMessage("");
+    } catch (error) {
+      console.error("Échec du téléversement de l’image :", error);
+      setFileWeightTooHeavyMessage("L’image n’a pas pu être enregistrée. Réessayez.");
+      setTimeout(() => setFileWeightTooHeavyMessage(""), 5000);
+    } finally {
+      e.target.value = "";
     }
   };
 
@@ -59,7 +64,7 @@ const EditProfilPhoto = () => {
           ref={filePicker}
           onChange={(e) => photoDisplayer(e)}
         />
-        <Edit onClick={() => filePicker.current.click()} />
+        <Edit onClick={() => filePicker.current?.click()} />
       </div>
       <span className="info-red-uppercase">{fileWeightTooHeavyMessage}</span>
     </>
