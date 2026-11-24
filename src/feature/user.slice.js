@@ -31,7 +31,32 @@ export const userSlice = createSlice({
     militaryDiplomasEarned: [],
   },
   reducers: {
-    clearCurrentUser: (state) => {\n      state.currentUser = null;\n      state.userEmail = null;\n      state.RPName = null;\n      state.photo = null;\n      state.photoRef = null;\n      state.banner = null;\n      state.bannerRef = null;\n      state.uploadedBannersList = [];\n      state.uploadedImagesList = [];\n      state.webSiteRole = null;\n      state.factionPart = null;\n      state.factionRank = null;\n      state.assignment = null;\n      state.assignmentUnit = null;\n      state.employment = null;\n      state.postulant = null;\n      state.department = null;\n      state.userId = null;\n      state.notifications = [];\n      state.promotedAt = null;\n      state.officerRecommandation = [];\n      state.civilianDiplomasEarned = [];\n      state.militaryDiplomasEarned = [];\n    },\n    getUser: (state, {payload}) => {
+    clearCurrentUser: (state) => {
+      state.currentUser = null;
+      state.userEmail = null;
+      state.RPName = null;
+      state.photo = null;
+      state.photoRef = null;
+      state.banner = null;
+      state.bannerRef = null;
+      state.uploadedBannersList = [];
+      state.uploadedImagesList = [];
+      state.webSiteRole = null;
+      state.factionPart = null;
+      state.factionRank = null;
+      state.assignment = null;
+      state.assignmentUnit = null;
+      state.employment = null;
+      state.postulant = null;
+      state.department = null;
+      state.userId = null;
+      state.notifications = [];
+      state.promotedAt = null;
+      state.officerRecommandation = [];
+      state.civilianDiplomasEarned = [];
+      state.militaryDiplomasEarned = [];
+    },
+    getUser: (state, {payload}) => {
       state.currentUser = payload;
     },
     getUserRPName: (state, {payload}) => {
@@ -125,6 +150,7 @@ export const userSlice = createSlice({
 });
 
 export const {
+  clearCurrentUser,
   getUser,
   getUserRPName,
   getUserEmploymentStatus,
