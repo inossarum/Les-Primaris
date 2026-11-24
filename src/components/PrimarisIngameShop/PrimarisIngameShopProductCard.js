@@ -60,7 +60,7 @@ const PrimarisIngameShopProductCard = ({product}) => {
       messageAuthor: currentUser.currentUser,
       messageAuthorId: currentUser.userId,
       messageContent: announcementMessage.current.value,
-      notificationId: Math.random(Date.now()),
+      notificationId: Date.now() + Math.random(),
     };
 
     const productMessages = product?.messages;
