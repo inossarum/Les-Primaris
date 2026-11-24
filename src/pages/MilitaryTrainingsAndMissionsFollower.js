@@ -13,21 +13,18 @@ const MilitaryTrainingsAndMissionsFollower = () => {
   const militaryUsers = useSelector((state) => state.user.militaryUsers);
 
   useEffect(() => {
-    onSnapshot(collection(db, "militaryEventsArchives"), (snapshot) => {
-      let militaryEventsArchivesData = [];
-      snapshot.docs.forEach((doc) => {
-        militaryEventsArchivesData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getMilitaryEventsArchivesList(militaryEventsArchivesData));
-    });
-    onSnapshot(collection(db, "militaryRanks"), (snapshot) => {
-      let militaryRanks = [];
-      snapshot.docs.forEach((doc) => {
-        militaryRanks.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getMilitaryRanks(militaryRanks));
-    });
-  }, []);
+    const unsubscribe = onSnapshot(
+      collection(db, "militaryEventsArchives"),
+      (snapshot) => {
+        const events = snapshot.docs.map((eventDoc) => ({
+          ...eventDoc.data(),
+          id: eventDoc.id,
+        }));
+        dispatch(getMilitaryEventsArchivesList(events));
+      }
+    );
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <div className="military-trainings-and-missions-follower-body">
