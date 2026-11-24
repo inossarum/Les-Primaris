@@ -80,7 +80,7 @@ const CrewMemberSearchResultCard = ({user, actualShipSelected}) => {
         <button
           type="submit"
           onClick={(e) =>
-            handleAddCrewMember(e) & dispatch(setCrewSelectionActive(false))
+            (handleAddCrewMember(e), dispatch(setCrewSelectionActive(false)))
           }
         >
           Valider le choix
