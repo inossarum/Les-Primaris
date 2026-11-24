@@ -123,8 +123,7 @@ const JobSelectionPanel = ({ownedShipDatas}) => {
             <button
               type="submit"
               onClick={(e) =>
-                handleAddCrewMemberPostulant(e) &
-                dispatch(setJobSelectionActive(false))
+                (handleAddCrewMemberPostulant(e), dispatch(setJobSelectionActive(false)))
               }
             >
               Valider le choix
