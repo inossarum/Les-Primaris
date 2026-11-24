@@ -1,15 +1,12 @@
 import {
-    onAuthStateChanged,
     sendPasswordResetEmail,
     signInWithEmailAndPassword,
 } from "firebase/auth";
 import React, {useRef, useState} from "react";
-import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {getUser} from "../../feature/user.slice";
 import {windowToggleActive} from "../../feature/window.slice";
-import {auth, db} from "../../utils/firebase.config";
-import {doc, getDoc} from "firebase/firestore";
+import {auth} from "../../utils/firebase.config";
 
 const Login = () => {
     const loginEmail = useRef();
@@ -30,22 +27,16 @@ const Login = () => {
             loginPassword.current.value
         )
             .then(async (userCredential) => {
-                dispatch(getUser(userCredential.displayName));
+                dispatch(getUser(userCredential.user.displayName));
                 windowSetNotActiveState();
             })
             .catch((err) => {
                 console.log(err);
                 setError(err);
             });
-
-        getDoc(doc(db, "users", auth?.currentUser?.uid));
     };
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            dispatch(getUser(user ? user.displayName : null));
-        });
-    }, [dispatch]);
+
 
     return (
         <div className="login-container">
