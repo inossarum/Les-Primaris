@@ -19,34 +19,69 @@ const MilitaryBulletinBoard = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        onSnapshot(collection(db, "militaryEvents"), (snapshot) => {
-            let militaryEventsData = [];
-            snapshot.docs.forEach((doc) => {
-                militaryEventsData.push({...doc.data(), id: doc.id});
-            });
-            dispatch(getMilitaryEventsList(militaryEventsData));
-        });
-        onSnapshot(collection(db, "militaryEventsArchives"), (snapshot) => {
-            let militaryEventsArchivesData = [];
-            snapshot.docs.forEach((doc) => {
-                militaryEventsArchivesData.push({...doc.data(), id: doc.id});
-            });
-            dispatch(getMilitaryEventsArchivesList(militaryEventsArchivesData));
-        });
-        onSnapshot(collection(db, "militaryPromotions"), (snapshot) => {
-            let primarisPromotions = [];
-            snapshot.docs.forEach((doc) => {
-                primarisPromotions.push({...doc.data(), id: doc.id});
-            });
-            dispatch(getMilitaryGeneralPromotions(primarisPromotions));
-        });
+        const unsubscribeEvents = onSnapshot(
+            collection(db, "militaryEvents"),
+            (snapshot) => {
+                const events = snapshot.docs.map((eventDoc) => ({
+                    ...eventDoc.data(),
+                    id: eventDoc.id,
+                }));
+                dispatch(getMilitaryEventsList(events));
+            },
+            (error) => console.error("Unable to load military events:", error)
+        );
 
-        if (RSIShips === null) {
-            axios
-                .get(`https://api.fleetyards.net/v1/models/?perPage=400`)
-                .then((res) => dispatch(getRSIShips(res.data)));
+        const unsubscribeArchives = onSnapshot(
+            collection(db, "militaryEventsArchives"),
+            (snapshot) => {
+                const events = snapshot.docs.map((eventDoc) => ({
+                    ...eventDoc.data(),
+                    id: eventDoc.id,
+                }));
+                dispatch(getMilitaryEventsArchivesList(events));
+            },
+            (error) => console.error("Unable to load military event archives:", error)
+        );
+
+        const unsubscribePromotions = onSnapshot(
+            collection(db, "militaryPromotions"),
+            (snapshot) => {
+                const promotions = snapshot.docs.map((promotionDoc) => ({
+                    ...promotionDoc.data(),
+                    id: promotionDoc.id,
+                }));
+                dispatch(getMilitaryGeneralPromotions(promotions));
+            },
+            (error) => console.error("Unable to load military promotions:", error)
+        );
+
+        return () => {
+            unsubscribeEvents();
+            unsubscribeArchives();
+            unsubscribePromotions();
+        };
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (RSIShips !== null) {
+            return undefined;
         }
-    }, []);
+
+        const controller = new AbortController();
+        axios
+            .get("https://api.fleetyards.net/v1/models/?perPage=400", {
+                signal: controller.signal,
+            })
+            .then((response) => dispatch(getRSIShips(response.data)))
+            .catch((error) => {
+                if (error.code !== "ERR_CANCELED") {
+                    console.error("Unable to load FleetYards ships:", error);
+                }
+            });
+
+        return () => controller.abort();
+    }, [RSIShips, dispatch]);
+
     return (
         <div className="military-bulletin-board-body">
             <NavBar
