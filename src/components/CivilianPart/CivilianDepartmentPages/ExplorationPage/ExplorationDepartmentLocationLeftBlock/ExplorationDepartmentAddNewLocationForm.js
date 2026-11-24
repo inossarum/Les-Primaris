@@ -21,8 +21,8 @@ const ExplorationDepartmentAddNewLocationForm = () => {
 
   const [fileWeightTooHeavyMessage, setFileWeightTooHeavyMessage] =
     useState("");
-
-  const [imagesAdded, setImagesAdded] = useState([]);
+  const [formError, setFormError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const locationName = useRef();
   const locationCelestialObject = useRef();
   const coordonate1 = useRef();
@@ -32,94 +32,93 @@ const ExplorationDepartmentAddNewLocationForm = () => {
   const locationDescription = useRef();
   const locationScreenshots = useRef();
 
-  const handleAddImage = (e) => {
-    e.preventDefault();
+  const handleImageChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    if (
-      locationScreenshots.current.files[0].name !== undefined &&
-      locationScreenshots.current.files[0].size <= 10000000
-    ) {
-      setImagesAdded([...imagesAdded, locationScreenshots.current.files[0]]);
-    } else {
-      setFileWeightTooHeavyMessage(
-        "La taille maximale de l'image ne doit pas dépasser 10 Mo"
-      );
+    if (!file.type.startsWith("image/") || file.size > 10000000) {
+      setFileWeightTooHeavyMessage("Choisissez une image de 10 Mo maximum.");
       setTimeout(() => setFileWeightTooHeavyMessage(""), 5000);
+      e.target.value = "";
+      return;
+    }
+
+    const storagePath = `images/explorationDepartmentLocations/${Date.now()}-${file.name}`;
+    try {
+      const snapshot = await uploadBytes(ref(storage, storagePath), file);
+      const url = await getDownloadURL(snapshot.ref);
+      dispatch(setDepartmentScreensToDownload({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        name: file.name,
+        URL: url,
+        storageRef: storagePath,
+      }));
+      setFileWeightTooHeavyMessage("");
+    } catch (error) {
+      console.error("Échec du téléversement de l’image :", error);
+      setFileWeightTooHeavyMessage("L’image n’a pas pu être téléversée. Réessayez.");
+    } finally {
+      e.target.value = "";
     }
   };
 
-  const handleDeleteImageRef = (e, image) => {
-    setImagesAdded(
-      [...imagesAdded].filter((imageAdded) => image.name !== imageAdded.name)
-    );
-    deleteObject(ref(storage, image.storageRef));
-    dispatch(removeDepartmentScreensToDownload(e.target.currentSrc));
+  const handleDeleteImageRef = async (image) => {
+    try {
+      if (image.storageRef) await deleteObject(ref(storage, image.storageRef));
+      dispatch(removeDepartmentScreensToDownload(image.URL));
+    } catch (error) {
+      console.error("Échec de la suppression de l’image :", error);
+      setFileWeightTooHeavyMessage("L’image n’a pas pu être supprimée.");
+    }
   };
 
-  const handleGetImagesUrl = async (e) => {
-    const imageRef = ref(
-      storage,
-      `images/explorationDepartmentLocations/${e.target.files[0].name}`
+  const handleCancel = async () => {
+    await Promise.allSettled(
+      (imagesToDownload || [])
+        .filter((image) => image.storageRef)
+        .map((image) => deleteObject(ref(storage, image.storageRef)))
     );
-
-    const imagesDatas = {
-      id: Math.random(Date.now()),
-      name: e.target.files[0].name,
-      URL: "",
-      storageRef: `images/explorationDepartmentLocations/${e.target.files[0].name}`,
-    };
-
-    if (
-      (e.target.files[0].name !== "" || e.target.files[0].name !== undefined) &&
-      locationScreenshots.current.files[0].size <= 10000000
-    ) {
-      uploadBytes(imageRef, e.target.files[0]).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(
-          (url) =>
-            (imagesDatas.URL = url) &
-            dispatch(setDepartmentScreensToDownload(imagesDatas))
-        );
-      });
-    }
+    dispatch(resetDepartmentScreensToDownload());
+    dispatch(setDepartmentDisplayedBlock("left"));
   };
 
   const handleAddNewLocation = async (e) => {
     e.preventDefault();
+    if (isSaving) return;
+    if (!actualUser?.userId) {
+      setFormError("Connectez-vous pour ajouter un point d’intérêt.");
+      return;
+    }
 
     const locationDatas = {
-      creator: actualUser.currentUser,
+      creator: actualUser.currentUser || "",
       creatorId: actualUser.userId,
-      name: locationName.current.value,
-      celestialObject: locationCelestialObject.current.value,
-      coordonate1: coordonate1.current.value,
-      coordonate2: coordonate2.current.value,
-      coordonate3: coordonate3.current.value,
-      coordonate4: coordonate4.current.value,
-      description: locationDescription.current.value,
-      images: imagesToDownload,
+      name: locationName.current?.value.trim() || "",
+      celestialObject: locationCelestialObject.current?.value.trim() || "",
+      coordonate1: coordonate1.current?.value.trim() || "",
+      coordonate2: coordonate2.current?.value.trim() || "",
+      coordonate3: coordonate3.current?.value.trim() || "",
+      coordonate4: coordonate4.current?.value.trim() || "",
+      description: locationDescription.current?.value.trim() || "",
+      images: imagesToDownload || [],
     };
 
-    if (
-      locationDatas.name !== "" &&
-      locationDatas.celestialObject !== "" &&
-      locationDatas.coordonate1 !== ""
-    ) {
-      try {
-        await addDoc(collection(db, "explorationLocations"), locationDatas);
-      } catch (err) {
-        console.log(err);
-      }
-      locationName.current.value = "";
-      locationCelestialObject.current.value = "";
-      coordonate1.current.value = "";
-      coordonate2.current.value = "";
-      coordonate3.current.value = "";
-      coordonate4.current.value = "";
-      locationDescription.current.value = "";
+    if (!locationDatas.name || !locationDatas.celestialObject || !locationDatas.coordonate1) {
+      setFormError("Le nom, l’emplacement et la première coordonnée sont requis.");
+      return;
+    }
+
+    setIsSaving(true);
+    setFormError("");
+    try {
+      await addDoc(collection(db, "explorationLocations"), locationDatas);
       dispatch(resetDepartmentScreensToDownload());
       dispatch(setDepartmentDisplayedBlock("left"));
-    } else {
-      console.log("remplir les champs");
+    } catch (error) {
+      console.error("Échec de la création du point d’intérêt :", error);
+      setFormError("Le point d’intérêt n’a pas pu être enregistré. Réessayez.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -128,10 +127,7 @@ const ExplorationDepartmentAddNewLocationForm = () => {
       <div className="exploration-department-add-location-form-header">
         <span
           className="primaris-ingame-shop-new-product-form-button-exploration"
-          onClick={() =>
-            dispatch(setDepartmentDisplayedBlock("left")) &
-            dispatch(resetDepartmentScreensToDownload())
-          }
+          onClick={() => void handleCancel()}
         >
           Annuler
         </span>
@@ -210,8 +206,8 @@ const ExplorationDepartmentAddNewLocationForm = () => {
               type="file"
               ref={locationScreenshots}
               hidden
-              accept=".png,.webp,.jpeg,.webp"
-              onChange={(e) => handleAddImage(e) & handleGetImagesUrl(e)}
+              accept="image/png,image/webp,image/jpeg"
+              onChange={handleImageChange}
             />
             <Photo onClick={(e) => locationScreenshots.current.click(e)} />
             <span className="info-red-uppercase">
@@ -223,21 +219,24 @@ const ExplorationDepartmentAddNewLocationForm = () => {
               ...imagesToDownload.map((image) => (
                 <img
                   src={image.URL}
-                  alt={image}
+                  alt={image.name || "Image du lieu"}
                   key={image.URL}
-                  onClick={(e) => handleDeleteImageRef(e, image)}
+                  onClick={() => void handleDeleteImageRef(image)}
                 />
               )),
             ]}
           </div>
         </div>
       </div>
-      <span
+      {formError && <p role="alert">{formError}</p>}
+      <button
         className="primaris-ingame-shop-new-product-form-button-exploration"
-        onClick={(e) => handleAddNewLocation(e)}
+        type="button"
+        disabled={isSaving}
+        onClick={(e) => void handleAddNewLocation(e)}
       >
-        Valider le point d'intérêt
-      </span>
+        {isSaving ? "Enregistrement…" : "Valider le point d'intérêt"}
+      </button>
     </div>
   );
 };
