@@ -212,7 +212,7 @@ const PrimarisIngameShopProductCard = ({product}) => {
         <div
           className="primaris-ingame-shop-product-card-body-reduced"
           onClick={(e) =>
-            handleRemoveAssociatedNotification(e) & setIsCollapsed(true)
+            (handleRemoveAssociatedNotification(e), setIsCollapsed(true))
           }
         >
           <div className="primaris-ingame-shop-product-card-sub-container">
@@ -264,7 +264,7 @@ const PrimarisIngameShopProductCard = ({product}) => {
         currentUser.webSiteRole === "moderateur" ? (
           <span
             className="primaris-ingame-shop-new-product-form-button-red"
-            onClick={(e) => setIsCollapsed(false) & handleDeleteProduct(e)}
+            onClick={(e) => (setIsCollapsed(false), handleDeleteProduct(e))}
           >
             <Delete />
           </span>
