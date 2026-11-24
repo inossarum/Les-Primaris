@@ -109,7 +109,7 @@ const Thread = ({thread}) => {
           threadId: thread.id,
           likes: [],
           createdAt: Date.now(),
-          notificationId: Math.random(Date.now()),
+          notificationId: Date.now() + Math.random(),
         };
 
         await updateDoc(doc(db, "moderatorThreads", thread.id), {
@@ -321,7 +321,7 @@ const Thread = ({thread}) => {
                 <button
                   className="open-btn"
                   onClick={(e) =>
-                    setIsOpened(true) & handleRemoveAssociatedNotification(e)
+                    (setIsOpened(true), handleRemoveAssociatedNotification(e))
                   }
                 >
                   Ouvrir
