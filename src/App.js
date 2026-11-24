@@ -40,7 +40,7 @@ import {
 } from "./feature/user.slice";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, db} from "./utils/firebase.config";
-import {collection, doc, getDoc, onSnapshot} from "firebase/firestore";
+import {collection, doc, onSnapshot} from "firebase/firestore";
 import UserPrivateRoom from "./pages/UserPrivateRoom";
 import Battlefield from "./pages/Battlefield";
 import MilitaryCrew from "./pages/MilitaryCrew";
@@ -68,139 +68,102 @@ import EX1RcFleetPanel from "./components/MilitaryPart/MilitaryCrews/MilitaryFle
 const App = () => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                dispatch(getUser(user.displayName));
-                getDoc(doc(db, "users", `${auth.currentUser.uid}`)).then(
-                    (user) =>
-                        dispatch(getUserFactionPart(user.data().factionPart)) &
-                        dispatch(getUserFactionRank(user.data().factionRank)) &
-                        dispatch(getUserAssignment(user.data().assignment)) &
-                        dispatch(
-                            getUserAssignmentUnit(user.data().assignmentUnit)
-                        ) &
-                        dispatch(getUserWebSiteRole(user.data().webSiteRole)) &
-                        dispatch(getUserDepartment(user.data().department)) &
-                        dispatch(getUserPhoto(user.data().photo)) &
-                        dispatch(getUserPhotoRef(user.data().photoRef)) &
-                        dispatch(
-                            getUserUploadedImagesList(
-                                user.data().uploadedImagesList
-                            )
-                        ) &
-                        dispatch(getUserBanner(user.data().banner)) &
-                        dispatch(getUserBannerRef(user.data().bannerRef)) &
-                        dispatch(
-                            getUserUploadedBannersList(
-                                user.data().uploadedBannersList
-                            )
-                        ) &
-                        dispatch(getUserId(auth.currentUser.uid)) &
-                        dispatch(getUserEmail(auth.currentUser.email)) &
-                        dispatch(
-                            getUserPostulantStatus(user.data().postulant)
-                        ) &
-                        dispatch(getUserEmail(auth.currentUser.email)) &
-                        dispatch(getUserPromotedAt(user.data().promotedAt)) &
-                        dispatch(
-                            getUserNotifications(user.data().notifications)
-                        ) &
-                        dispatch(getUserRPName(user.data()?.RPName)) &
-                        dispatch(
-                            getUserOfficerRecommandation(
-                                user.data()?.officerRecommandation
-                            )
-                        ) &
-                        dispatch(
-                            getUserCivilianDiplomasEarned(
-                                user.data()?.civilianDiplomasEarned
-                            )
-                        ) &
-                        dispatch(
-                            getUserMilitaryDiplomasEarned(
-                                user.data()?.militaryDiplomasEarned
-                            )
-                        ) &
-                        dispatch(getUserEmploymentStatus(user.data()?.employed))
-                );
+    useE    useEffect(() => {
+        let unsubscribeProfile = null;
+
+        const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+            if (unsubscribeProfile) {
+                unsubscribeProfile();
+                unsubscribeProfile = null;
             }
+
+            if (!user) {
+                dispatch(getUser(null));
+                return;
+            }
+
+            dispatch(getUser(user.displayName));
+            dispatch(getUserId(user.uid));
+            dispatch(getUserEmail(user.email));
+
+            unsubscribeProfile = onSnapshot(
+                doc(db, "users", user.uid),
+                (userSnapshot) => {
+                    if (!userSnapshot.exists()) {
+                        return;
+                    }
+
+                    const profile = userSnapshot.data() || {};
+                    dispatch(getUserFactionPart(profile.factionPart));
+                    dispatch(getUserFactionRank(profile.factionRank));
+                    dispatch(getUserAssignment(profile.assignment));
+                    dispatch(getUserAssignmentUnit(profile.assignmentUnit));
+                    dispatch(getUserWebSiteRole(profile.webSiteRole));
+                    dispatch(getUserDepartment(profile.department));
+                    dispatch(getUserPhoto(profile.photo));
+                    dispatch(getUserPhotoRef(profile.photoRef));
+                    dispatch(getUserBanner(profile.banner));
+                    dispatch(getUserBannerRef(profile.bannerRef));
+                    dispatch(getUserUploadedImagesList(profile.uploadedImagesList || []));
+                    dispatch(getUserUploadedBannersList(profile.uploadedBannersList || []));
+                    dispatch(getUserPostulantStatus(profile.postulant));
+                    dispatch(getUserPromotedAt(profile.promotedAt));
+                    dispatch(getUserNotifications(profile.notifications || []));
+                    dispatch(getUserRPName(profile.RPName));
+                    dispatch(getUserOfficerRecommandation(profile.officerRecommandation));
+                    dispatch(getUserCivilianDiplomasEarned(profile.civilianDiplomasEarned || []));
+                    dispatch(getUserMilitaryDiplomasEarned(profile.militaryDiplomasEarned || []));
+                    dispatch(getUserEmploymentStatus(profile.employed));
+                },
+                (error) => console.error("Unable to load user profile:", error)
+            );
         });
 
-        onSnapshot(collection(db, "users"), (snapshot) => {
-            let usersData = [];
-            snapshot.docs.forEach((doc) => {
-                usersData.push({...doc.data(), id: doc.id});
-            });
+        const unsubscribeUsers = onSnapshot(
+            collection(db, "users"),
+            (snapshot) => {
+                const usersData = snapshot.docs.map((userDoc) => ({
+                    ...userDoc.data(),
+                    id: userDoc.id,
+                }));
+                dispatch(getUsers(usersData));
+            },
+            (error) => console.error("Unable to load users:", error)
+        );
 
-            dispatch(getUsers(usersData));
+        const unsubscribeMilitaryRanks = onSnapshot(
+            collection(db, "militaryRanks"),
+            (snapshot) => {
+                const militaryRanks = snapshot.docs.map((rankDoc) => ({
+                    ...rankDoc.data(),
+                    id: rankDoc.id,
+                }));
+                dispatch(getMilitaryRanks(militaryRanks));
+            },
+            (error) => console.error("Unable to load military ranks:", error)
+        );
 
-            usersData &&
-                [...usersData]
-                    .filter((user) => auth?.currentUser?.uid === user?.id)
-                    .map(
-                        (user) =>
-                            dispatch(getUserFactionPart(user?.factionPart)) &
-                            dispatch(getUserFactionRank(user?.factionRank)) &
-                            dispatch(getUserAssignment(user?.assignment)) &
-                            dispatch(
-                                getUserAssignmentUnit(user?.assignmentUnit)
-                            ) &
-                            dispatch(getUserWebSiteRole(user?.webSiteRole)) &
-                            dispatch(getUserDepartment(user?.department)) &
-                            dispatch(getUserPostulantStatus(user?.postulant)) &
-                            dispatch(
-                                getUserNotifications(user?.notifications)
-                            ) &
-                            dispatch(getUserRPName(user?.RPName)) &
-                            dispatch(getUserPromotedAt(user?.promotedAt)) &
-                            dispatch(
-                                getUserOfficerRecommandation(
-                                    user?.officerRecommandation
-                                )
-                            ) &
-                            dispatch(
-                                getUserCivilianDiplomasEarned(
-                                    user?.civilianDiplomasEarned
-                                )
-                            ) &
-                            dispatch(
-                                getUserMilitaryDiplomasEarned(
-                                    user?.militaryDiplomasEarned
-                                )
-                            ) &
-                            dispatch(getUserEmploymentStatus(user?.employed)) &
-                            dispatch(
-                                getUserUploadedImagesList(
-                                    user?.uploadedImagesList
-                                )
-                            ) &
-                            dispatch(
-                                getUserUploadedBannersList(
-                                    user?.uploadedBannersList
-                                )
-                            )
-                    );
-        });
+        const unsubscribeShipsAndCrews = onSnapshot(
+            collection(db, "shipsAndCrews"),
+            (snapshot) => {
+                const shipsAndCrews = snapshot.docs.map((shipDoc) => ({
+                    ...shipDoc.data(),
+                    id: shipDoc.id,
+                }));
+                dispatch(getSharedShipsList(shipsAndCrews));
+                dispatch(getSharedShipsFleet(shipsAndCrews));
+            },
+            (error) => console.error("Unable to load ships and crews:", error)
+        );
 
-        onSnapshot(collection(db, "militaryRanks"), (snapshot) => {
-            let militaryRanks = [];
-            snapshot.docs.forEach((doc) => {
-                militaryRanks.push({...doc.data(), id: doc.id});
-            });
-            dispatch(getMilitaryRanks(militaryRanks));
-        });
-        onSnapshot(collection(db, "shipsAndCrews"), (snapshot) => {
-            let shipsAndCrews = [];
-            snapshot.docs.forEach((doc) => {
-                shipsAndCrews.push({...doc.data(), id: doc.id});
-            });
-            dispatch(getSharedShipsList(shipsAndCrews));
-            dispatch(getSharedShipsFleet(shipsAndCrews));
-        });
-    }, [dispatch]);
-
-    return (
+        return () => {
+            unsubscribeAuth();
+            unsubscribeProfile?.();
+            unsubscribeUsers();
+            unsubscribeMilitaryRanks();
+            unsubscribeShipsAndCrews();
+        };
+    }, [dispatch]);turn (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
