@@ -33,6 +33,7 @@ const MilitaryEventBoard = () => {
 
   const handleAddNewEvent = async (e) => {
     e.preventDefault();
+    if (!currentUser?.userId) return false;
     const eventDatas = {
       creator: currentUser.currentUser,
       creatorId: currentUser.userId,
@@ -52,8 +53,8 @@ const MilitaryEventBoard = () => {
     };
 
     if (
-      eventName.current.value !== "" &&
-      eventName.current.value !== "" &&
+      eventName.current.value.trim() !== "" &&
+      eventDate.current.value !== "" &&
       eventType.current.value !== ""
     ) {
       try {
