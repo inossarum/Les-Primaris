@@ -1,5 +1,5 @@
 import {AddCircle} from "@mui/icons-material";
-import {addDoc, collection, doc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, updateDoc} from "firebase/firestore";
 import React, {useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {db} from "../../../utils/firebase.config";
@@ -46,7 +46,7 @@ const CivilianEventBoard = () => {
       players: [],
       vehicles: [],
       createdAt: Date.now(),
-      notificationId: Math.random(Date.now()),
+      notificationId: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
     };
 
     if (
@@ -54,7 +54,12 @@ const CivilianEventBoard = () => {
       eventName.current.value !== "" &&
       eventType.current.value !== ""
     ) {
-      await addDoc(collection(db, "civilianEvents"), eventDatas);
+      try {
+        await addDoc(collection(db, "civilianEvents"), eventDatas);
+      } catch (error) {
+        console.error("Échec de la création de l’événement :", error);
+        return false;
+      }
       const notificationDatas = {
         eventDate: eventDatas.date,
         type: "evenement civil",
@@ -66,8 +71,8 @@ const CivilianEventBoard = () => {
         name: eventDatas.name,
         associatedEvent: eventDatas.notificationId,
       };
-      users &&
-        [...users]
+      await Promise.allSettled(
+        (users || [])
           .filter(
             (user) =>
               (user.factionPart === "militaire" &&
@@ -75,14 +80,15 @@ const CivilianEventBoard = () => {
               (user.factionPart === "civil-militaire" &&
                 user.id !== currentUser.userId) ||
               (user.factionPart === "civil" && user.id !== currentUser.userId)
-          )
-          .map((user) => {
-            const userNotifications = user.notifications;
-            updateDoc(doc(db, "users", user.id), {
-              notifications: [...userNotifications, notificationDatas],
-            });
-          });
+          ).map((user) =>
+          updateDoc(doc(db, "users", user.id), {
+            notifications: arrayUnion(notificationDatas),
+          })
+        )
+      )
+      return true;
     }
+    return false;
   };
 
   return (
@@ -293,7 +299,9 @@ const CivilianEventBoard = () => {
             ></textarea>
           </div>
           <button
-            onClick={(e) => handleAddNewEvent(e) && setIsSettingNewEvent(false)}
+            onClick={async (e) => {
+              if (await handleAddNewEvent(e)) setIsSettingNewEvent(false);
+            }}
           >
             Valider la création
           </button>
