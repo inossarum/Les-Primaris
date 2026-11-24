@@ -35,6 +35,7 @@ const EditProfilPhoto = () => {
                 photoRef: `${imageRef}`,
                 uploadedImagesList: [...userUploadedImagesList, url],
               })
+            )
           );
         });
       } catch (err) {
