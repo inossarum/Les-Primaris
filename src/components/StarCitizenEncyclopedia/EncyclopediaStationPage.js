@@ -6,7 +6,7 @@ import NavBar from "../Navbar/NavBar";
 import DecorationBar1 from "../Decorations/DecorationBar1";
 import DecorationBar2 from "../Decorations/DecorationBar2";
 import axios from "axios";
-import {getRSIShops} from "../../feature/rsi.slice";
+import {clearRSIShops, getRSIShops} from "../../feature/rsi.slice";
 import DecorationBorderThick from "../Decorations/DecorationBorderThick";
 import EncyclopediaObjectPageCard from "./EncyclopediaObjectPageCard";
 import EncyclopediaShopItemsPageCard from "./EncyclopediaShopItemsCard";
@@ -27,50 +27,62 @@ const EncyclopediaStationPage = () => {
   );
 
   useEffect(() => {
-    if (data?.classification === "rest_stop") {
-      axios
-        .get(
-          `https://api.star-citizen.wiki/api/shops/position/${data.name
-            .split(" ")[0]
-            .toLowerCase()}?include=items`
-        )
-        .then((res) => dispatch(getRSIShops(res.data.data)));
-    } else if (
-      data?.type === "outpost" &&
-      data?.name?.includes("Area 0") !== true
-    ) {
-      axios
-        .get(
-          `https://api.star-citizen.wiki/api/shops/${data.name}?include=items `
-        )
-        .then((res) => dispatch(getRSIShops(res.data.data)));
-    } else if (
-      data?.type === "outpost" &&
-      data?.name?.includes("Area 0") === true
-    ) {
-      axios
-        .get(
-          `https://api.star-citizen.wiki/api/shops/${data?.name
-            .split("0")
-            .join("")}?include=items`
-        )
-        .then((res) => {
-          res.data.data.items.data[0] === undefined
-            ? dispatch(getRSIShops("Pas de magasins"))
-            : dispatch(getRSIShops(res.data.data));
-        })
-        .catch(() => dispatch(getRSIShops("Pas de magasins")));
+    window.scrollTo(0, 0);
+    dispatch(clearRSIShops());
+
+    if (!data || typeof data !== "object" || !data.name) return undefined;
+
+    let shopPath;
+    if (data.classification === "rest_stop") {
+      shopPath = `position/${data.name.split(" ")[0].toLowerCase()}`;
+    } else if (data.type === "outpost") {
+      const outpostName = data.name.includes("Area 0")
+        ? data.name.split("0").join("")
+        : data.name;
+      shopPath = `shops/${encodeURIComponent(outpostName)}`;
     } else {
-      axios
-        .get(
-          `https://api.star-citizen.wiki/api/shops/position/${data.name}?include=items`
-        )
-        .then((res) => dispatch(getRSIShops(res.data.data)))
-        .catch(() => dispatch(getRSIShops("Pas de magasins")));
+      shopPath = `position/${encodeURIComponent(data.name)}`;
     }
 
-    window.scrollTo(0, 0);
-  }, []);
+    const controller = new AbortController();
+    axios
+      .get(`https://api.star-citizen.wiki/api/${shopPath}?include=items`, {
+        signal: controller.signal,
+      })
+      .then((res) => {
+        const shopData = res.data?.data;
+        if (!shopData) {
+          dispatch(getRSIShops("Pas de magasins"));
+          return;
+        }
+        if (
+          data.type === "outpost" &&
+          data.name.includes("Area 0") &&
+          !shopData.items?.data?.length
+        ) {
+          dispatch(getRSIShops("Pas de magasins"));
+          return;
+        }
+        dispatch(getRSIShops(shopData));
+      })
+      .catch((error) => {
+        if (error.name !== "CanceledError" && error.code !== "ERR_CANCELED") {
+          console.error("Échec du chargement des boutiques :", error);
+          dispatch(getRSIShops("Pas de magasins"));
+        }
+      });
+
+    return () => controller.abort();
+  }, [data, dispatch]);
+
+  if (!data || typeof data !== "object") {
+    return (
+      <div className="encyclopedia-station-page-body">
+        <NavBar factionPart="civilian" pageActive="starCitizenEncyclopedia" />
+        <p role="status">Sélectionnez un lieu à consulter.</p>
+      </div>
+    );
+  }
 
   if (data.type !== "outpost") {
     return (
@@ -292,7 +304,7 @@ const EncyclopediaStationPage = () => {
               )}
             </span>
           </div>
-          {RSIShops === "Pas de magasin" ? (
+          {RSIShops === "Pas de magasins" ? (
             <>
               <EncyclopediaShopsItemsFilter shopName={data.name} />
               <div className="encyclopedia-station-page-sub-container">
