@@ -37,7 +37,7 @@ const CommentPosts = ({post}) => {
       authorPhoto: userPhoto,
       likers: [],
       createdAt: utcDate,
-      notificationId: Math.random(Date.now()),
+      notificationId: Date.now() + Math.random(),
     };
 
     if (commentContent.current.value !== "") {
