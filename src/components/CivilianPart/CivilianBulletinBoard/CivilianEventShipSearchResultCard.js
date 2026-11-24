@@ -37,7 +37,7 @@ const CivilianEventShipSearchResultCard = ({ship}) => {
       employees: [],
       maxCrew: ship.maxCrew,
       vehiclePicture: ship.storeImageLarge,
-      vehicleId: Math.random(Date.now()),
+      vehicleId: Date.now() + Math.random(),
       vehicleRole: vehicleFactionPart,
       maxCrewAllowed: Number(maxCrewAllowed.current.value),
       createdAt: Date.now(),
