@@ -17,14 +17,18 @@ const PrimarisIngameShop = () => {
   );
 
   useEffect(() => {
-    onSnapshot(collection(db, "primarisIngameShop"), (snapshot) => {
-      let primarisIngameShopData = [];
-      snapshot.docs.forEach((doc) => {
-        primarisIngameShopData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getAllProducts(primarisIngameShopData));
-    });
-  }, []);
+    const unsubscribe = onSnapshot(
+      collection(db, "primarisIngameShop"),
+      (snapshot) => {
+        const products = snapshot.docs.map((productDoc) => ({
+          ...productDoc.data(),
+          id: productDoc.id,
+        }));
+        dispatch(getAllProducts(products));
+      }
+    );
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <div className="primaris-ingame-shop-body">
