@@ -492,7 +492,7 @@ const MilitaryEventCard = ({event, isViewingArchives}) => {
             <div
               className="military-event-card-main-container-event-button remove"
               onClick={(e) =>
-                (dispatch(setEventDetailsWindowActive("")), resetEventDetailTimeout(e))
+                { dispatch(setEventDetailsWindowActive("")); resetEventDetailTimeout(e); }
               }
             >
               <span>Retour à la liste</span>
