@@ -1,5 +1,5 @@
 import {AddCircle} from "@mui/icons-material";
-import {addDoc, collection, doc, updateDoc} from "firebase/firestore";
+import {addDoc, arrayUnion, collection, doc, updateDoc} from "firebase/firestore";
 import React, {useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {db} from "../../../utils/firebase.config";
@@ -47,7 +47,7 @@ const MilitaryEventBoard = () => {
       players: [],
       vehicles: [],
       createdAt: Date.now(),
-      notificationId: Math.random(Date.now()),
+      notificationId: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
       civilianOpened: eventCivilianOpened.current.value,
     };
 
@@ -56,7 +56,12 @@ const MilitaryEventBoard = () => {
       eventName.current.value !== "" &&
       eventType.current.value !== ""
     ) {
-      await addDoc(collection(db, "militaryEvents"), eventDatas);
+      try {
+        await addDoc(collection(db, "militaryEvents"), eventDatas);
+      } catch (error) {
+        console.error("Échec de la création de l’événement :", error);
+        return false;
+      }
       const notificationDatas = {
         eventDate: eventDatas.date,
         type: "evenement militaire",
@@ -69,24 +74,23 @@ const MilitaryEventBoard = () => {
       };
 
       if (eventDatas.civilianOpened === "non") {
-        users &&
-          [...users]
+        await Promise.allSettled(
+        (users || [])
             .filter(
               (user) =>
                 (user.factionPart === "militaire" &&
                   user.id !== currentUser.userId) ||
                 (user.factionPart === "civil-militaire" &&
                   user.id !== currentUser.userId)
-            )
-            .map((user) => {
-              const userNotifications = user.notifications;
-              updateDoc(doc(db, "users", user.id), {
-                notifications: [...userNotifications, notificationDatas],
-              });
-            });
+            ).map((user) =>
+          updateDoc(doc(db, "users", user.id), {
+            notifications: arrayUnion(notificationDatas),
+          })
+        )
+      )
       } else {
-        users &&
-          [...users]
+        await Promise.allSettled(
+        (users || [])
             .filter(
               (user) =>
                 (user.factionPart === "militaire" &&
@@ -94,15 +98,16 @@ const MilitaryEventBoard = () => {
                 (user.factionPart === "civil-militaire" &&
                   user.id !== currentUser.userId) ||
                 (user.factionPart === "civil" && user.id !== currentUser.userId)
-            )
-            .map((user) => {
-              const userNotifications = user.notifications;
-              updateDoc(doc(db, "users", user.id), {
-                notifications: [...userNotifications, notificationDatas],
-              });
-            });
+            ).map((user) =>
+          updateDoc(doc(db, "users", user.id), {
+            notifications: arrayUnion(notificationDatas),
+          })
+        )
+      )
       }
+      return true;
     }
+    return false;
   };
 
   return (
@@ -309,7 +314,9 @@ const MilitaryEventBoard = () => {
             ></textarea>
           </div>
           <button
-            onClick={(e) => handleAddNewEvent(e) && setIsSettingNewEvent(false)}
+            onClick={async (e) => {
+              if (await handleAddNewEvent(e)) setIsSettingNewEvent(false);
+            }}
           >
             Valider la création
           </button>
