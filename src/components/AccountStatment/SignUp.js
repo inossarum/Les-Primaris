@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useRef} from "react";
 import {
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   sendEmailVerification,
   updateProfile,
 } from "firebase/auth";
@@ -18,7 +17,6 @@ import {
   getUserPhoto,
   getUserRPName,
   getUserWebSiteRole,
-  getUsers,
 } from "../../feature/user.slice";
 
 import {doc, setDoc} from "firebase/firestore";
@@ -27,83 +25,71 @@ const SignUp = () => {
   const registerEmail = useRef();
   const registerPassword = useRef();
   const [displayName, setDisplayName] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
 
   const windowSetNotActiveState = () => {
     return dispatch(windowToggleActive(false));
   };
 
-  // Na pas changer, la fonction est opérante.
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
-        registerEmail.current.value,
+        registerEmail.current.value.trim(),
         registerPassword.current.value
-      )
-        .then(async (userCredential) => {
-          sendEmailVerification(auth.currentUser);
-          updateProfile(userCredential.user, {
-            displayName: `${displayName}`,
-          });
-          dispatch(getUser(displayName));
-          windowSetNotActiveState();
-          const createUserDB = async () => {
-            const userData = {
-              pseudo: displayName,
-              RPName: "",
-              email: userCredential.user.email,
-              photo: "",
-              factionPart: "none",
-              factionRank: "invité",
-              webSiteRole: "invité",
-              department: "none",
-              notifications: [],
-              id: auth.currentUser.uid,
-              trainings: 0,
-              rankOrder: null,
-              missions: 0,
-              postulant: "non",
-              employed: "non",
-              assignment: "none",
-              assignmentUnit: "none",
-              job: "none",
-              promotedAt: "",
-              officerRecommandation: [],
-              civilianDiplomasEarned: [],
-              militaryDiplomasEarned: [],
-            };
-            if (userData !== "") {
-              await setDoc(
-                doc(db, "users", `${userCredential.user.uid}`),
-                userData
-              );
+      );
+      const user = userCredential.user;
 
-              dispatch(getUsers());
-              dispatch(getUserRPName(userData?.RPName));
-              dispatch(getUserId(userData.id));
-              dispatch(getUserFactionPart(userData.factionPart));
-              dispatch(getUserFactionRank(userData.factionRank));
-              dispatch(getUserWebSiteRole(userData.webSiteRole));
-              dispatch(getUserDepartment(userData.department));
-              dispatch(getUserPhoto(userData.photo));
-            }
-          };
-          await createUserDB();
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(err);
+      await updateProfile(user, {displayName: displayName.trim()});
+
+      const userData = {
+        pseudo: displayName.trim(),
+        RPName: "",
+        email: user.email,
+        photo: "",
+        factionPart: "none",
+        factionRank: "invité",
+        webSiteRole: "invité",
+        department: "none",
+        notifications: [],
+        id: user.uid,
+        trainings: 0,
+        rankOrder: null,
+        missions: 0,
+        postulant: "non",
+        employed: "non",
+        assignment: "none",
+        assignmentUnit: "none",
+        job: "none",
+        promotedAt: "",
+        officerRecommandation: [],
+        civilianDiplomasEarned: [],
+        militaryDiplomasEarned: [],
+      };
+
+      await setDoc(doc(db, "users", user.uid), userData);
+      await sendEmailVerification(user).catch((verificationError) => {
+        console.error("Unable to send verification email:", verificationError);
+      });
+
+      dispatch(getUser(userData.pseudo));
+      dispatch(getUserId(user.uid));
+      dispatch(getUserFactionPart(userData.factionPart));
+      dispatch(getUserFactionRank(userData.factionRank));
+      dispatch(getUserWebSiteRole(userData.webSiteRole));
+      dispatch(getUserDepartment(userData.department));
+      dispatch(getUserPhoto(userData.photo));
+      dispatch(getUserRPName(userData.RPName));
+      windowSetNotActiveState();
+    } catch (registrationError) {
+      console.error("Unable to register user:", registrationError);
+      setError("La création du compte a échoué. Vérifiez vos informations puis réessayez.");
     }
   };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      dispatch(getUser(currentUser ? currentUser.displayName : null));
-    });
-  }, [dispatch]);
 
   return (
     <div className="login-container">
@@ -133,13 +119,13 @@ const SignUp = () => {
           <label>Mot de passe</label>
           <div className="password-input">
             <input
-              type="text"
-              onChange={(e) => e.target.value}
+              type="password"
               required
               ref={registerPassword}
             />
           </div>
         </div>
+        {error && <p role="alert">{error}</p>}
         <div className="submit-btn">
           <button type="submit" className="submit-form">
             Valider
