@@ -104,10 +104,10 @@ const EncyclopediaStationPage = () => {
                         to="/starCitizenEncyclopediaDetailPage"
                         className="station-details"
                         onClick={() =>
-                          RSIStarSystems.filter(
+                          (RSIStarSystems || []).filter(
                             (starSystem) =>
                               starSystem.name ===
-                              data.celestialObject.starsystem.name
+                              data?.celestialObject?.starsystem?.name
                           ).map((starSystem) =>
                             dispatch(celestialCardContentDeployed(starSystem))
                           )
@@ -120,10 +120,10 @@ const EncyclopediaStationPage = () => {
                           to="/starCitizenEncyclopediaDetailPage"
                           className="station-details"
                           onClick={() =>
-                            RSICelestialObjects.filter(
+                            (RSICelestialObjects || []).filter(
                               (celestialObject) =>
                                 celestialObject.name ===
-                                data.celestialObject.parent.name
+                                data?.celestialObject?.parent?.name
                             ).map((celestialObject) =>
                               dispatch(
                                 celestialCardContentDeployed(celestialObject)
@@ -140,9 +140,9 @@ const EncyclopediaStationPage = () => {
                         to="/starCitizenEncyclopediaDetailPage"
                         className="station-details"
                         onClick={() =>
-                          RSICelestialObjects.filter(
+                          (RSICelestialObjects || []).filter(
                             (celestialObject) =>
-                              celestialObject.name === data.celestialObject.name
+                              celestialObject.name === data?.celestialObject?.name
                           ).map((celestialObject) =>
                             dispatch(
                               celestialCardContentDeployed(celestialObject)
@@ -150,7 +150,7 @@ const EncyclopediaStationPage = () => {
                           )
                         }
                       >
-                        {data?.celestialObject.name} /
+                        {data?.celestialObject?.name} /
                       </NavLink>
                       <h2>{data?.name}</h2>
                     </>
@@ -228,10 +228,10 @@ const EncyclopediaStationPage = () => {
                         to="/starCitizenEncyclopediaDetailPage"
                         className="station-details"
                         onClick={() =>
-                          RSIStarSystems.filter(
+                          (RSIStarSystems || []).filter(
                             (starSystem) =>
                               starSystem.name ===
-                              data.celestialObject.starsystem.name
+                              data?.celestialObject?.starsystem?.name
                           ).map((starSystem) =>
                             dispatch(celestialCardContentDeployed(starSystem))
                           )
@@ -244,10 +244,10 @@ const EncyclopediaStationPage = () => {
                           to="/starCitizenEncyclopediaDetailPage"
                           className="station-details"
                           onClick={() =>
-                            RSICelestialObjects.filter(
+                            (RSICelestialObjects || []).filter(
                               (celestialObject) =>
                                 celestialObject.name ===
-                                data.celestialObject.parent.name
+                                data?.celestialObject?.parent?.name
                             ).map((celestialObject) =>
                               dispatch(
                                 celestialCardContentDeployed(celestialObject)
@@ -264,9 +264,9 @@ const EncyclopediaStationPage = () => {
                         to="/starCitizenEncyclopediaDetailPage"
                         className="station-details"
                         onClick={() =>
-                          RSICelestialObjects.filter(
+                          (RSICelestialObjects || []).filter(
                             (celestialObject) =>
-                              celestialObject.name === data.celestialObject.name
+                              celestialObject.name === data?.celestialObject?.name
                           ).map((celestialObject) =>
                             dispatch(
                               celestialCardContentDeployed(celestialObject)
@@ -274,7 +274,7 @@ const EncyclopediaStationPage = () => {
                           )
                         }
                       >
-                        {data?.celestialObject.name} /
+                        {data?.celestialObject?.name} /
                       </NavLink>
                       <h2>{data?.name}</h2>
                     </>
