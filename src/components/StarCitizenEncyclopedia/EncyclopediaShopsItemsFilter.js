@@ -9,26 +9,13 @@ const EncyclopediaShopsItemsFilter = ({shopName}) => {
 
   let buttonList = "";
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    let searchResultArray = [];
-
-    if (searchKeyWords.current.value.toLowerCase() === "") {
-      dispatch(setRSIShopsItemsFilterResult(RSIShopsItems));
-    } else if (searchKeyWords.current.value.toLowerCase() !== "") {
-      (await RSIShopsItems) &&
-        RSIShopsItems.find((item) => {
-          if (
-            item.name
-              .toLowerCase()
-              .includes(searchKeyWords.current.value.toLowerCase()) === true ||
-            item.name.includes(searchKeyWords.current.value) === true
-          ) {
-            searchResultArray = [...searchResultArray, item];
-            dispatch(setRSIShopsItemsFilterResult(searchResultArray));
-          }
-        });
-    }
+    const query = searchKeyWords.current.value.trim().toLowerCase();
+    const items = RSIShopsItems || [];
+    dispatch(setRSIShopsItemsFilterResult(
+      query ? items.filter((item) => String(item.name || "").toLowerCase().includes(query)) : items
+    ));
   };
 
   // Food
