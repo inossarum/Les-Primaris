@@ -82,8 +82,8 @@ const MilitaryDepartments = ({department}) => {
             alt={`logo de ${department}`}
             onClick={() =>
               opened && departments === department
-                ? setOpened(false) & setDepartments(department)
-                : setOpened(true) & setDepartments(department)
+                ? (setOpened(false), setDepartments(department))
+                : (setOpened(true), setDepartments(department))
             }
           />
         </div>
