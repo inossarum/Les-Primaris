@@ -29,7 +29,7 @@ const EditBannerPhoto = () => {
         uploadBytes(imageRef, e.target.files[0]).then((snapshot) => {
           getDownloadURL(snapshot.ref).then(
             (url) =>
-              dispatch(getUserBanner(url)) &
+              (dispatch(getUserBanner(url)),
               updateDoc(doc(db, "users", `${auth.currentUser.uid}`), {
                 banner: `${url}`,
                 bannerRef: `${imageRef}`,
