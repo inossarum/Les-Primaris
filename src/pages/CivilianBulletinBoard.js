@@ -18,27 +18,55 @@ const CivilianBulletinBoard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onSnapshot(collection(db, "civilianEvents"), (snapshot) => {
-      let civilianEventsData = [];
-      snapshot.docs.forEach((doc) => {
-        civilianEventsData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getCivilianEventsList(civilianEventsData));
-    });
-    onSnapshot(collection(db, "civilianEventsArchives"), (snapshot) => {
-      let civilianEventsArchivesData = [];
-      snapshot.docs.forEach((doc) => {
-        civilianEventsArchivesData.push({...doc.data(), id: doc.id});
-      });
-      dispatch(getCivilianEventsArchivesList(civilianEventsArchivesData));
-    });
+    const unsubscribeEvents = onSnapshot(
+      collection(db, "civilianEvents"),
+      (snapshot) => {
+        const events = snapshot.docs.map((eventDoc) => ({
+          ...eventDoc.data(),
+          id: eventDoc.id,
+        }));
+        dispatch(getCivilianEventsList(events));
+      },
+      (error) => console.error("Unable to load civilian events:", error)
+    );
 
-    if (RSIShips === null) {
-      axios
-        .get(`https://api.fleetyards.net/v1/models/?perPage=200`)
-        .then((res) => dispatch(getRSIShips(res.data)));
+    const unsubscribeArchives = onSnapshot(
+      collection(db, "civilianEventsArchives"),
+      (snapshot) => {
+        const events = snapshot.docs.map((eventDoc) => ({
+          ...eventDoc.data(),
+          id: eventDoc.id,
+        }));
+        dispatch(getCivilianEventsArchivesList(events));
+      },
+      (error) => console.error("Unable to load civilian event archives:", error)
+    );
+
+    return () => {
+      unsubscribeEvents();
+      unsubscribeArchives();
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (RSIShips !== null) {
+      return undefined;
     }
-  }, []);
+
+    const controller = new AbortController();
+    axios
+      .get("https://api.fleetyards.net/v1/models/?perPage=200", {
+        signal: controller.signal,
+      })
+      .then((response) => dispatch(getRSIShips(response.data)))
+      .catch((error) => {
+        if (error.code !== "ERR_CANCELED") {
+          console.error("Unable to load FleetYards ships:", error);
+        }
+      });
+
+    return () => controller.abort();
+  }, [RSIShips, dispatch]);
 
   return (
     <div className="civilian-bulletin-board-body">
